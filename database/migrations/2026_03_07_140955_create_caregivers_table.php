@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('caregivers', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id")->constrained()->onDelete("cascade");
+            $table->string("coren", 15)->nullable();
+            $table->string("certificado_cuidador")->nullable();
             $table->text("bio")->nullable();
             $table->decimal("rating", 3, 2)->default(0);
             $table->boolean("verified")->default(false);
