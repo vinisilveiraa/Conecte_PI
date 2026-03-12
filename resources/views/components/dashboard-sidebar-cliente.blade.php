@@ -9,21 +9,21 @@
     </div>
 
     <nav class="sidebar-menu">
-        <a href="dashboard-cliente.php" class="sidebar-menu-item <?php echo ($current_page == 'dashboard-cliente') ? 'active' : ''; ?>">
+        <a href="dashboard-cliente.php" class="sidebar-menu-item">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
             </svg>
             Perfil
         </a>
-        <a href="dashboard-buscar-cuidadores.php" class="sidebar-menu-item <?php echo ($current_page == 'dashboard-buscar-cuidadores') ? 'active' : ''; ?>">
+        <a href="dashboard-buscar-cuidadores.php" class="sidebar-menu-item">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="11" cy="11" r="8"></circle>
                 <path d="m21 21-4.35-4.35"></path>
             </svg>
             Buscar Cuidadores
         </a>
-        <a href="dashboard-historico.php" class="sidebar-menu-item <?php echo ($current_page == 'dashboard-historico') ? 'active' : ''; ?>">
+        <a href="dashboard-historico.php" class="sidebar-menu-item">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
                 <path d="M21 3v5h-5"></path>
@@ -37,7 +37,7 @@
     <div class="sidebar-footer">
         <div class="sidebar-user">
             <div class="user-avatar">M</div>
-            <span><?php echo $user_name; ?></span>
+            <span>{{Auth::user()->nome}}</span>
         </div>
         <button class="btn-logout">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

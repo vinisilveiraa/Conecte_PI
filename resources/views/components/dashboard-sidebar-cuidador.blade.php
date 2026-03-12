@@ -9,20 +9,20 @@
     </div>
 
     <nav class="sidebar-menu">
-        <a href="dashboard-cuidador.php" class="sidebar-menu-item <?php echo ($current_page == 'dashboard-cuidador') ? 'active' : ''; ?>">
+        <a href="dashboard-cuidador.php" class="sidebar-menu-item ">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
             </svg>
             Perfil
         </a>
-        <a href="dashboard-propostas.php" class="sidebar-menu-item <?php echo ($current_page == 'dashboard-propostas') ? 'active' : ''; ?>">
+        <a href="dashboard-propostas.php" class="sidebar-menu-item">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2"></path>
             </svg>
             Propostas
         </a>
-        <a href="dashboard-especialidades.php" class="sidebar-menu-item <?php echo ($current_page == 'dashboard-especialidades') ? 'active' : ''; ?>">
+        <a href="dashboard-especialidades.php" class="sidebar-menu-item">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
             </svg>
@@ -33,7 +33,7 @@
     <div class="sidebar-footer">
         <div class="sidebar-user">
             <div class="user-avatar">A</div>
-            <span><?php echo $user_name; ?></span>
+            <span>{{Auth::user()->name}}</span>
         </div>
         <button class="btn-logout">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

@@ -27,7 +27,7 @@
         </a>
       </li>
       <li>
-        <a href="cadastro.php">
+        <a href="{{route('register')}}">
           Cadastro
         </a>
       </li>
