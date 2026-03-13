@@ -1,3 +1,4 @@
+@section('title', 'Login')
 {{-- HEADER --}}
 @include('components.header')
 {{-- NAVBAR --}}
@@ -17,7 +18,7 @@
                     Encontre o cuidador ideal para suas necessidades ou ofereça seus serviços de cuidado de forma
                     fácil e segura.
                 </p>
-                <a href="cadastro.php" class="btn btn-secondary btn-lg">
+                <a href="{{route('register')}}" class="btn btn-secondary btn-lg">
                     Quero saber mais
                 </a>
             </div>

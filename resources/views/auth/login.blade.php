@@ -1,3 +1,5 @@
+{{-- TITLE --}}
+@section('title', 'Login')
 {{-- HEADER --}}
 @include('components.header')
 <!-- NAVBAR -->
@@ -5,6 +7,23 @@
 <!-- LOGIN CONTAINER -->
 <div class="login-container">
     <div class="login-card">
+        {{-- ERROR --}}
+        @if (session('error'))
+        <div
+            style="
+                text-align:center;
+                padding:12px;
+                margin-bottom:20px;
+                background-color:#ff4d4f;
+                border-radius:6px;
+                font-weight:600;
+                box-shadow:0 2px 6px rgba(0,0,0,0.1);
+            ">
+            <p style="font-size:1.1rem; margin:0; color:white">
+                {{ session('error') }}
+            </p>
+        </div>
+    @endif
         <!-- Ícone -->
         <div class="login-icon">
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -19,17 +38,18 @@
         <h1>Entrar no Conecte</h1>
 
         <!-- Formulário -->
-        <form method="POST" action="#" onsubmit="handleLogin(event)">
+        <form method="POST" action="{{route('login')}}">
+            @csrf
             <!-- Campo E-mail -->
             <div class="form-group">
                 <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                <input type="email" id="email" name="email" placeholder="seu@email.com"  >
             </div>
 
             <!-- Campo Senha -->
             <div class="form-group">
                 <label for="password">Senha</label>
-                <input type="password" id="password" name="password" placeholder="••••••••" required>
+                <input type="password" id="password" name="password" placeholder="••••••••"  >
             </div>
 
             <!-- Botão Login -->

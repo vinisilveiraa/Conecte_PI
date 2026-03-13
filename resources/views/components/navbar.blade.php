@@ -2,7 +2,7 @@
 <nav class="navbar">
   <div class="navbar-container">
     <!-- Logo/Brand -->
-    <a href="index.php" class="navbar-brand">
+    <a href="{{route('home')}}" class="navbar-brand">
       <span class="navbar-brand-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
           <!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->

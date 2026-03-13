@@ -1,3 +1,5 @@
+{{-- TITLE --}}
+@section('title', 'Cadastro de Cuidador')
 {{-- HEADER --}}
 @include('components.header')
 <!-- NAVBAR -->
@@ -5,6 +7,22 @@
 
 <!-- MAIN CONTENT -->
 <main class="cadastro-container">
+    @if (session('error'))
+        <div
+            style="
+                text-align:center;
+                padding:12px;
+                margin-bottom:20px;
+                background-color:#ff4d4f;
+                border-radius:6px;
+                font-weight:600;
+                box-shadow:0 2px 6px rgba(0,0,0,0.1);
+            ">
+            <p style="font-size:1.1rem; margin:0; color:white">
+                {{ session('error') }}
+            </p>
+        </div>
+    @endif
     <div class="cadastro-wrapper">
         <!-- SEÇÃO ESQUERDA - CTA -->
         <div class="cadastro-sidebar">
@@ -15,7 +33,7 @@
 
         <!-- SEÇÃO DIREITA - FORMULÁRIO -->
         <div class="cadastro-form-section">
-            <form class="cadastro-form" method="POST" action="{{ route('register') }}"enctype="multipart/form-data">
+            <form class="cadastro-form" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                 @csrf
 
                 <input type="hidden"name='role' value='caregiver'>
@@ -27,10 +45,10 @@
                     <div class="form-row" style="grid-template-columns: 1fr;">
                         <div class="form-group">
                             <label for="nome">Nome</label>
-                            <input type="text" id="nome" name="nome" placeholder="">
+                            <input type="text" id="nome" name="nome" placeholder=""value="{{ old('nome') }}">
                             {{-- erro --}}
                             @error('nome')
-                                <div class="text-danger fw-bold">
+                                <div style="color:#ff0000;font-weight:bold">
                                     {{ $message }}
                                 </div>
                             @enderror
@@ -40,20 +58,20 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for=" cpf">CPF</label>
-                            <input type="text" id="cpf" name="cpf" placeholder="">
+                            <input type="text" id="cpf" name="cpf" placeholder=""value="{{ old('cpf') }}">
                             {{-- erro --}}
                             @error('cpf')
-                                <div class="text-danger fw-bold">
+                                <div style="color:#ff0000;font-weight:bold">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="rg">RG</label>
-                            <input type="text" id="rg" name="rg" placeholder="">
+                            <input type="text" id="rg" name="rg" placeholder=""value="{{ old('rg') }}">
                             {{-- erro --}}
                             @error('rg')
-                                <div class="text-danger fw-bold">
+                                <div style="color:#ff0000;font-weight:bold">
                                     {{ $message }}
                                 </div>
                             @enderror
@@ -64,20 +82,20 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="email">E-mail</label>
-                        <input type="email" id="email" name="email" placeholder="">
+                        <input type="email" id="email" name="email" placeholder=""value="{{ old('email') }}">
                         {{-- erro --}}
                         @error('email')
-                            <div class="text-danger fw-bold">
+                            <div style="color:#ff0000;font-weight:bold">
                                 {{ $message }}
                             </div>
                         @enderror
                     </div>
                     <div class="form-group">
                         <label for="telefone">Telefone</label>
-                        <input type="tel" id="telefone" name="telefone" placeholder="">
+                        <input type="tel" id="telefone" name="telefone" placeholder=""value="{{ old('telefone') }}">
                         {{-- erro --}}
                         @error('telefone')
-                            <div class="text-danger fw-bold">
+                            <div style="color:#ff0000;font-weight:bold">
                                 {{ $message }}
                             </div>
                         @enderror
@@ -91,10 +109,10 @@
                     <div class="form-row" style="grid-template-columns: 1fr;">
                         <div class="form-group">
                             <label for="cep">CEP</label>
-                            <input type="text" id="cep" name="cep" placeholder="">
+                            <input type="text" id="cep" name="cep" placeholder=""value="{{ old('cep') }}">
                             {{-- erro --}}
                             @error('cep')
-                                <div class="text-danger fw-bold">
+                                <div style="color:#ff0000;font-weight:bold">
                                     {{ $message }}
                                 </div>
                             @enderror
@@ -104,20 +122,20 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="logradouro">Logradouro</label>
-                            <input type="text" id="logradouro" name="logradouro" placeholder="">
+                            <input type="text" id="logradouro" name="logradouro" placeholder=""value="{{ old('logradouro') }}">
                             {{-- erro --}}
                             @error('logradouro')
-                                <div class="text-danger fw-bold">
+                                <div style="color:#ff0000;font-weight:bold">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="bairro">Bairro</label>
-                            <input type="text" id="bairro" name="bairro" placeholder="">
+                            <input type="text" id="bairro" name="bairro" placeholder=""value="{{ old('bairro') }}">
                             {{-- erro --}}
                             @error('bairro')
-                                <div class="text-danger fw-bold">
+                                <div style="color:#ff0000;font-weight:bold">
                                     {{ $message }}
                                 </div>
                             @enderror
@@ -127,20 +145,20 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="cidade">Cidade</label>
-                            <input type="text" id="cidade" name="cidade" placeholder="">
+                            <input type="text" id="cidade" name="cidade" placeholder=""value="{{ old('cidade') }}">
                             {{-- erro --}}
                             @error('cidade')
-                                <div class="text-danger fw-bold">
+                                <div style="color:#ff0000;font-weight:bold">
                                     {{ $message }}
                                 </div>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="estado">Estado</label>
-                            <input type="text" id="estado" name="estado" placeholder="">
+                            <input type="text" id="estado" name="estado" placeholder=""value="{{ old('estado') }}">
                             {{-- erro --}}
                             @error('estado')
-                                <div class="text-danger fw-bold">
+                                <div style="color:#ff0000;font-weight:bold">
                                     {{ $message }}
                                 </div>
                             @enderror
@@ -155,10 +173,10 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="coren">Coren</label>
-                            <input type="text" id="coren" name="coren" placeholder="">
+                            <input type="text" id="coren" name="coren" placeholder=""value="{{ old('coren') }}">
                             {{-- erro --}}
                             @error('coren')
-                                <div class="text-danger fw-bold">
+                                <div style="color:#ff0000;font-weight:bold">
                                     {{ $message }}
                                 </div>
                             @enderror
@@ -172,7 +190,7 @@
                                 accept="application/pdf ,image/*">
                             {{-- erro --}}
                             @error('certificado_cuidador')
-                                <div class="text-danger fw-bold">
+                                <div style="color:#ff0000;font-weight:bold">
                                     {{ $message }}
                                 </div>
                             @enderror
@@ -197,7 +215,7 @@
                     </div>
                     {{-- erro --}}
                     @error('password')
-                        <div class="text-danger fw-bold">
+                        <div style="color:#ff0000;font-weight:bold">
                             {{ $message }}
                         </div>
                     @enderror

@@ -66,6 +66,12 @@ class AuthController extends Controller
             'password.confirmed' => "A senha e o confirmar senha dever ser exatamente iguais"
         ]);
 
+        // verificar se este usuario ja existe por email e cpf
+        $user = User::where('email', $data['email'])->where('cpf', $data['cpf'])->first();
+        if ($user) {
+            return redirect()->back()->with('error', 'Ja existe um usuario com esse email ou cpf !');
+        }
+
         // normalizando os dados
         // este método esta declarado na class Controller
         $data['nome'] = $this->cleanInput($data['nome']);
@@ -123,5 +129,19 @@ class AuthController extends Controller
         );
 
         return view('auth.check-email');
+    }
+
+    public function login(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        if ($user && Hash::check($request->password, $user->password)) {
+            Auth::login($user);
+            if ($user->role === 'client') {
+                return redirect()->route('dashboard.client');
+            } else {
+                return redirect()->route('dashboard.caregiver');
+            }
+        }
+        return redirect()->route('login')->with('error', 'Email ou senha incorretos !');
     }
 }// fim da classe

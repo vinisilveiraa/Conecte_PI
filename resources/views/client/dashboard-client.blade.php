@@ -1,3 +1,7 @@
+
+{{-- TITLE --}}
+@section('title', 'Dashboard Cliente')
+{{-- HEADER --}}
 @include('components.header-dashboard')
 <!-- NAVBAR -->
 @include('components.navbar')
@@ -9,7 +13,7 @@
     <!-- MAIN CONTENT -->
     <main class="dashboard-content">
         <div class="container">
-            <h1>Bem vindo, <span class="text-secondary">{{Auth::user()->nome}}</span>!</h1>
+            <h1>Bem vindo, <span>{{Auth::user()->nome}}</span>!</h1>
 
             <div class="dashboard-grid">
                 <!-- PERFIL CARD -->
