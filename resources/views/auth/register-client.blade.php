@@ -44,7 +44,8 @@
                     <div class="form-row" style="grid-template-columns: 1fr;">
                         <div class="form-group">
                             <label for="nome">Nome</label>
-                            <input type="text" id="nome" name="nome" placeholder="Digite seu Nome"value="{{ old('nome') }}">
+                            <input type="text" id="nome" name="nome"
+                                placeholder="Digite seu Nome"value="{{ old('nome') }}">
                             {{-- ERRO --}}
                             @error('nome')
                                 <div style="color:#ff0000;font-weight:bold">
@@ -57,7 +58,8 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for=" cpf">CPF</label>
-                            <input type="text" id="cpf" name="cpf" placeholder="CPF"value="{{ old('cpf') }}">
+                            <input type="text" id="cpf" name="cpf"
+                                placeholder="CPF"value="{{ old('cpf') }}">
                             {{-- ERRO --}}
                             @error('cpf')
                                 <div style="color:#ff0000;font-weight:bold">
@@ -67,7 +69,8 @@
                         </div>
                         <div class="form-group">
                             <label for="rg">RG</label>
-                            <input type="text" id="rg" name="rg" placeholder=""value="{{ old('rg') }}">
+                            <input type="text" id="rg" name="rg"
+                                placeholder=""value="{{ old('rg') }}">
                             {{-- ERRO --}}
                             @error('rg')
                                 <div style="color:#ff0000;font-weight:bold">
@@ -81,7 +84,8 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="email">E-mail</label>
-                        <input type="email" id="email" name="email" placeholder="email@example.com"value="{{ old('email') }}">
+                        <input type="email" id="email" name="email"
+                            placeholder="email@example.com"value="{{ old('email') }}">
                         {{-- ERRO --}}
                         @error('email')
                             <div style="color:#ff0000;font-weight:bold">
@@ -91,7 +95,8 @@
                     </div>
                     <div class="form-group">
                         <label for="telefone">Telefone</label>
-                        <input type="tel" id="telefone" name="telefone" placeholder="(XX) XXXXX-XXXX"value="{{ old('telefone') }}">
+                        <input type="tel" id="telefone" name="telefone"
+                            placeholder="(XX) XXXXX-XXXX"value="{{ old('telefone') }}">
                         {{-- ERRO --}}
                         @error('telefone')
                             <div style="color:#ff0000;font-weight:bold">
@@ -108,7 +113,8 @@
                     <div class="form-row" style="grid-template-columns: 1fr;">
                         <div class="form-group">
                             <label for="cep">CEP</label>
-                            <input type="text" id="cep" name="cep" placeholder="12456-789"value="{{ old('cep') }}">
+                            <input type="text" id="cep" name="cep"
+                                placeholder="12456-789"value="{{ old('cep') }}">
                             {{-- ERRO --}}
                             @error('cep')
                                 <div style="color:#ff0000;font-weight:bold">
@@ -121,7 +127,8 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="logradouro">Logradouro</label>
-                            <input type="text" id="logradouro" name="logradouro" placeholder=""value="{{ old('logradouro') }}">
+                            <input type="text" id="logradouro" name="logradouro"
+                                placeholder=""value="{{ old('logradouro') }}">
                             {{-- ERRO --}}
                             @error('logradouro')
                                 <div style="color:#ff0000;font-weight:bold">
@@ -131,7 +138,8 @@
                         </div>
                         <div class="form-group">
                             <label for="bairro">Bairro</label>
-                            <input type="text" id="bairro" name="bairro" placeholder=""value="{{ old('bairro') }}">
+                            <input type="text" id="bairro" name="bairro"
+                                placeholder=""value="{{ old('bairro') }}">
                             {{-- ERRO --}}
                             @error('bairro')
                                 <div style="color:#ff0000;font-weight:bold">
@@ -144,7 +152,8 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="cidade">Cidade</label>
-                            <input type="text" id="cidade" name="cidade" placeholder=""value="{{ old('cidade') }}">
+                            <input type="text" id="cidade" name="cidade"
+                                placeholder=""value="{{ old('cidade') }}">
                             {{-- ERRO --}}
                             @error('cidade')
                                 <div style="color:#ff0000;font-weight:bold">
@@ -154,7 +163,8 @@
                         </div>
                         <div class="form-group">
                             <label for="estado">Estado</label>
-                            <input type="text" id="estado" name="estado" placeholder=""value="{{ old('estado') }}">
+                            <input type="text" id="estado" name="estado"
+                                placeholder=""value="{{ old('estado') }}">
                             {{-- ERRO --}}
                             @error('estado')
                                 <div style="color:#ff0000;font-weight:bold">
@@ -194,7 +204,7 @@
                     </div>
                 </div>
 
-                <div class="form-section">
+                {{-- <div class="form-section">
                     <h3 class="form-section-title">Arquivos</h3>
 
                     <div class="form-row" style="grid-template-columns: 1fr;">
@@ -207,9 +217,10 @@
                                 style="max-width: 200px; max-height: 200px; border-radius: 8px;">
                         </div>
                     </div>
+                </div> --}}
 
-                    <!-- BOTÃO ENVIAR -->
-                    <button type="submit" class="btn btn-submit">Cadastrar-se</button>
+                <!-- BOTÃO ENVIAR -->
+                <button type="submit" class="btn btn-submit">Cadastrar-se</button>
             </form>
         </div>
     </div>

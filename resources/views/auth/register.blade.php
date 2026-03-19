@@ -30,7 +30,7 @@
                     <li>Encontre ajuda quando mais precisar.</li>
                 </ul>
 
-                <a href="{{ route('register.client') }}" class="btn btn-primary btn-md btn-block">
+                <a href="{{ route('register.client') }}" class="btn btn-primary btn-md btn-block text-center btn-choose">
                     Preciso de um
                 </a>
             </div>
@@ -57,7 +57,7 @@
                     <li>Flexibilidade para escolher.</li>
                 </ul>
 
-                <a href="{{ route('register.caregiver') }}" class="btn btn-secondary btn-md btn-block">
+                <a href="{{ route('register.caregiver') }}" class="btn btn-secondary btn-md btn-block text-center btn-choose">
                     Seja Cuidador
                 </a>
             </div>

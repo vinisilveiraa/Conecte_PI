@@ -42,7 +42,7 @@ class AuthController extends Controller
             'nome.required' => 'O campo nome é obrigatório',
             'nome.string' => 'O nome deve conter apenas letras',
 
-            'cpf.required' => 'O camppo cpf é obrigatório',
+            'cpf.required' => 'O campo cpf é obrigatório',
             'cpf.min' => 'O cpf deve ter no minimo :min digitos',
 
             'rg.required' => 'O campo rg é obrigatório',

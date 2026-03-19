@@ -5,6 +5,8 @@
 @include('components.navbar')
 
 
+
+
 {{-- HERO SECTION --}}
 <section class="hero">
     <div class="hero-container">

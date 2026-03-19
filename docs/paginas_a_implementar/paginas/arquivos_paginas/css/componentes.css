@@ -488,6 +488,10 @@
   color: var(--color-text-light);
   font-size: var(--font-size-sm);
 }
+/*
+.btn-choose:hover {
+  color: white;
+} */
 
 /* ============================================
    TESTIMONIAL/COLABORADOR
