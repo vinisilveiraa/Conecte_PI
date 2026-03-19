@@ -1,0 +1,115 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                    CONECTE - GUIA DE INSTALAÇÃO RÁPIDA                     ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+📋 REQUISITOS
+─────────────
+- PHP 7.4+ instalado
+- Servidor Web (Apache, Nginx) OU PHP Built-in Server
+- Navegador moderno
+
+🚀 INSTALAÇÃO RÁPIDA (LOCAL)
+─────────────────────────────
+
+1. Extrair o arquivo:
+   unzip conecte_php.zip
+   cd conecte_php
+
+2. Iniciar servidor PHP:
+   php -S localhost:8000
+
+3. Acessar no navegador:
+   http://localhost:8000
+
+✅ PRONTO! O site está funcionando.
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🌐 INSTALAÇÃO EM SERVIDOR (APACHE/NGINX)
+──────────────────────────────────────────
+
+1. Upload dos arquivos via FTP:
+   - Conecte-se ao servidor via FTP
+   - Faça upload de toda a pasta conecte_php
+   - Coloque em public_html ou www
+
+2. Configurar permissões (se necessário):
+   chmod -R 755 conecte_php/
+   chmod -R 644 conecte_php/*.*
+
+3. Acessar via domínio:
+   https://seu-dominio.com/conecte_php
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 ESTRUTURA DO PROJETO
+───────────────────────
+
+conecte_php/
+├── css/
+│   ├── global.css          ← Variáveis CSS e reset
+│   └── componentes.css     ← Estilos dos componentes
+├── components/
+│   ├── navbar.php          ← Menu de navegação
+│   └── footer.php          ← Rodapé
+├── pages/
+│   ├── index.php           ← Home
+│   ├── cadastro.php        ← Cadastro
+│   ├── sobre-nos.php       ← Sobre Nós
+│   ├── contatos.php        ← Contatos
+│   └── login.php           ← Login
+├── js/
+│   └── main.js             ← JavaScript
+├── assets/                 ← Imagens (pasta vazia)
+├── index.php               ← Entrada principal
+├── .htaccess               ← Configuração Apache
+├── README.md               ← Documentação completa
+└── INSTALACAO.txt          ← Este arquivo
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🎨 CUSTOMIZAÇÃO
+────────────────
+
+Alterar cores:
+  Edite: css/global.css
+  Procure por: :root { ... }
+  Modifique as variáveis --color-*
+
+Alterar fontes:
+  Edite: css/global.css
+  Procure por: --font-family-*
+
+Adicionar nova página:
+  1. Crie: pages/nova-pagina.php
+  2. Inclua navbar e footer
+  3. Defina: $current_page = 'nova-pagina'
+  4. Adicione link na navbar.php
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🔧 TROUBLESHOOTING
+───────────────────
+
+Problema: "Página em branco"
+Solução: Verifique se PHP está instalado (php -v)
+
+Problema: "CSS não carrega"
+Solução: Verifique os caminhos dos includes (../css/)
+
+Problema: "Menu mobile não funciona"
+Solução: Abra console (F12) e verifique erros JavaScript
+
+═══════════════════════════════════════════════════════════════════════════════
+
+📞 SUPORTE
+──────────
+
+Para mais informações, consulte:
+- README.md (documentação completa)
+- Comentários no código
+- Exemplos em cada página
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✨ Desenvolvido com ❤️ para o Conecte

@@ -1,0 +1,93 @@
+# ============================================
+# CONECTE - CONFIGURAÇÃO APACHE
+# ============================================
+
+# Ativar reescrita de URL
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  
+  # Redirecionar para HTTPS (descomente em produção)
+  # RewriteCond %{HTTPS} off
+  # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  
+  # Remover .php da URL (opcional)
+  # RewriteCond %{REQUEST_FILENAME} !-f
+  # RewriteCond %{REQUEST_FILENAME} !-d
+  # RewriteRule ^([^\.]+)$ $1.php [NC,L]
+</IfModule>
+
+# ============================================
+# SEGURANÇA
+# ============================================
+
+# Desabilitar listagem de diretórios
+<IfModule mod_autoindex.c>
+  Options -Indexes
+</IfModule>
+
+# Proteger arquivos sensíveis
+<FilesMatch "\.php$">
+  <IfModule mod_fcgid.c>
+    SetHandler fcgid-script
+  </IfModule>
+  <IfModule mod_php.c>
+    SetHandler application/x-httpd-php
+  </IfModule>
+</FilesMatch>
+
+# Bloquear acesso a arquivos específicos
+<FilesMatch "\.(env|json|lock|md)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# ============================================
+# CACHE
+# ============================================
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  
+  # Imagens
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  
+  # CSS e JS
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  
+  # HTML
+  ExpiresByType text/html "access plus 1 day"
+</IfModule>
+
+# ============================================
+# COMPRESSÃO
+# ============================================
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/json
+</IfModule>
+
+# ============================================
+# HEADERS
+# ============================================
+
+<IfModule mod_headers.c>
+  # Prevenir clickjacking
+  Header always set X-Frame-Options "SAMEORIGIN"
+  
+  # Prevenir MIME sniffing
+  Header always set X-Content-Type-Options "nosniff"
+  
+  # Ativar XSS protection
+  Header always set X-XSS-Protection "1; mode=block"
+  
+  # Referrer policy
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

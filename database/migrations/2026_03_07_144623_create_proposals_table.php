@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('proposals', function (Blueprint $table) {
             $table->id();
+            $table->decimal('valor_servico');
+            $table->datetime('data_inicio');
+            $table->datetime('data_fim');
+            $table->text("descricao_servico");
+            $table->string("endereco_servico");
+            $table->enum("status", ["pending", "accepted", "rejected", "completed", "cancelled"])->default("pending");
+            $table->integer('estrela')->nullable();
+            
             $table->foreignId("client_id")->constrained()->onDelete("cascade");
             $table->foreignId("caregiver_id")->constrained()->onDelete("cascade");
-            $table->text("description");
-            $table->string("address");
-            $table->dateTime("service_date");
-            $table->decimal("price", 10, 2);
-            $table->enum("status", ["pending", "accepted", "rejected", "completed", "cancelled"])->default("pending");
             $table->timestamps();
         });
     }

@@ -18,21 +18,21 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->foreignId('reviewer_id')
+            $table->foreignId('revisor_id')
                 ->constrained('users')
                 ->cascadeOnDelete();
 
-            $table->foreignId('reviewed_id')
+            $table->foreignId('revisado_id')
                 ->constrained('users')
                 ->cascadeOnDelete();
 
-            $table->tinyInteger('rating');
+            $table->tinyInteger('avaliacao');
 
-            $table->text('comment')->nullable();
+            $table->text('comentario')->nullable();
 
             $table->timestamps();
 
-            $table->unique(['proposal_id', 'reviewer_id']);
+            $table->unique(['proposal_id', 'revisor_id']);
         });
     }
 

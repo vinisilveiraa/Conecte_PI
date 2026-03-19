@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId("proposal_id")->constrained()->onDelete("cascade");
-            $table->decimal("amount", 10, 2);
-            $table->decimal("platform_fee", 10, 2);
-            $table->decimal("caregiver_amount", 10, 2);
+            $table->decimal("valor", 10, 2);
+            $table->decimal("taxa_plataforma", 10, 2);
+            $table->decimal("valor_cuidador", 10, 2);
             $table->enum("status", [
-                'pending',      // Aguardando o cliente ler o QR Code
-                'paid',         // Pix confirmado (Dinheiro na conta da plataforma)
-                'held',         // Em custódia (período de 24h pós-serviço)
-                'released',     // Pix transferido para o cuidador
-                'refunded',     // Estorno realizado
-                'canceled'
+                'pendente',      // Aguardando o cliente ler o QR Code
+                'depositado',         // Pix confirmado (Dinheiro na conta da plataforma)
+                'em_custodia',         // Em custódia (período de 24h pós-serviço)
+                'pago',     // Pix transferido para o cuidador
+                'estorno_realizado',     // Estorno realizado
+                'cancelado'
             ]);
 
             $table->timestamps();

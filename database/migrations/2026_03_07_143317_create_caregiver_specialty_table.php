@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('specialty_id')->constrained()->onDelete('cascade');
 
             // Seu campo de valor mínimo
-            $table->decimal('min_price', 10, 2);
+            $table->decimal('preco_minimo', 10, 2);
 
             // Chave Primária Composta para evitar duplicidade
             $table->primary(['caregiver_id', 'specialty_id']);
