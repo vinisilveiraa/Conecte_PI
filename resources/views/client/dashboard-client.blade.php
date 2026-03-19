@@ -1,4 +1,3 @@
-
 {{-- TITLE --}}
 @section('title', 'Dashboard Cliente')
 {{-- HEADER --}}
@@ -13,14 +12,14 @@
     <!-- MAIN CONTENT -->
     <main class="dashboard-content">
         <div class="container">
-            <h1>Bem vindo, <span>{{Auth::user()->nome}}</span>!</h1>
+            <h1>Bem vindo, <span>{{ Auth::user()->nome }}</span>!</h1>
 
             <div class="dashboard-grid">
                 <!-- PERFIL CARD -->
                 <div class="profile-card">
                     <div class="profile-avatar">M</div>
-                    <h3>{{Auth::user()->nome}}</h3>
-                    <p class="profile-type">{{ucfirst(Auth::user()->role)}}</p>
+                    <h3>{{ Auth::user()->nome }}</h3>
+                    <p class="profile-type">{{ ucfirst(Auth::user()->role) }}</p>
                 </div>
 
                 <!-- INFORMAÇÕES CARD -->
@@ -36,7 +35,7 @@
                         </svg>
                         <div>
                             <label>E-mail</label>
-                            <p>{{Auth::user()->email}}</p>
+                            <p>{{ Auth::user()->email }}</p>
                         </div>
                     </div>
 
@@ -49,7 +48,7 @@
                         </svg>
                         <div>
                             <label>Telefone</label>
-                            <p>{{Auth::user()->telefone}}</p>
+                            <p>{{ Auth::user()->telefone }}</p>
                         </div>
                     </div>
 
@@ -68,7 +67,7 @@
                         </svg>
                         <div>
                             <label>CPF</label>
-                            <p>{{Auth::user()->cpf}}</p>
+                            <p>{{ Auth::user()->cpf }}</p>
                         </div>
                     </div>
 
@@ -80,7 +79,7 @@
                         </svg>
                         <div>
                             <label>Cidade</label>
-                            <p>{{Auth::user()->address->cidade}}</p>
+                            <p>{{ Auth::user()->address->cidade }}</p>
                         </div>
                     </div>
 
@@ -92,7 +91,7 @@
                         </svg>
                         <div>
                             <label>Bairro</label>
-                            <p>{{Auth::user()->address->bairro}}</p>
+                            <p>{{ Auth::user()->address->bairro }}</p>
                         </div>
                     </div>
 
@@ -104,7 +103,7 @@
                         </svg>
                         <div>
                             <label>Logradouro</label>
-                            <p>{{Auth::user()->address->logradouro}}</p>
+                            <p>{{ Auth::user()->address->logradouro }}</p>
                         </div>
                     </div>
 
