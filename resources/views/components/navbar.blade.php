@@ -32,17 +32,17 @@
         </a>
       </li>
       <li>
-        <a href="sobre-nos.php">
+        <a href="{{route('sobre-nos')}}">
           Sobre Nós
         </a>
       </li>
       <li>
-        <a href="contatos.php">
+        <a href="{{route('contatos')}}">
           Contatos
         </a>
       </li>
       <li>
-        <a href="politica-privacidade.php">
+        <a href="{{route('politica-privacidade')}}">
           Política de Privacidade
         </a>
       </li>

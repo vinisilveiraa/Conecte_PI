@@ -1,4 +1,4 @@
-@section('title', 'Login')
+@section('title', 'Home')
 {{-- HEADER --}}
 @include('components.header')
 {{-- NAVBAR --}}

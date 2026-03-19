@@ -22,6 +22,9 @@ Route::middleware('guest')->group(function () {
     // rotas para visitantes
 
     Route::view("/", "site.home")->name('home');
+    Route::view("/sobre-nos", "site.sobre-nos")->name('sobre-nos');
+    Route::view("/politica-privacidade", "site.politica-privacidade")->name('politica-privacidade');
+    Route::view("/contatos", "site.contatos")->name('contatos');
     Route::view('/login', 'auth.login')->name('login');
     Route::post('/login', [AuthController::class, 'login']);
 
