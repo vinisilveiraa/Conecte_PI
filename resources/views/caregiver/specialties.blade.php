@@ -1,4 +1,4 @@
-{{-- TITLE --}}
+
 @section('title', 'Especialidades')
 {{-- HEADER --}}
 @include('components.header-dashboard')
@@ -19,12 +19,15 @@
                 <p>Gerencie as áreas em que você atua como cuidador.</p>
 
                 <div class="tags-container">
-                    <?php foreach ($registered_specialties as $specialty): ?>
+                    @foreach ($specialties as $specialty)
+                        {{$specialty->nome}}
+                        <br>
+                        {{$specialty->descricao}}
+                        <br>
+                    @endforeach
                     <span class="tag">
-                        <?php echo $specialty; ?>
                         <button class="tag-remove">&times;</button>
                     </span>
-                    <?php endforeach; ?>
                 </div>
             </div>
 

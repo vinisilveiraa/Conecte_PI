@@ -27,6 +27,11 @@
         </a>
       </li>
       <li>
+        <a href="{{route('check-email')}}">
+          pagina email
+        </a>
+      </li>
+      <li>
         <a href="{{route('register')}}">
           Cadastro
         </a>

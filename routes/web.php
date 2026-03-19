@@ -1,22 +1,52 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CaregiverController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+
+Route::view("/teste", "auth.check-email")->name('check-email');
+
 
 
 
 
 Route::middleware('auth')->group(function () {
     // rotas para usuarios autenticados
+    // CLIENT
     Route::view('/dashboard-client', 'client.dashboard-client')->name('dashboard.client');
-    Route::view('/dashboard-cliente-buscar', 'client.dashboard-client-buscar')->name('dashboard.client.buscar');
+    Route::get("/find-caregivers", [CaregiverController::class, 'index'])->name('find.caregivers');
+
+    // CAREGIVER
+    Route::get("/caregiver-specialties", [CaregiverController::class, 'addSpecialty'])->name('caregiver.specialties');
+
+
+
+
+
+
+
+
+
+    Route::post('/caregiver/specialty/{id}', [CaregiverController::class, 'add'])->name('caregiver.specialty.add');
+
+    Route::delete('/caregiver/specialty/{id}', [CaregiverController::class, 'remove'])->name('caregiver.specialty.remove');
+
+
+
+
+
+
+
+
+
     Route::view('/dashboard-cliente-historico', 'client.dashboard-client-historico')->name('dashboard.client.buscar');
 
 
     Route::view('/dashboard-caregiver', 'caregiver.dashboard-caregiver')->name('dashboard.caregiver');
-    Route::view('/dashboard-caregiver-especialidades', 'caregiver.dashboard-caregiver-especialidades')->name('dashboard.caregiver.especialidades');
+    Route::get('/dashboard-caregiver-especialidades', [CaregiverController::class, 'createSpecialty'])->name('dashboard.caregiverespecialidades');
     Route::view('/dashboard-caregiver-propostas', 'caregiver.dashboard-caregiver-propostas')->name('dashboard.caregiver.propostas');
 
 
@@ -28,6 +58,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('guest')->group(function () {
     // rotas para visitantes
+
 
     Route::view("/", "site.home")->name('home');
     Route::view("/sobre-nos", "site.sobre-nos")->name('sobre-nos');

@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('coren')->nullable();
             $table->string('certificado_cuidador')->nullable();
             $table->text("bio")->nullable();
-            $table->integer("estrela")->default(0);
+            $table->integer("like")->default(0);
+            $table->integer("deslike")->default(0);
             $table->boolean("verificado")->default(false);
             $table->foreignId("user_id")->constrained()->onDelete("cascade");
 
