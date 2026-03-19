@@ -488,6 +488,7 @@
   color: var(--color-text-light);
   font-size: var(--font-size-sm);
 }
+
 /*
 .btn-choose:hover {
   color: white;
@@ -722,7 +723,8 @@
 .form-group input {
   width: 100%;
   padding: var(--spacing-xs);
-  border: 1px solid var(--color-medium-gray);
+  /* border: 1px solid var(--color-medium-gray); */
+  border: 1px solid var(--color-primary);
   border-radius: var(--border-radius-md);
   font-size: var(--font-size-base);
   transition: border-color var(--transition-fast);

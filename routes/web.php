@@ -11,7 +11,15 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
     // rotas para usuarios autenticados
     Route::view('/dashboard-client', 'client.dashboard-client')->name('dashboard.client');
+    Route::view('/dashboard-cliente-buscar', 'client.dashboard-client-buscar')->name('dashboard.client.buscar');
+    Route::view('/dashboard-cliente-historico', 'client.dashboard-client-historico')->name('dashboard.client.buscar');
+
+
     Route::view('/dashboard-caregiver', 'caregiver.dashboard-caregiver')->name('dashboard.caregiver');
+    Route::view('/dashboard-caregiver-especialidades', 'caregiver.dashboard-caregiver-especialidades')->name('dashboard.caregiver.especialidades');
+    Route::view('/dashboard-caregiver-propostas', 'caregiver.dashboard-caregiver-propostas')->name('dashboard.caregiver.propostas');
+
+
     Route::get('/logout', function () {
         Auth::logout();
         return redirect()->route('home');
