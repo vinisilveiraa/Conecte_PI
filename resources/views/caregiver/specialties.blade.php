@@ -1,4 +1,3 @@
-
 @section('title', 'Especialidades')
 {{-- HEADER --}}
 @include('components.header-dashboard')
@@ -9,7 +8,6 @@
     <!-- SIDEBAR -->
     @include('components.dashboard-sidebar-cuidador')
 
-
     <!-- MAIN CONTENT -->
     <main class="dashboard-content">
         <div class="container">
@@ -19,15 +17,18 @@
                 <p>Gerencie as áreas em que você atua como cuidador.</p>
 
                 <div class="tags-container">
-                    @foreach ($specialties as $specialty)
-                        {{$specialty->nome}}
-                        <br>
-                        {{$specialty->descricao}}
-                        <br>
+                    @foreach ($mySpecialties as $specialty)
+                        <span class="tag">
+                            {{ $specialty->nome }}
+
+                            <form action="{{ route('caregiver.remove.specialty', $specialty->id) }}" method="POST"
+                                style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button class="tag-remove">&times;</button>
+                            </form>
+                        </span>
                     @endforeach
-                    <span class="tag">
-                        <button class="tag-remove">&times;</button>
-                    </span>
                 </div>
             </div>
 
@@ -40,26 +41,70 @@
                     <!-- Cuidados Pessoais -->
                     <div class="specialty-category">
                         <h3>Cuidados pessoais</h3>
-                        <button class="btn btn-outline btn-sm">+ Banho</button>
+                        {{-- mostrar todas as especialidades que seja da categoria cuidados pessoais que ainda não foram cadastradas pelo mcuidador --}}
+                        @foreach ($availableSpecialties as $specialty)
+                            @if ($specialty->categoria == 'Cuidados Pessoais')
+                                <form action="{{ route('caregiver.add.specialty', $specialty->id) }}" method="POST"
+                                    style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline btn-sm">
+                                        + {{ $specialty->nome }}
+                                    </button>
+                                </form>
+                            @endif
+                        @endforeach
                     </div>
 
                     <!-- Cuidados de Saúde -->
                     <div class="specialty-category">
                         <h3>Cuidados de Saúde</h3>
-                        <button class="btn btn-outline btn-sm">+ Curativo</button>
+                        {{-- mostrar todas as especialidades que seja da categoria cuidados e saude que ainda não foram cadastradas pelo mcuidador --}}
+                        @foreach ($availableSpecialties as $specialty)
+                            @if ($specialty->categoria == 'Saúde')
+                                <form action="{{ route('caregiver.add.specialty', $specialty->id) }}" method="POST"
+                                    style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline btn-sm">
+                                        + {{ $specialty->nome }}
+                                    </button>
+                                </form>
+                            @endif
+                        @endforeach
                     </div>
 
                     <!-- Rotina e Acompanhamento -->
                     <div class="specialty-category">
                         <h3>Rotina e Acompanhamento</h3>
-                        <button class="btn btn-outline btn-sm">+ Diária</button>
-                        <button class="btn btn-outline btn-sm">+ Pernoite</button>
+                        {{-- mostrar todas as especialidades que seja da categoria cuidados e saude que ainda não foram cadastradas pelo mcuidador --}}
+                        @foreach ($availableSpecialties as $specialty)
+                            @if ($specialty->categoria == 'Acompanhamento')
+                                <form action="{{ route('caregiver.add.specialty', $specialty->id) }}" method="POST"
+                                    style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline btn-sm">
+                                        + {{ $specialty->nome }}
+                                    </button>
+                                </form>
+                            @endif
+                        @endforeach
+
                     </div>
 
                     <!-- Apoio Emocional -->
                     <div class="specialty-category">
                         <h3>Apoio Emocional e Social</h3>
-                        <p class="coming-soon">Em breve</p>
+                        @foreach ($availableSpecialties as $specialty)
+                            @if ($specialty->categoria == 'Especializados')
+                                <form action="{{ route('caregiver.add.specialty', $specialty->id) }}" method="POST"
+                                    style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-outline btn-sm">
+                                        + {{ $specialty->nome }}
+                                    </button>
+                                </form>
+                            @endif
+                        @endforeach
+
                     </div>
 
                     <!-- Tarefas Domésticas -->

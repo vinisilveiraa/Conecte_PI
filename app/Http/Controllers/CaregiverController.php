@@ -16,27 +16,43 @@ class CaregiverController extends Controller
         return view('client.find-caregivers', compact('caregivers'));
     }
 
-    public function add($id)
+    public function addSpecialty($id)
     {
-        $caregiver = Auth::user()->caregiver;
+        $caregiver = Caregiver::where('user_id', Auth::user()->id)->firstOrFail();
 
-        $caregiver->specialties()->attach($id);
+        $caregiver->specialties()->attach($id, [
+            'preco_minimo' => 0 // ou valor padrão
+        ]);
 
         return back();
     }
 
-    public function remove($id)
+    public function removeSpecialty($id)
     {
-        $caregiver = Auth::user()->caregiver;
-
+        $caregiver = Caregiver::where('user_id', Auth::user()->id)->firstOrFail();
         $caregiver->specialties()->detach($id);
 
         return back();
     }
 
-    public function addSpecialty()
+    public function showSpecialties()
     {
-        $specialties = Specialty::all();
-        return view('caregiver.specialties', compact('specialties'));
+        $caregiver = Caregiver::with('specialties')
+            ->where('user_id', Auth::user()->id)
+            ->firstOrFail();
+
+        //  Especialidades que ele JÁ TEM
+        $mySpecialties = $caregiver->specialties;
+
+        //  IDs das especialidades que ele já possui
+        $mySpecialtiesIds = $mySpecialties->pluck('id');
+
+        //  Especialidades que ele NÃO TEM
+        $availableSpecialties = Specialty::whereNotIn('id', $mySpecialtiesIds)->get();
+
+        return view('caregiver.specialties', compact(
+            'mySpecialties',
+            'availableSpecialties'
+        ));
     }
 }

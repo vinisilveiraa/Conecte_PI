@@ -20,19 +20,11 @@ Route::middleware('auth')->group(function () {
     Route::get("/find-caregivers", [CaregiverController::class, 'index'])->name('find.caregivers');
 
     // CAREGIVER
-    Route::get("/caregiver-specialties", [CaregiverController::class, 'addSpecialty'])->name('caregiver.specialties');
+    Route::get("/caregiver-specialties", [CaregiverController::class, 'showSpecialties'])->name('caregiver.specialties');
 
+    Route::post('/caregiver/specialty/{id}', [CaregiverController::class, 'addSpecialty'])->name('caregiver.add.specialty');
 
-
-
-
-
-
-
-
-    Route::post('/caregiver/specialty/{id}', [CaregiverController::class, 'add'])->name('caregiver.specialty.add');
-
-    Route::delete('/caregiver/specialty/{id}', [CaregiverController::class, 'remove'])->name('caregiver.specialty.remove');
+    Route::delete('/caregiver/specialty/{id}', [CaregiverController::class, 'removeSpecialty'])->name('caregiver.remove.specialty');
 
 
 
