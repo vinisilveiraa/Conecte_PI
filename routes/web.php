@@ -28,7 +28,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/dashboard-editAvatar', [ProfileController::class, 'updateAvatar'])
         ->name('edit.profile.avatar');
 
-
     // CLIENT
     Route::view('/dashboard-client', 'client.dashboard-client')->name('dashboard.client');
     Route::get("/select-specialty", [ClientController::class, 'selectSpecialty'])->name('select.specialty');
