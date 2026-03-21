@@ -12,14 +12,22 @@
     <!-- MAIN CONTENT -->
     <main class="dashboard-content">
         <div class="container">
-            <h1>Bem vindo, <span>{{ Auth::user()->nome }}</span>!</h1>
+            <h1 class="text-center">Bem vindo, <span>{{ Auth::user()->nome }}</span>!</h1>
 
             <div class="dashboard-grid">
                 <!-- PERFIL CARD -->
                 <div class="profile-card">
-                    <div class="profile-avatar">M</div>
-                    <h3>{{ Auth::user()->nome }}</h3>
-                    <p class="profile-type">{{ ucfirst(Auth::user()->role) }}</p>
+                    @if (Auth::user()->foto == null)
+                        <i class="fa-solid fa-user fa-4x"></i>
+                    @else
+                        <img src="{{ asset('assets/imgs/clients/' . Auth::user()->foto) }}" alt="">
+                    @endif
+                    <h3>{{ ucwords(Auth::user()->nome) }}</h3>
+                    @if (Auth::user()->role == 'caregiver')
+                        <p class="profile-type">Cuidador</p>
+                    @else
+                        <p class="profile-type">Cliente</p>
+                    @endif
                 </div>
 
                 <!-- INFORMAÇÕES CARD -->
