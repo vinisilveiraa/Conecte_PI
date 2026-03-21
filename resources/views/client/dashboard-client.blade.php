@@ -13,12 +13,13 @@
     <main class="dashboard-content">
         <div class="container">
             <h1 class="text-center">Bem vindo, <span>{{ Auth::user()->nome }}</span>!</h1>
+            <h1 class="text-center">Bem vindo, <span>{{ Auth::user()->nome }}</span>!</h1>
 
             <div class="dashboard-grid">
                 <!-- PERFIL CARD -->
                 <div class="profile-card">
                     <div class="profile-avatar">
-                        
+
                         @if (Auth::user()->foto == null)
                             <i class="fa-solid fa-user"></i>
                         @else
