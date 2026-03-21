@@ -20,15 +20,9 @@
                     Encontre o cuidador ideal para suas necessidades ou ofereça seus serviços de cuidado de forma
                     fácil e segura.
                 </p>
-                <a href="{{route('register')}}" class="btn btn-secondary btn-lg">
+                <a href="{{ route('register') }}" class="btn btn-secondary btn-lg">
                     Quero saber mais
                 </a>
-            </div>
-            <div class="hero-image">
-                <div
-                    style="background: linear-gradient(135deg, #d4f0f0 0%, #e8f8f8 100%); border-radius: 20px; text-align: center; color: #999;">
-                    <img src="../assets/imgs/home-hero.png" alt="Cuidador com idosa">
-                </div>
             </div>
         </div>
     </div>
@@ -106,7 +100,7 @@
             <div>
                 <div
                     style="background: linear-gradient(135deg, #f5e6d3 0%, #f0d4e0 100%); padding: 1rem; border-radius: 20px; text-align: center; color: #999; min-height: 300px; display: flex; align-items: center; justify-content: center;">
-                    <img style="border-radius: 20px" src="../assets/imgs/home-sobre.png" alt="Cuidador com idosa">
+                    <img style="border-radius: 20px" src="/assets/imgs/home1.png" alt="Cuidador com idosa">
                 </div>
             </div>
             <div>

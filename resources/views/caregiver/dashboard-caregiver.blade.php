@@ -17,17 +17,45 @@
             <div class="dashboard-grid">
                 <!-- PERFIL CARD -->
                 <div class="profile-card">
-                    @if (Auth::user()->foto == null)
-                        <i class="fa-solid fa-user fa-4x"></i>
-                    @else
-                        <img src="{{ asset('assets/imgs/caregivers/' . Auth::user()->foto) }}" alt="">
-                    @endif
+                    <div class="profile-avatar">
+
+                        @if (Auth::user()->foto == null)
+                            <i class="fa-solid fa-user"></i>
+                        @else
+                            <img src="{{ asset('assets/imgs/caregivers/' . Auth::user()->foto) }}" alt="">
+                        @endif
+
+                        <!-- FORM escondido -->
+                        <form id="avatarForm" action="{{ route('edit.profile.avatar') }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <input type="file" name="avatar" id="avatarInput" hidden>
+                        </form>
+
+                        <!-- BOTÃO lápis -->
+                        <button type="button" class="profile-edit-icon"
+                            onclick="document.getElementById('avatarInput').click()">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+
+                    </div>
+
                     <h3>{{ ucwords(Auth::user()->nome) }}</h3>
+
                     @if (Auth::user()->role == 'caregiver')
                         <p class="profile-type">Cuidador</p>
                     @else
                         <p class="profile-type">Cliente</p>
                     @endif
+
+                    <div class="profile-bio">
+                        <h4>Bio:</h4>
+                        @if (Auth::user()->bio == null)
+                            <p>nada ainda</p>
+                        @else
+                            {{ Auth::user()->bio }}
+                        @endif
+                    </div>
                 </div>
 
                 <!-- INFORMAÇÕES CARD -->

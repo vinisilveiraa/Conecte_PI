@@ -12,14 +12,50 @@
     <!-- MAIN CONTENT -->
     <main class="dashboard-content">
         <div class="container">
-            <h1>Bem vindo, <span>{{ Auth::user()->nome }}</span>!</h1>
+            <h1 class="text-center">Bem vindo, <span>{{ Auth::user()->nome }}</span>!</h1>
 
             <div class="dashboard-grid">
                 <!-- PERFIL CARD -->
                 <div class="profile-card">
-                    <div class="profile-avatar">M</div>
-                    <h3>{{ Auth::user()->nome }}</h3>
-                    <p class="profile-type">{{ ucfirst(Auth::user()->role) }}</p>
+                    <div class="profile-avatar">
+                        
+                        @if (Auth::user()->foto == null)
+                            <i class="fa-solid fa-user"></i>
+                        @else
+                            <img src="{{ asset('assets/imgs/caregivers/' . Auth::user()->foto) }}" alt="">
+                        @endif
+
+                        <!-- FORM escondido -->
+                        <form id="avatarForm" action="{{ route('edit.profile.avatar') }}" method="POST"
+                            enctype="multipart/form-data">
+                            @csrf
+                            <input type="file" name="avatar" id="avatarInput" hidden>
+                        </form>
+
+                        <!-- BOTÃO lápis -->
+                        <button type="button" class="profile-edit-icon"
+                            onclick="document.getElementById('avatarInput').click()">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+
+                    </div>
+
+                    <h3>{{ ucwords(Auth::user()->nome) }}</h3>
+
+                    @if (Auth::user()->role == 'caregiver')
+                        <p class="profile-type">Cuidador</p>
+                    @else
+                        <p class="profile-type">Cliente</p>
+                    @endif
+
+                    <div class="profile-bio">
+                        <h4>Bio:</h4>
+                        @if (Auth::user()->bio == null)
+                            <p>nada ainda</p>
+                        @else
+                            {{ Auth::user()->bio }}
+                        @endif
+                    </div>
                 </div>
 
                 <!-- INFORMAÇÕES CARD -->
@@ -115,3 +151,9 @@
 </div>
 
 @include('components.footer')
+
+<script>
+    document.getElementById('avatarInput').addEventListener('change', function() {
+        document.getElementById('avatarForm').submit();
+    });
+</script>
