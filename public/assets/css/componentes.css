@@ -1397,6 +1397,11 @@
     padding: 0;
 }
 
+.send-btn i {
+    width: 10px;
+    height: 10px;
+}
+
 .send-btn:hover {
     background-color: var(--color-primary-dark);
 }

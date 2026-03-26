@@ -287,6 +287,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // ============================================
 // PREVIEW DE IMAGEM NO CADASTRO
 // ============================================
+
 document.addEventListener('DOMContentLoaded', function () {
     const inputImagem = document.getElementById('foto-perfil');
     const previewContainer = document.getElementById('preview-container');
@@ -313,19 +314,23 @@ document.addEventListener('DOMContentLoaded', function () {
 // FORM AVATAR EDIT
 // ============================================
 
+const avatarInput = document.getElementById('avatarInput');
 
-document.getElementById('avatarInput').addEventListener('change', function () {
-    document.getElementById('avatarForm').submit();
-});
+if (avatarInput) {
+    avatarInput.addEventListener('change', function () {
+        document.getElementById('avatarForm')?.submit();
+    });
+}
 
 
 // ============================================
 // CHATBOT
 // ============================================
 
-
 document.addEventListener('DOMContentLoaded', function () {
     const bubble = document.getElementById('chatbot-bubble');
+    if (!bubble) return;
+
     const chatWindow = document.getElementById('chatbot-window');
     const closeBtn = document.getElementById('close-chat');
     const sendBtn = document.getElementById('send-msg');
