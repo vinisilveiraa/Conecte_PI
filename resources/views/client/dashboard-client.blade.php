@@ -22,7 +22,7 @@
                         @if (Auth::user()->foto == null)
                             <i class="fa-solid fa-user"></i>
                         @else
-                            <img src="{{ asset('assets/imgs/caregivers/' . Auth::user()->foto) }}" alt="">
+                            <img src="{{ asset('assets/imgs/clients/' . Auth::user()->foto) }}" alt="">
                         @endif
 
                         <!-- FORM escondido -->
@@ -151,9 +151,3 @@
 </div>
 
 @include('components.footer')
-
-<script>
-    document.getElementById('avatarInput').addEventListener('change', function() {
-        document.getElementById('avatarForm').submit();
-    });
-</script>

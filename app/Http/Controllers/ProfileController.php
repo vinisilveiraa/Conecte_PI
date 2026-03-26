@@ -15,7 +15,6 @@ class ProfileController extends Controller
         // dd($request->all());
         // dd(\auth()->user());
 
-
         // precisa ter arquivo, ser imagem, formatos aceitos e no maximo 2mb
         $request->validate([
             'avatar' => 'required|image|mimes:jpg,jpeg,png|max:2048'
@@ -24,24 +23,40 @@ class ProfileController extends Controller
         // pega o user
         $user = request()->user();
 
+        // dd([
+        //     'user' => $user->id,
+        //     'role' => $user->role,
+        //     'file' => $request->file('avatar')
+        // ]);
+
         // salva pra apaga dps
         $oldFoto = $user->foto;
 
         // pega arquivo
         $file = $request->file('avatar');
+
         // nomeia ele
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        // move ele
-        $file->move(public_path('assets/imgs/caregivers'), $filename);
+        $filename = uniqid() . '.' . $file->getClientOriginalExtension();
+
+        // define o caminho com base na role
+        $path = $user->role == 'caregiver'
+            ? 'assets/imgs/caregivers/'
+            : 'assets/imgs/clients/';
+
+        if (!file_exists(public_path($path))) {
+            mkdir(public_path($path), 0777, true);
+        }
+
+        // move o arquivo
+        $file->move(public_path($path), $filename);
+
+        // apaga a antiga
+        if ($oldFoto && file_exists(public_path($path . $oldFoto))) {
+            unlink(public_path($path . $oldFoto));
+        }
 
         // atualiza
         $user->foto = $filename;
-
-        // apaga a antiga
-        if ($oldFoto && file_exists(public_path('assets/imgs/caregivers/' . $oldFoto))) {
-            unlink(public_path('assets/imgs/caregivers/' . $oldFoto));
-        }
-
         $user->save();
 
         return back()->with('success', 'Avatar atualizado!');
