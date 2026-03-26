@@ -3,6 +3,8 @@
 @include('components.header')
 {{-- NAVBAR --}}
 @include('components.navbar')
+{{-- CHATBOT --}}
+@include('components.chatbot')
 
 
 

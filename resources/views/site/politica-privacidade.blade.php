@@ -4,6 +4,9 @@
 {{-- NAVBAR --}}
 @include('components.navbar')
 
+{{-- CHATBOT --}}
+@include('components.chatbot')
+
 <!-- MAIN CONTENT -->
 <main class="politica-container">
     <div class="politica-header">

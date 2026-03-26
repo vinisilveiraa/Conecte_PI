@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CaregiverController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ChatbotController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -79,6 +80,8 @@ Route::middleware('guest')->group(function () {
     // ROTAS PARA APRESENTAÇÃO DAS VIEWS DE CADASTRO
     Route::view("/register-client", "auth.register-client")->name('register.client');
     Route::view('/register-caregiver', 'auth.register-caregiver')->name('register.caregiver');
+
+    Route::post('/chatbot', [ChatbotController::class, 'responder']);
 });
 
 

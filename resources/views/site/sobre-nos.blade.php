@@ -4,6 +4,9 @@
 {{-- NAVBAR --}}
 @include('components.navbar')
 
+{{-- CHATBOT --}}
+@include('components.chatbot')
+
 
 
 <!-- TÍTULO E DESCRIÇÃO -->
