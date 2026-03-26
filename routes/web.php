@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::post("/load-caregivers", [ClientController::class, 'loadCaregivers'])->name('load.caregivers');
 
     // CAREGIVER
+    Route::view('/dashboard-caregiver', 'caregiver.dashboard-caregiver')->name('dashboard.caregiver');
+    
     Route::get("/caregiver-specialties", [CaregiverController::class, 'showSpecialties'])
         ->name('caregiver.specialties');
 
@@ -53,7 +55,6 @@ Route::middleware('auth')->group(function () {
     // Route::view('/dashboard-cliente-historico', 'client.dashboard-client-historico')->name('dashboard.client.buscar');
 
 
-    // Route::view('/dashboard-caregiver', 'caregiver.dashboard-caregiver')->name('dashboard.caregiver');
     // Route::get('/dashboard-caregiver-especialidades', [CaregiverController::class, 'createSpecialty'])->name('dashboard.caregiverespecialidades');
     // Route::view('/dashboard-caregiver-propostas', 'caregiver.dashboard-caregiver-propostas')->name('dashboard.caregiver.propostas');
 

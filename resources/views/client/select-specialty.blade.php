@@ -14,13 +14,19 @@
         <div class="container">
             <h1>Buscar Cuidadores</h1>
 
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
             <div class="search-wrapper">
                 <!-- FILTROS -->
 
                 <div class="filters-card">
                     <h3>Filtros</h3>
 
-                    <form action="{{route('load.caregivers')}}" method="POST">
+                    <form action="{{ route('load.caregivers') }}" method="POST">
 
                         @csrf
 
@@ -87,61 +93,52 @@
                     </form>
                 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                @php
+                    $caregivers = session('caregivers');
+                    // session()->forgot('caregivers');
+                @endphp
                 <!-- CAREGIVERS GRID -->
-                @if (empty($caregivers))
-                    <p class="no-caregivers">Nenhum cuidador encontrado</p>
+                @if (!isset($caregivers) || $caregivers->isEmpty())
+                    <p>
+                        Nenhum cuidador encontrado
+                    </p>
                 @else
                     <div class="caregivers-grid">
-                        <?php foreach ($caregivers as $caregiver): ?>
-                        <div class="caregiver-card">
-                            <div class="caregiver-avatar">
-                                @if ($caregiver->user->foto == null)
-                                    <i class="fa-solid fa-user"></i>
-                                @else
-                                    <img src="{{ asset('asserts/imgs/caregivers/' . $caregiver->user->foto) }}"
-                                        alt="">
-                                @endif
-                            </div>
-                            <h3>{{ $caregiver->user->nome }}</h3>
+                        @foreach ($caregivers as $caregiver)
+                            <div class="caregiver-card">
+                                <div class="caregiver-avatar">
+                                    @if ($caregiver->user->foto == null)
+                                        <i class="fa-solid fa-user"></i>
+                                    @else
+                                        <img src="{{ asset('asserts/imgs/caregivers/' . $caregiver->user->foto) }}"
+                                            alt="">
+                                    @endif
+                                </div>
+                                <h3>{{ $caregiver->user->nome }}</h3>
 
-                            <div class="caregiver-rating">
-                                <span class="rating-item">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M14 17H9v-5h5v5zm-2.5-8c-1.38 0-2.5-1.12-2.5-2.5S10.12 4 11.5 4 14 5.12 14 6.5 12.88 9 11.5 9z" />
-                                    </svg>
-                                    {{ $caregiver->estrela }}
-                                </span>
-                                <span class="rating-item dislike">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                        <path
-                                            d="M10 7H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h5v2h2V9c0-1.1-.9-2-2-2zm0 10H5V9h5v8z" />
-                                    </svg>
+                                <div class="caregiver-rating">
+                                    <span class="rating-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                            <path
+                                                d="M14 17H9v-5h5v5zm-2.5-8c-1.38 0-2.5-1.12-2.5-2.5S10.12 4 11.5 4 14 5.12 14 6.5 12.88 9 11.5 9z" />
+                                        </svg>
+                                        {{ $caregiver->estrela }}
+                                    </span>
+                                    <span class="rating-item dislike">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                                            <path
+                                                d="M10 7H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h5v2h2V9c0-1.1-.9-2-2-2zm0 10H5V9h5v8z" />
+                                        </svg>
 
-                                </span>
-                            </div>
+                                    </span>
+                                </div>
 
-                            <div class="caregiver-actions">
-                                <button class="btn btn-outline btn-sm">Currículo</button>
-                                <button class="btn btn-primary btn-sm">Contratar</button>
+                                <div class="caregiver-actions">
+                                    <button class="btn btn-outline btn-sm">Currículo</button>
+                                    <button class="btn btn-primary btn-sm">Contratar</button>
+                                </div>
                             </div>
-                        </div>
-                        <?php endforeach; ?>
+                        @endforeach
                     </div>
                 @endif
             </div>
