@@ -26,6 +26,13 @@ Route::middleware('auth')->group(function () {
     })->name('logout');
 
     // USER
+    Route::view('/dashboard.caregiver-editProfile', 'caregiver.dashboard-caregiver-editprofile')
+        ->name('dashboard.caregiver-editProfile');
+    Route::view('/dashboard.client-edit Profile', 'client.dashboard-client-editprofile')
+        ->name('dashboard.client-editProfile');
+
+    Route::post('/dashboard-updateProfile', [ProfileController::class, 'updateProfile'])
+        ->name('update.profile');
     Route::post('/dashboard-editAvatar', [ProfileController::class, 'updateAvatar'])
         ->name('edit.profile.avatar');
 
@@ -36,7 +43,7 @@ Route::middleware('auth')->group(function () {
 
     // CAREGIVER
     Route::view('/dashboard-caregiver', 'caregiver.dashboard-caregiver')->name('dashboard.caregiver');
-    
+
     Route::get("/caregiver-specialties", [CaregiverController::class, 'showSpecialties'])
         ->name('caregiver.specialties');
 

@@ -37,6 +37,7 @@ class AuthController extends Controller
             $rules['certificado_cuidador'] = 'nullable|required_without:coren';
             $rules['bio'] = 'nullable|max:200';
         }
+        
         // menssagens de erro
         $data = $request->validate($rules, [
             'nome.required' => 'O campo nome é obrigatório',

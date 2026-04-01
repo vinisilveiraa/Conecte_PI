@@ -110,7 +110,7 @@
                                     @if ($caregiver->user->foto == null)
                                         <i class="fa-solid fa-user"></i>
                                     @else
-                                        <img src="{{ asset('asserts/imgs/caregivers/' . $caregiver->user->foto) }}"
+                                        <img src="{{ asset('assets/imgs/caregivers/' . $caregiver->user->foto) }}"
                                             alt="">
                                     @endif
                                 </div>
@@ -118,23 +118,21 @@
 
                                 <div class="caregiver-rating">
                                     <span class="rating-item">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M14 17H9v-5h5v5zm-2.5-8c-1.38 0-2.5-1.12-2.5-2.5S10.12 4 11.5 4 14 5.12 14 6.5 12.88 9 11.5 9z" />
-                                        </svg>
+                                        <i class="fa-solid fa-star"></i>
                                         {{ $caregiver->estrela }}
-                                    </span>
-                                    <span class="rating-item dislike">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                                            <path
-                                                d="M10 7H5c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h5v2h2V9c0-1.1-.9-2-2-2zm0 10H5V9h5v8z" />
-                                        </svg>
-
                                     </span>
                                 </div>
 
                                 <div class="caregiver-actions">
-                                    <button class="btn btn-outline btn-sm">Currículo</button>
+                                    <button class="btn btn-outline btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#perfilModal" data-id="{{ $caregiver->id }}"
+                                        data-nome="{{ $caregiver->user->nome }}"
+                                        data-foto="{{ $caregiver->user->foto }}"
+                                        data-cidade="{{ $caregiver->user->address->cidade }}"
+                                        data-bio="{{ $caregiver->bio }}"
+                                        data-especialidades="{{ implode(', ', $caregiver->specialties->pluck('nome')->toArray()) }}">
+                                        Mais
+                                    </button>
                                     <button class="btn btn-primary btn-sm">Contratar</button>
                                 </div>
                             </div>
@@ -144,6 +142,78 @@
             </div>
         </div>
     </main>
+
+    <!-- Modal Perfil do Cuidador -->
+    <div class="modal fade" id="perfilModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content caregiver-modal-content">
+
+                <!-- Cabeçalho com fundo decorativo -->
+                <div class="modal-header-banner">
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="modal-body p-0">
+                    <!-- Perfil Principal -->
+                    <div class="modal-perfil-header">
+                        <div class="caregiver-avatar-wrapper">
+                            <img id="modal-avatar" src="/assets/imgs/default-avatar.png" alt="Avatar">
+                        </div>
+                        <div class="caregiver-basic-info">
+                            <h3 id="modal-nome" class="mb-0">Nome do Cuidador</h3>
+                            {{-- <p class="text-primary font-weight-semibold mb-1">Cuidador de Idosos & Pós-Operatório</p> --}}
+                            {{-- <div class="rating-stars">
+                                <span class="text-secondary">★★★★★</span>
+                                <span class="text-sm text-muted">(12 avaliações)</span>
+                            </div> --}}
+                        </div>
+                    </div>
+
+                    <!-- Detalhes do Perfil -->
+                    <div class="modal-perfil-details p-md">
+                        <div class="info-section mb-lg">
+                            <h4 class="section-subtitle">Bio</h4>
+                            <p id="modal-bio" class="text-sm">
+
+                            </p>
+                        </div>
+
+                        <div class="info-section mb-lg">
+                            <h4 class="section-subtitle">Especialidades</h4>
+                            <div class="tags-container" id="modal-especialidades">
+                                {{-- Especialidades aqui pelo JS --}}
+                            </div>
+                        </div>
+
+                        <div class="info-grid">
+                            <div class="info-item info-item-column">
+                                <span class="info-label">Avaliação</span>
+                                {{-- ! trocar aqui avalicao futuramente ! --}}
+                                <span class="info-value" id="modal-avaliacao">
+                                    <i class="fas fa-star"></i>
+                                    4.8
+                                </span>
+                            </div>
+                            <div class="info-item info-item-column">
+                                <span class="info-label"> <i class="fa-solid fa-location-dot"></i>
+                                    Localização</span>
+                                <span class="info-value" id="modal-cidade">None</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer border-0 p-md">
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary">Entrar em Contato</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </div>
 
 @include('components.footer')

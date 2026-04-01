@@ -51,7 +51,7 @@
                     <div class="profile-bio">
                         <h4>Bio:</h4>
                         @if (Auth::user()->bio == null)
-                            <p>nada ainda</p>
+                            <p class="text-muted">Nenhuma bio adicionada.</p>
                         @else
                             {{ Auth::user()->bio }}
                         @endif
@@ -143,7 +143,9 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary btn-block">Atualizar Dados</button>
+                    <a href="{{ route('dashboard.caregiver-editProfile') }}" class="btn btn-primary btn-block">
+                        Atualizar Dados
+                    </a>
                 </div>
             </div>
         </div>

@@ -34,15 +34,10 @@ class ClientController extends Controller
         $caregivers = Caregiver::whereHas('specialties', function ($query) use ($specialtyId) {
             $query->where('specialty_id', $specialtyId);
         })
-            ->with([
-                'user',
-                'specialties' => function ($query) use ($specialtyId) {
-                    $query->where('specialty_id', $specialtyId);
-                }
-            ])
+            ->with(['user', 'specialties'])
             ->paginate(10);
 
         // RETORNAR OS CUIDADORES ENCONTRADOS PARA PAGINA select-specialty
-       return redirect()->route('select.specialty')->with('caregivers', $caregivers);
+        return redirect()->route('select.specialty')->with('caregivers', $caregivers);
     }
 }

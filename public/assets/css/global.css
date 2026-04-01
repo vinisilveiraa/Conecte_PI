@@ -238,6 +238,7 @@ textarea {
 /* Cards */
 .card {
   background-color: var(--color-white);
+  border: 0px;
   border-radius: var(--border-radius-lg);
   padding: var(--spacing-sm) var(--spacing-md);
   box-shadow: var(--shadow-md);
