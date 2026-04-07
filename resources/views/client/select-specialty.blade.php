@@ -119,7 +119,11 @@
                                 <div class="caregiver-rating">
                                     <span class="rating-item">
                                         <i class="fa-solid fa-star"></i>
-                                        {{ $caregiver->estrela }}
+                                        @if ($caregiver->estrela == null)
+                                            <span class="text-muted">N/A</span>
+                                        @else
+                                            {{ $caregiver->estrela }}
+                                        @endif
                                     </span>
                                 </div>
 
@@ -133,7 +137,8 @@
                                         data-especialidades="{{ implode(', ', $caregiver->specialties->pluck('nome')->toArray()) }}">
                                         Mais
                                     </button>
-                                    <button class="btn btn-primary btn-sm">Contratar</button>
+                                    <a href="{{ route('client.hire.form', $caregiver->user->id) }}"
+                                        class="btn btn-primary btn-sm">Contratar</a>
                                 </div>
                             </div>
                         @endforeach
@@ -189,11 +194,13 @@
 
                         <div class="info-grid">
                             <div class="info-item info-item-column">
-                                <span class="info-label">Avaliação</span>
+                                <span class="info-label">
+                                    <i class="fas fa-star"></i>
+                                    Avaliação</span>
                                 {{-- ! trocar aqui avalicao futuramente ! --}}
                                 <span class="info-value" id="modal-avaliacao">
                                     <i class="fas fa-star"></i>
-                                    4.8
+                                    4.8 / 5
                                 </span>
                             </div>
                             <div class="info-item info-item-column">
@@ -207,7 +214,9 @@
 
                 <div class="modal-footer border-0 p-md">
                     <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary">Entrar em Contato</button>
+
+                    <a id="contratarBtn" class="btn btn-primary"
+                        href="{{ route('client.hire.form', 0) }}">Contratar</a>
                 </div>
 
             </div>
@@ -215,5 +224,20 @@
     </div>
 
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var perfilModal = document.getElementById('perfilModal');
+        perfilModal.addEventListener('show.bs.modal', function(event) {
+            var button = event.relatedTarget;
+            var caregiverId = button.getAttribute('data-id');
+            var contratarBtn = document.getElementById('contratarBtn');
+            if (caregiverId && contratarBtn) {
+                // Substitui o id 0 pelo id real do cuidador na rota Blade
+                contratarBtn.href = contratarBtn.href.replace(/\d+$/, caregiverId);
+            }
+        });
+    });
+</script>
 
 @include('components.footer')

@@ -18,9 +18,8 @@
 
                 <div class="tags-container">
                     @foreach ($mySpecialties as $specialty)
-                        <span class="tag">
+                        <span class="badge-tag">
                             {{ $specialty->nome }}
-
                             <form action="{{ route('caregiver.remove.specialty', $specialty->id) }}" method="POST"
                                 style="display:inline;">
                                 @csrf

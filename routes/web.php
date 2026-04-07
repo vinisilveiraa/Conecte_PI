@@ -5,6 +5,7 @@ use App\Http\Controllers\CaregiverController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatbotController;
+use App\Models\Client;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -41,22 +42,31 @@ Route::middleware('auth')->group(function () {
     Route::get("/select-specialty", [ClientController::class, 'selectSpecialty'])->name('select.specialty');
     Route::post("/load-caregivers", [ClientController::class, 'loadCaregivers'])->name('load.caregivers');
 
+
     // CAREGIVER
     Route::view('/dashboard-caregiver', 'caregiver.dashboard-caregiver')->name('dashboard.caregiver');
 
     Route::get("/caregiver-specialties", [CaregiverController::class, 'showSpecialties'])
-        ->name('caregiver.specialties');
+    ->name('caregiver.specialties');
 
     Route::post('/caregiver/specialty/{id}', [CaregiverController::class, 'addSpecialty'])
-        ->name('caregiver.add.specialty');
+    ->name('caregiver.add.specialty');
 
     Route::delete('/caregiver/specialty/{id}', [CaregiverController::class, 'removeSpecialty'])
-        ->name('caregiver.remove.specialty');
+    ->name('caregiver.remove.specialty');
+
+
+    // Route::view('/dashboard-caregiver-proposals', 'caregiver.caregiver-proposals')->name('caregiver.proposals');
+    Route::get('/dashboard-caregiver-proposals', [CaregiverController::class, 'showProposals'])->name('caregiver.proposals');
 
 
 
+    // CLIENTE - CONTRATAR
+    Route::get('/dashboard-hire-form/{id}', [ClientController::class, 'showHireForm'])
+        ->name('client.hire.form');
 
 
+    Route::post('/dashboard-hire', [ClientController::class, 'hireCaregiver'])->name('client.hire');
 
 
     // Route::view('/dashboard-cliente-historico', 'client.dashboard-client-historico')->name('dashboard.client.buscar');

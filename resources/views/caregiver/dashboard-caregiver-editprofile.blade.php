@@ -12,11 +12,16 @@
         <div class="container">
             <div class="content-header mb-xl">
                 <div class="">
-
                     <h1>Editar Perfil <span>Profissional</span></h1>
                     <p class="text-muted">Mantenha seus dados e certificados em dia para atrair mais clientes.</p>
                 </div>
             </div>
+
+            @if (session('success'))
+                <div class="alert alert-success mb-md">
+                    {{ session('success') }}
+                </div>
+            @endif
 
             @if ($errors->any())
                 <div class="alert alert-warning mb-md">
@@ -39,9 +44,7 @@
                             <div class="profile-avatar-edit">
 
                                 <img id="avatar-preview"
-                                    src="{{ Auth::user()->foto
-                                        ? asset('assets/imgs/caregivers/' . Auth::user()->foto)
-                                        : asset('assets/imgs/default-avatar.png') }}"
+                                    src="{{ Auth::user()->foto ? asset('storage/caregivers/' . Auth::user()->foto) : asset('storage/default-avatar.png') }}"
                                     class="avatar-img">
 
                                 <label for="avatarInput" class="avatar-upload-btn">
@@ -158,6 +161,11 @@
                                 <div class="form-group col-5">
                                     <label>Cidade</label>
                                     <input type="text" name="cidade" value="{{ Auth::user()->address->cidade }}"
+                                        class="form-control">
+                                </div>
+                                <div class="form-group col-2">
+                                    <label>Estado</label>
+                                    <input type="text" name="estado" value="{{ Auth::user()->address->estado }}"
                                         class="form-control">
                                 </div>
                             </div>

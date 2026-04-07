@@ -143,8 +143,8 @@ class ProfileController extends Controller
         $filename = uniqid() . '.' . $file->getClientOriginalExtension();
 
         $path = $user->role == 'caregiver'
-            ? 'assets/imgs/caregivers/'
-            : 'assets/imgs/clients/';
+            ? 'storage/caregivers/'
+            : 'storage/clients/';
 
         if (!file_exists(public_path($path))) {
             mkdir(public_path($path), 0777, true);

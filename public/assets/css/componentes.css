@@ -351,7 +351,7 @@
 }
 
 .hero-text h1 .highlight {
-    color: var(--color-secondary);
+    color: var(--color-primary);
 }
 
 .hero-text p {

@@ -290,6 +290,17 @@ textarea {
   color: var(--color-white);
 }
 
+.btn-outline-secondary {
+  background-color: transparent;
+  color: var(--color-secondary);
+  border: 2px solid var(--color-secondary);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+}
+
 .btn-lg {
   padding: var(--spacing-md) var(--spacing-xl);
   font-size: var(--font-size-lg);

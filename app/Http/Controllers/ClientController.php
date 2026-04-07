@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Caregiver;
+use App\Models\User;
 use App\Models\Specialty;
 use Illuminate\Http\Request;
 
@@ -39,5 +40,17 @@ class ClientController extends Controller
 
         // RETORNAR OS CUIDADORES ENCONTRADOS PARA PAGINA select-specialty
         return redirect()->route('select.specialty')->with('caregivers', $caregivers);
+    }
+
+    public function showHireForm($id)
+    {
+        // buscar cuidador
+        $caregiver = User::with('address')->findOrFail($id);
+
+        return view('client.dashboard-hire-form', compact('caregiver'));
+    }
+
+    public function hireCaregiver(Request $request) {
+        // criar, checar e salvar contratacao
     }
 }

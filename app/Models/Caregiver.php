@@ -28,11 +28,12 @@ class Caregiver extends Model
             Specialty::class,
             'caregiver_specialty',
         )->withPivot('preco_minimo')
-        ->withTimestamps();
+            ->withTimestamps();
     }
 
     public function proposals(): HasMany
     {
         return $this->hasMany(Proposal::class);
     }
+
 }

@@ -22,14 +22,14 @@
                         @if (Auth::user()->foto == null)
                             <i class="fa-solid fa-user"></i>
                         @else
-                            <img src="{{ asset('assets/imgs/caregivers/' . Auth::user()->foto) }}" alt="">
+                            <img src="{{ asset('storage/caregivers/' . Auth::user()->foto) }}" alt="">
                         @endif
 
                         <!-- FORM escondido -->
                         <form id="avatarForm" action="{{ route('edit.profile.avatar') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
-                            <input type="file" name="avatar" id="avatarInput" hidden>
+                            <input type="file" name="foto" id="avatarInput" hidden>
                         </form>
 
                         <!-- BOTÃO lápis -->

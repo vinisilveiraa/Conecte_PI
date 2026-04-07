@@ -37,7 +37,7 @@ class AuthController extends Controller
             $rules['certificado_cuidador'] = 'nullable|required_without:coren';
             $rules['bio'] = 'nullable|max:200';
         }
-        
+
         // menssagens de erro
         $data = $request->validate($rules, [
             'nome.required' => 'O campo nome é obrigatório',
@@ -123,11 +123,11 @@ class AuthController extends Controller
         // ====================================================================
         // ENVIO DE E-MAIL
         // ====================================================================
-        $link = route('login.link', $user->id);
+        // $link = route('login.link', $user->id);
 
-        Mail::to($user->email)->send(
-            new WelcomeUserMail($user, $link)
-        );
+        // Mail::to($user->email)->send(
+        //     new WelcomeUserMail($user, $link)
+        // );
 
         return view('auth.check-email');
     }

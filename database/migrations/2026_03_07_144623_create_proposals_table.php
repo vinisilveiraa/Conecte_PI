@@ -19,8 +19,13 @@ return new class extends Migration
             $table->text("descricao_servico");
             $table->string("endereco_servico");
             $table->enum("status", ["pending", "accepted", "rejected", "completed", "cancelled"])->default("pending");
-            $table->integer('estrela')->nullable();
-            
+
+            $table->integer('estrela')->nullable(); // tirar?
+
+            $table->datetime('accepted_at')->nullable();
+            $table->datetime('finished_at')->nullable();
+            $table->datetime('cancelled_at')->nullable();
+
             $table->foreignId("client_id")->constrained()->onDelete("cascade");
             $table->foreignId("caregiver_id")->constrained()->onDelete("cascade");
             $table->timestamps();

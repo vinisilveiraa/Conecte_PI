@@ -20,7 +20,7 @@
             </svg>
             Perfil
         </a>
-        <a href="{{route('select.specialty')}}" class="sidebar-menu-item">
+        <a href="{{ route('select.specialty') }}" class="sidebar-menu-item">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                 stroke-width="2">
                 <circle cx="11" cy="11" r="8"></circle>
@@ -42,7 +42,13 @@
 
     <div class="sidebar-footer">
         <div class="sidebar-user">
-            <div class="user-avatar">M</div>
+            <div class="user-avatar">
+                @if (Auth::user()->foto == null)
+                    <i class="fa-solid fa-user"></i>
+                @else
+                    <img src="{{ asset('storage/clients/' . Auth::user()->foto) }}" alt="">
+                @endif
+            </div>
             <span>{{ Auth::user()->nome }}</span>
         </div>
         <a href="{{ route('logout') }}" class="btn-logout">

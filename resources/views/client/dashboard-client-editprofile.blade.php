@@ -11,8 +11,24 @@
         <div class="container">
             <div class="content-header mb-xl">
                 <h1>Meu <span>Perfil</span></h1>
-                <p class="text-light">Atualize seus dados para que os cuidadores saibam como entrar em contato.</p>
+                <p class="text-muted">Atualize seus dados para que os cuidadores saibam como entrar em contato.</p>
             </div>
+
+            @if (session('success'))
+                <div class="alert alert-success mb-md">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if ($errors->any())
+                <div class="alert alert-warning mb-md">
+                    <ul style="list-style: none; padding-left: 0;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <form action="{{ route('update.profile') }}" method="POST" enctype="multipart/form-data"
                 class="edit-profile-form">
@@ -21,14 +37,14 @@
                 <div class="edit-grid">
                     <!-- COLUNA ESQUERDA: Avatar e Bio -->
                     <div class="edit-sidebar">
+
                         <div class="card profile-upload-card">
                             <div class="profile-avatar-edit">
-                                @if (Auth::user()->foto == null)
-                                    <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
-                                @else
-                                    <img src="{{ asset('assets/imgs/clients/' . Auth::user()->foto) }}"
-                                        id="avatar-preview">
-                                @endif
+
+                                <img id="avatar-preview"
+                                    src="{{ Auth::user()->foto ? asset('storage/clients/' . Auth::user()->foto) : asset('storage/default-avatar.png') }}"
+                                    class="avatar-img">
+
                                 <label for="avatarInput" class="avatar-upload-btn">
                                     <i class="fa-solid fa-pencil"></i>
                                     <input type="file" name="foto" id="avatarInput" hidden
@@ -39,11 +55,6 @@
                             <p class="profile-type">Cliente Conecte</p>
                         </div>
 
-                        <div class="card mt-md">
-                            <label class="form-label">Bio (Opcional)</label>
-                            <textarea name="bio" class="form-control" rows="4"
-                                placeholder="Ex: Preciso de um cuidador para meu pai aos finais de semana...">{{ Auth::user()->bio }}</textarea>
-                        </div>
                     </div>
 
                     <!-- COLUNA DIREITA: Dados -->
@@ -57,17 +68,21 @@
                                     <input type="text" name="nome" value="{{ Auth::user()->nome }}"
                                         class="form-control">
                                 </div>
-                            </div>
-                            <div class="form-row mt-sm">
                                 <div class="form-group col-6">
                                     <label>E-mail</label>
                                     <input type="email" name="email" value="{{ Auth::user()->email }}"
                                         class="form-control">
                                 </div>
+                            </div>
+                            <div class="form-row mt-sm">
                                 <div class="form-group col-6">
                                     <label>WhatsApp / Telefone</label>
                                     <input type="text" name="telefone" value="{{ Auth::user()->telefone }}"
                                         class="form-control phone-mask">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label>CPF (Protegido)</label>
+                                    <input type="text" value="{{ Auth::user()->cpf }}" class="form-control" disabled>
                                 </div>
                             </div>
                         </div>
@@ -99,8 +114,8 @@
                                         class="form-control">
                                 </div>
                                 <div class="form-group col-2">
-                                    <label>UF</label>
-                                    <input type="text" name="uf" value="{{ Auth::user()->address->uf }}"
+                                    <label>Estado</label>
+                                    <input type="text" name="estado" value="{{ Auth::user()->address->estado }}"
                                         class="form-control">
                                 </div>
                             </div>

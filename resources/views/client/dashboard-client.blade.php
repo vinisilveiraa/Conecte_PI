@@ -22,14 +22,14 @@
                         @if (Auth::user()->foto == null)
                             <i class="fa-solid fa-user"></i>
                         @else
-                            <img src="{{ asset('assets/imgs/clients/' . Auth::user()->foto) }}" alt="">
+                            <img src="{{ asset('storage/clients/' . Auth::user()->foto) }}" alt="">
                         @endif
 
                         <!-- FORM escondido -->
                         <form id="avatarForm" action="{{ route('edit.profile.avatar') }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
-                            <input type="file" name="avatar" id="avatarInput" hidden>
+                            <input type="file" name="foto" id="avatarInput" hidden>
                         </form>
 
                         <!-- BOTÃO lápis -->
@@ -37,7 +37,6 @@
                             onclick="document.getElementById('avatarInput').click()">
                             <i class="fa-solid fa-pencil"></i>
                         </button>
-
                     </div>
 
                     <h3>{{ ucwords(Auth::user()->nome) }}</h3>
@@ -47,7 +46,7 @@
                     @else
                         <p class="profile-type">Cliente</p>
                     @endif
-
+                    {{--
                     <div class="profile-bio">
                         <h4>Bio:</h4>
                         @if (Auth::user()->bio == null)
@@ -55,7 +54,7 @@
                         @else
                             {{ Auth::user()->bio }}
                         @endif
-                    </div>
+                    </div> --}}
                 </div>
 
                 <!-- INFORMAÇÕES CARD -->

@@ -55,4 +55,18 @@ class CaregiverController extends Controller
             'availableSpecialties'
         ));
     }
+
+    public function showProposals()
+    {
+        // Pega: cuidador logado + suas propostas + cliente + usuário do cliente
+        $caregiver = Caregiver::with('proposals.client.user')
+            ->where('user_id', Auth::user()->id)
+            ->firstOrFail();
+
+        $proposals = $caregiver->proposals;
+
+        return view('caregiver.caregiver-proposals', compact('proposals'));
+    }
+
+    // public function showProposalStatus
 }
