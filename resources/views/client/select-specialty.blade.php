@@ -137,7 +137,7 @@
                                         data-especialidades="{{ implode(', ', $caregiver->specialties->pluck('nome')->toArray()) }}">
                                         Mais
                                     </button>
-                                    <a href="{{ route('client.hire.form', $caregiver->user->id) }}"
+                                    <a href="{{ route('client.hire.form', $caregiver->id) }}"
                                         class="btn btn-primary btn-sm">Contratar</a>
                                 </div>
                             </div>

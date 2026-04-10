@@ -42,15 +42,5 @@ class ClientController extends Controller
         return redirect()->route('select.specialty')->with('caregivers', $caregivers);
     }
 
-    public function showHireForm($id)
-    {
-        // buscar cuidador
-        $caregiver = User::with('address')->findOrFail($id);
 
-        return view('client.dashboard-hire-form', compact('caregiver'));
-    }
-
-    public function hireCaregiver(Request $request) {
-        // criar, checar e salvar contratacao
-    }
 }

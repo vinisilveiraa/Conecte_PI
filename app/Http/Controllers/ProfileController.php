@@ -109,6 +109,7 @@ class ProfileController extends Controller
             $this->handleAvatarUpload($request, $user);
         }
 
+        // return redirect()->route('dashboard.client')->with('success', 'Perfil atualizado com sucesso!');
         return redirect()->back()->with('success', 'Perfil atualizado com sucesso!');
     }
 

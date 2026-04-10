@@ -10,96 +10,114 @@
     <main class="dashboard-content">
         <div class="container">
             <div class="content-header mb-xl">
-                <h1>Propostas <span>Recebidas</span></h1>
-                <p class="text-muted">Gerencie suas solicitações de trabalho e propostas de clientes.</p>
+                <h1 class="mb-0">Propostas <span>Recebidas</span></h1>
+                <p class="text-light">Gerencie suas solicitações de trabalho e novas oportunidades de clientes.</p>
             </div>
 
-            <!-- FILTROS RÁPIDOS -->
-            <div class="status-filters mb-lg">
-                <a href="{{ route('caregiver.proposals') }}" class="status-filter active">Todas (10)</a>
-                {{-- <a href="{{ route('caregiver.proposals.pendentes') }}" class="status-filter ">Pendentes</a> --}}
-                {{-- <a href="{{ route('caregiver.proposals.aceitas') }}" class="status-filter">Aceitas</a> --}}
-                {{-- <a href="{{ route('caregiver.proposals.recusadas') }}" class="status-filter">Recusadas</a> --}}
+            <!-- NAVEGAÇÃO DE STATUS (FILTROS) -->
+            <div class="status-nav mb-xl">
+                <a href="?status=all"
+                    class="status-nav-item {{ !request('status') || request('status') == 'all' ? 'active' : '' }}">Todas</a>
+                <a href="?status=pending"
+                    class="status-nav-item {{ request('status') == 'pending' ? 'active' : '' }}">Pendentes</a>
+                <a href="?status=accepted"
+                    class="status-nav-item {{ request('status') == 'accepted' ? 'active' : '' }}">Aceitas</a>
+                <a href="?status=rejected"
+                    class="status-nav-item {{ request('status') == 'rejected' ? 'active' : '' }}">Rejeitadas</a>
+                <a href="?status=completed"
+                    class="status-nav-item {{ request('status') == 'completed' ? 'active' : '' }}">Finalizadas</a>
             </div>
 
-            <!-- LISTA DE PROPOSTAS -->
-            <div class="proposals-list">
+            <!-- LISTAGEM DE PROPOSTAS -->
+            <div class="requests-container">
                 @forelse($proposals as $proposal)
-                    <div class="card proposal-card mb-md">
-                        <div class="proposal-header">
-                            <div class="client-info">
-                                <div class="client-avatar">
-                                    @if ($proposal->client->foto == null)
-                                        <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
-                                    @else
-                                        <img src="{{ asset('storage/clients/' . $proposal->client->foto) }}"
-                                            alt="{{ $proposal->client->nome }}">
-                                    @endif
-                                </div>
-                                <div class="client-details">
-                                    <h4>{{ $proposal->client->nome }}</h4>
-                                    <span class="text-xs text-light">Solicitado em
-                                        {{ $proposal->created_at->format('d/m/Y') }}</span>
-                                </div>
+                    <div class="premium-request-card mb-lg">
+                        <!-- LADO ESQUERDO: Perfil do Cliente -->
+                        <div class="request-side-info">
+                            <div class="avatar-container">
+                                @if ($proposal->client->user->foto == null)
+                                    <div
+                                        class="request-user-avatar d-flex align-items-center justify-content-center bg-light-blue">
+                                        <i class="fa-solid fa-user text-primary" style="font-size: 32px;"></i>
+                                    </div>
+                                @else
+                                    <img src="{{ asset('storage/clients/' . $proposal->client->user->foto) }}"
+                                        class="request-user-avatar" alt="{{ $proposal->client->user->nome }}">
+                                @endif
                             </div>
-                            <div class="proposal-status badge-{{ $proposal->status }}">
-                                {{ ucfirst($proposal->status) }}
-                            </div>
+                            <h4 class="request-user-name">{{ $proposal->client->user->nome }}</h4>
+                            <span class="request-date-meta text-muted">Recebida em
+                                {{ $proposal->created_at }}</span>
+
+                            <a href="" class="btn btn-outline-primary w-100 mt-auto">Ver
+                                Perfil</a>
                         </div>
 
-                        <div class="proposal-body">
-                            <div class="proposal-details-grid">
-                                <div class="detail-item">
-                                    <i class="fa-solid fa-calendar-day text-primary"></i>
-                                    <div>
-                                        <label>Período</label>
-                                        <p>{{ $proposal->data_inicio->format('d/m/Y') }} a
-                                            {{ $proposal->data_fim->format('d/m/Y') }}</p>
-                                    </div>
+                        <!-- LADO DIREITO: Detalhes da Proposta -->
+                        <div class="request-main-content">
+                            <div class="request-top-bar">
+                                <div class="request-id">
+                                    <span
+                                        class="text-xs text-light font-bold">#{{ str_pad($proposal->id, 5, '0', STR_PAD_LEFT) }}</span>
                                 </div>
-                                <div class="detail-item">
-                                    <i class="fa-solid fa-sack-dollar text-secondary"></i>
-                                    <div>
-                                        <label>Valor Oferecido</label>
-                                        <p>R$ {{ number_format($proposal->valor_servico, 2, ',', '.') }}</p>
-                                    </div>
-                                </div>
-                                <div class="detail-item col-span-2">
-                                    <i class="fa-solid fa-location-dot text-primary"></i>
-                                    <div>
-                                        <label>Endereço do Serviço</label>
-                                        <p>{{ $proposal->endereco_servico }}</p>
-                                    </div>
+                                <div class="premium-badge badge-{{ $proposal->status }}">
+                                    {{ ucfirst($proposal->status) }}
                                 </div>
                             </div>
 
-                            <div class="proposal-description mt-md">
-                                <label>Descrição do Serviço:</label>
+                            <div class="request-stats-grid">
+                                <div class="stat-item">
+                                    <label><i class="fa-solid fa-money-bill-wave mr-xs"></i> Valor Oferecido</label>
+                                    <span>R$ {{ number_format($proposal->valor_servico, 2, ',', '.') }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Grid de Estatísticas Rápidas -->
+                            <div class="request-stats-grid">
+                                <div class="stat-item">
+                                    <label><i class="fa-solid fa-calendar mr-xs"></i> Período</label>
+                                    <span>{{ $proposal->data_inicio }} -
+                                        {{ $proposal->data_fim }}</span>
+                                </div>
+                                <div class="stat-item">
+                                    <label><i class="fa-solid fa-location-dot mr-xs"></i> Localização</label>
+                                    <span>{{ Str::limit($proposal->endereco_servico) }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Descrição do Serviço -->
+                            <div class="request-description-box">
+                                <h5>Descrição do Serviço</h5>
                                 <p>{{ $proposal->descricao_servico }}</p>
                             </div>
-                        </div>
 
-                        <div class="proposal-footer">
-                            @if ($proposal->status == 'pendente')
-                                <div class="actions-group">
-                                    <form action="{{ route('proposta.recusar', $proposal->id) }}" method="POST">
+                            <!-- Ações Inferiores -->
+                            <div class="request-actions-bar">
+                                @if ($proposal->status == 'pending')
+                                    <form action="" method="POST">
                                         @csrf @method('PATCH')
                                         <button type="submit" class="btn btn-outline-danger">Recusar</button>
                                     </form>
-                                    <form action="{{ route('proposta.aceitar', $proposal->id) }}" method="POST">
+                                    <form action="" method="POST">
                                         @csrf @method('PATCH')
-                                        <button type="submit" class="btn btn-primary">Aceitar Proposta</button>
+                                        <button type="submit" class="btn btn-primary">Aceitar
+                                            Proposta</button>
                                     </form>
-                                </div>
-                            @else
-                                <button class="btn btn-light" disabled>Ação não disponível</button>
-                            @endif
+                                @endif
+
+                                @if ($proposal->status == 'accepted')
+                                    <a href="#" class="btn btn-secondary"><i class="fa-solid fa-comment"></i>
+                                        Abrir Chat</a>
+                                    <button class="btn btn-outline-primary" disabled>Aguardando
+                                        Finalização</button>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 @empty
                     <div class="card text-center p-xl">
-                        <i class="fa-solid fa-folder-open text-muted mb-md" style="font-size: 40px;"></i>
-                        <p class="text-muted">Nenhuma proposta encontrada.</p>
+                        <i class="fa-solid fa-folder-open text-light mb-md" style="font-size: 40px;"></i>
+                        <p class="text-light">Nenhuma proposta recebida no momento.</p>
                     </div>
                 @endforelse
             </div>

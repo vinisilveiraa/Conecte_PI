@@ -104,7 +104,6 @@ class AuthController extends Controller
 
         // cria tipo de usuário
         if ($request->role === 'client') {
-
             Client::create([
                 'user_id' => $user->id
             ]);
@@ -145,5 +144,4 @@ class AuthController extends Controller
         }
         return redirect()->route('login')->with('error', 'Email ou senha incorretos !');
     }
-
 }// fim da classe

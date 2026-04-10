@@ -447,6 +447,8 @@
 
 .form-group {
     flex: 1;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .form-label {
@@ -1099,164 +1101,235 @@
     color: var(--color-border);
 }
 
-/* PROPOSAL LIST STYLES */
-.status-filters {
+
+
+/* ============================================
+   MÓDULO DE SOLICITAÇÕES & PROPOSTAS
+   ============================================ */
+
+/* Container de Listagem */
+.requests-container {
     display: flex;
-    gap: 15px;
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 10px;
+    flex-direction: column;
+    gap: var(--spacing-lg);
 }
 
-.status-filter {
-    padding: 8px 16px;
-    border-radius: var(--border-radius-full);
-    color: var(--color-text-light);
-    font-weight: 600;
+/* Filtros Estilizados */
+.status-nav {
+    display: flex;
+    gap: var(--spacing-xs);
+    background: #f0f2f5;
+    padding: 6px;
+    border-radius: var(--border-radius-lg);
+    width: fit-content;
+    margin-bottom: var(--spacing-xl);
+}
+
+.status-nav-item {
+    padding: 10px 24px;
+    border-radius: var(--border-radius-md);
     font-size: var(--font-size-sm);
-    transition: all 0.2s;
+    font-weight: 700;
+    color: var(--color-text-light);
+    transition: all var(--transition-normal);
+    text-decoration: none;
+    border: none;
+    background: transparent;
+    cursor: pointer;
 }
 
-.status-filter.active,
-.status-filter:hover {
-    background: var(--color-primary);
-    color: white;
+.status-nav-item:hover {
+    color: var(--color-primary);
 }
 
-.proposal-card {
-    padding: 0;
+.status-nav-item.active {
+    background: var(--color-white);
+    color: var(--color-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Card de Solicitação Premium */
+.premium-request-card {
+    background: var(--color-white);
+    border-radius: var(--border-radius-xl);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
     overflow: hidden;
+    display: grid;
+    grid-template-columns: 280px 1fr;
 }
 
-.proposal-header {
-    padding: var(--spacing-md);
-    background: #fcfcfc;
-    border-bottom: 1px solid #f0f0f0;
+.premium-request-card:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-primary-light);
+}
+
+/* Lado Esquerdo: Perfil e Status */
+.request-side-info {
+    padding: var(--spacing-lg);
+    background: #fafbfc;
+    border-right: 1px solid var(--color-border);
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
-.client-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.client-avatar {
-    width: 45px;
-    height: 45px;
+.request-user-avatar {
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    overflow: hidden;
-}
-
-.client-avatar img {
-    width: 100%;
-    height: 100%;
+    margin-bottom: var(--spacing-md);
+    border: 4px solid var(--color-white);
+    box-shadow: var(--shadow-md);
     object-fit: cover;
 }
 
-.proposal-status {
-    padding: 4px 12px;
-    border-radius: var(--border-radius-full);
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.badge-pendente {
-    background: #fff9db;
-    color: #f08c00;
-}
-
-.badge-aceito {
-    background: #ebfbee;
-    color: #40c057;
-}
-
-.badge-recusado {
-    background: #fff5f5;
-    color: #fa5252;
-}
-
-.proposal-body {
-    padding: var(--spacing-md);
-}
-
-.proposal-details-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-md);
-}
-
-.detail-item {
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-}
-
-.detail-item i {
-    margin-top: 4px;
-}
-
-.detail-item label {
-    font-size: 10px;
-    text-transform: uppercase;
-    color: var(--color-text-light);
-    display: block;
-}
-
-.detail-item p {
-    margin: 0;
-    font-weight: 600;
-    font-size: var(--font-size-sm);
+.request-user-name {
+    font-size: var(--font-size-lg);
+    font-weight: 800;
+    margin-bottom: 4px;
     color: var(--color-text);
 }
 
-.col-span-2 {
-    grid-column: span 2;
-}
-
-.proposal-description {
-    background: var(--color-light-gray);
-    padding: var(--spacing-sm);
-    border-radius: var(--border-radius-md);
-}
-
-.proposal-description label {
-    font-weight: 700;
+.request-date-meta {
     font-size: 11px;
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-lg);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Lado Direito: Detalhes e Ações */
+.request-main-content {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+}
+
+.request-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-lg);
+}
+
+.premium-badge {
+    padding: 6px 16px;
+    border-radius: var(--border-radius-full);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.badge-pending {
+    background: #fff9db;
+    color: #f08c00;
+    border: 1px solid #ffe066;
+}
+
+.badge-accepted {
+    background: #ebfbee;
+    color: var(--color-primary);
+    border: 1px solid #b2f2bb;
+}
+
+.badge-completed {
+    background: #e6fcf5;
+    color: #40c057;
+    border: 1px solid #96f2d7;
+}
+
+.badge-rejected {
+    background: #fff5f5;
+    color: #fa5252;
+    border: 1px solid #ffc9c9;
+}
+
+/* Grid de Informações Rápidas */
+.request-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.stat-item {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: var(--border-radius-md);
+    border: 1px solid #eee;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-item label {
     display: block;
+    font-size: 10px;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    font-weight: 700;
     margin-bottom: 4px;
 }
 
-.proposal-description p {
+.stat-item span {
+    font-weight: 700;
+    color: var(--color-text);
     font-size: var(--font-size-sm);
-    margin: 0;
-    line-height: 1.4;
 }
 
-.proposal-footer {
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-top: 1px solid #f0f0f0;
+/* Descrição do Serviço */
+.request-description-box {
+    flex: 1;
+    margin-bottom: var(--spacing-lg);
+
+    background: #f8f9fa;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    border: 1px solid #eee;
+}
+
+.request-description-box h5 {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+    margin-bottom: 8px;
+}
+
+.request-description-box p {
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+    color: var(--color-text);
+    margin: 0;
+}
+
+/* Barra de Ações Inferior */
+.request-actions-bar {
     display: flex;
     justify-content: flex-end;
+    gap: var(--spacing-sm);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border);
 }
 
-.actions-group {
-    display: flex;
-    gap: 10px;
+/* Responsividade */
+@media (max-width: 992px) {
+    .premium-request-card {
+        grid-template-columns: 1fr;
+    }
+
+    .request-side-info {
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .request-stats-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-.btn-outline-danger {
-    background: transparent;
-    border: 1px solid #fa5252;
-    color: #fa5252;
-}
-
-.btn-outline-danger:hover {
-    background: #fa5252;
-    color: white;
-}
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {

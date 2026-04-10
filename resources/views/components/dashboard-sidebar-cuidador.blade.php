@@ -44,10 +44,10 @@
                 @if (Auth::user()->foto == null)
                     <i class="fa-solid fa-user"></i>
                 @else
-                    <img src="{{ asset('storage/caregiver/' . Auth::user()->foto) }}" alt="">
+                    <img src="{{ asset('storage/caregivers/' . Auth::user()->foto) }}" alt="">
                 @endif
             </div>
-            <span>{{ Auth::user()->name }}</span>
+            <span>{{ Auth::user()->nome }}</span>
         </div>
         <a href="{{ route('logout') }}" class="btn-logout">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"

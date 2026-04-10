@@ -18,6 +18,7 @@
                 </nav>
                 <h1>Solicitar <span>Contratação</span></h1>
                 <p class="text-muted">Preencha os detalhes do serviço para enviar a proposta ao cuidador.</p>
+
             </div>
 
             <div class="hire-grid">
@@ -46,8 +47,8 @@
                         <div class="summary-info">
                             <div class="info-line">
                                 <span class="label">Localização:</span>
-                                <span class="value">{{ $caregiver->address->cidade }},
-                                    {{ $caregiver->address->estado }}</span>
+                                <span class="value">{{ $caregiver->user->address->cidade }},
+                                    {{ $caregiver->user->address->estado }}</span>
                             </div>
                             {{-- <div class="info-line">
                                 <span class="label">Experiência:</span>
@@ -70,10 +71,20 @@
                                 <div class="form-group col-6">
                                     <label class="form-label">Data de Início</label>
                                     <input type="date" name="data_inicio" class="form-control" required>
+                                    @error('data_inicio')
+                                        <div class="alert alert-warning">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label class="form-label">Data de Fim</label>
                                     <input type="date" name="data_fim" class="form-control" required>
+                                    @error('data_fim')
+                                        <div class=" alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -89,6 +100,11 @@
                                         <input type="number" step="0.01" name="valor_servico" class="form-control"
                                             placeholder="0,00" required>
                                     </div>
+                                    @error('valor_servico')
+                                        <div class=" alert-danger">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
                                     <small class="text-muted">Defina o valor total, recomendado R$:15,00/hora.</small>
                                 </div>
                             </div>
@@ -101,6 +117,11 @@
                                 <label class="form-label">Descrição das Atividades</label>
                                 <textarea name="descricao_servico" class="form-control" rows="4"
                                     placeholder="Descreva as necessidades do paciente, rotinas e cuidados específicos..." required></textarea>
+                                @error('descricao_servico')
+                                    <div class=" alert-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Endereço do Serviço</label>
@@ -108,6 +129,11 @@
                                     placeholder="Rua, número, bairro e cidade"
                                     value="{{ Auth::user()->address->logradouro }}, {{ Auth::user()->address->bairro }}"
                                     required>
+                                @error('endereco_servico')
+                                    <div class=" alert-danger">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
 
