@@ -26,14 +26,14 @@
                 <div class="hire-sidebar">
                     <div class="card caregiver-summary-card">
                         <div class="summary-avatar">
-                            @if ($caregiver->foto == null)
+                            @if ($caregiver->user->foto == null)
                                 <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
                             @else
-                                <img src="{{ asset('storage/caregivers/' . $caregiver->foto) }}"
-                                    alt="{{ $caregiver->nome }}">
+                                <img src="{{ asset('storage/caregivers/' . $caregiver->user->foto) }}"
+                                    alt="{{ $caregiver->user->nome }}">
                             @endif
                         </div>
-                        <h3>{{ $caregiver->nome }}</h3>
+                        <h3>{{ $caregiver->user->nome }}</h3>
                         <div class="rating-stars mb-sm">
                             <span class="text-primary">★★★★★</span>
                             <span class="text-xs text-muted">(4.9)</span>

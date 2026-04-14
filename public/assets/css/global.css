@@ -28,6 +28,11 @@
     --color-light-pink: #f0d4e0;
     --color-light-blue: #d4e8f0;
 
+    /* BTN */
+
+    --color-warning: #f7b84d;
+    --color-danger: #dc3545;
+
     /* Espaçamento */
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;

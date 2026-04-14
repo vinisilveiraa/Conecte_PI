@@ -56,17 +56,4 @@ class CaregiverController extends Controller
         ));
     }
 
-
-
-    // MOVER PARA PROPOSAL CONTROLLER
-    public function showProposals()
-    {
-        // Pega: cuidador logado + suas propostas + cliente + usuário do cliente
-
-        $caregiver = Auth::user()->caregiver;
-
-        $proposals = $caregiver->proposals()->with('client.user')->get();
-
-        return view('caregiver.caregiver-proposals', compact('proposals'));
-    }
 }

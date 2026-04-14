@@ -436,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const img = modal.querySelector('#modal-avatar');
 
         if (foto) {
-            img.src = '/assets/imgs/caregivers/' + foto;
+            img.src = '/storage/caregivers/' + foto;
         } else {
             img.src = ''; // ou imagem padrão
         }

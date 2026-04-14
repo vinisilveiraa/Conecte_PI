@@ -110,7 +110,7 @@
                                     @if ($caregiver->user->foto == null)
                                         <i class="fa-solid fa-user"></i>
                                     @else
-                                        <img src="{{ asset('assets/imgs/caregivers/' . $caregiver->user->foto) }}"
+                                        <img src="{{ asset('storage/caregivers/' . $caregiver->user->foto) }}"
                                             alt="">
                                     @endif
                                 </div>
@@ -164,7 +164,7 @@
                     <!-- Perfil Principal -->
                     <div class="modal-perfil-header">
                         <div class="caregiver-avatar-wrapper">
-                            <img id="modal-avatar" src="/assets/imgs/default-avatar.png" alt="Avatar">
+                            <img id="modal-avatar" src="/storage/caregivers/default-avatar.png" alt="Avatar">
                         </div>
                         <div class="caregiver-basic-info">
                             <h3 id="modal-nome" class="mb-0">Nome do Cuidador</h3>

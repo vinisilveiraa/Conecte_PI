@@ -11,27 +11,35 @@
         <div class="container">
             <div class="content-header mb-xl">
                 <h1 class="mb-0">Acompanhar <span>Solicitações</span></h1>
-                <p class="text-light">Gerencie suas propostas enviadas aos cuidadores em um só lugar.</p>
+                <p class="text-muted">Gerencie suas propostas enviadas aos cuidadores em um só lugar.</p>
             </div>
 
             <!-- NAVEGAÇÃO DE STATUS (FILTROS) -->
-            <div class="status-nav mb-xl">
-                <a href="?status=all"
-                    class="status-nav-item {{ !request('status') || request('status') == 'all' ? 'active' : '' }}">Todas</a>
-                <a href="?status=pending"
-                    class="status-nav-item {{ request('status') == 'pending' ? 'active' : '' }}">Pendentes</a>
-                <a href="?status=accepted"
-                    class="status-nav-item {{ request('status') == 'accepted' ? 'active' : '' }}">Aceitas</a>
-                <a href="?status=rejected"
-                    class="status-nav-item {{ request('status') == 'rejected' ? 'active' : '' }}">Rejeitadas</a>
-                <a href="?status=completed"
-                    class="status-nav-item {{ request('status') == 'completed' ? 'active' : '' }}">Finalizadas</a>
+            <div class="status-nav-container mb-sm">
+                <div class="status-nav status-nav-first">
+                    <a href="?status=all"
+                        class="status-nav-item {{ !request('status') || request('status') == 'all' ? 'active' : '' }}">Todas</a>
+                    <a href="?status=pending"
+                        class="status-nav-item {{ request('status') == 'pending' ? 'active' : '' }}">Pendentes</a>
+                    <a href="?status=accepted"
+                        class="status-nav-item {{ request('status') == 'accepted' ? 'active' : '' }}">Aceitas</a>
+                    <a href="?status=rejected"
+                        class="status-nav-item {{ request('status') == 'rejected' ? 'active' : '' }}">Rejeitadas</a>
+                    <a href="?status=completed"
+                        class="status-nav-item {{ request('status') == 'completed' ? 'active' : '' }}">Finalizadas</a>
+                </div>
+                <div class="status-nav status-nav-last">
+                    <a href="?status=cancelled"
+                        class="status-nav-item {{ request('status') == 'cancelled' ? 'active' : '' }}">Canceladas</a>
+                    <a href="?status=expired"
+                        class="status-nav-item {{ request('status') == 'expired' ? 'active' : '' }}">Expiradas</a>
+                </div>
             </div>
 
             <!-- LISTAGEM DE SOLICITAÇÕES -->
             <div class="requests-container">
                 @forelse($requests as $request)
-                    <div class="premium-request-card mb-lg">
+                    <div class="request-card mb-lg">
                         <!-- LADO ESQUERDO: Perfil do Cuidador -->
                         <div class="request-side-info">
                             <div class="avatar-container">
@@ -53,6 +61,14 @@
                             <span class="request-date-meta text-muted">Enviada em
                                 {{ $request->created_at }}</span>
 
+                            @if ($request->status == 'rejected')
+                                <span class="request-date-meta text-muted">Proposta Recusada em
+                                    {{ $request->cancelled_at }}</span>
+                            @elseif ($request->status == 'accepted')
+                                <span class="request-date-meta text-success">Proposta Aceita em <br>
+                                    {{ $request->accepted_at }}</span>
+                            @endif
+
                             <a href="" class="btn btn-outline-primary w-100 mt-auto">Ver
                                 Perfil</a>
                         </div>
@@ -62,9 +78,9 @@
                             <div class="request-top-bar">
                                 <div class="request-id">
                                     <span
-                                        class="text-xs text-light font-bold">#{{ str_pad($request->id, 5, '0', STR_PAD_LEFT) }}</span>
+                                        class="text-xs text-muted font-bold">#{{ str_pad($request->id, 5, '0', STR_PAD_LEFT) }}</span>
                                 </div>
-                                <div class="premium-badge badge-{{ $request->status }}">
+                                <div class="request-badge badge-{{ $request->status }}">
                                     {{ ucfirst($request->status) }}
                                 </div>
                             </div>
@@ -104,7 +120,12 @@
                                         <button type="submit" class="btn btn-outline-warning">Editar
                                             Solicitação</button>
                                     </form>
-                                    <form action=" # " method="POST">
+                                    <form
+                                        action="{{ route('proposal.set-proposal-status', [
+                                            'id' => $request->id,
+                                            'status' => 'cancelled',
+                                        ]) }}"
+                                        method="POST">
                                         @csrf @method('PATCH')
                                         <button type="submit" class="btn btn-outline-danger">Cancelar
                                             Solicitação</button>
@@ -113,8 +134,15 @@
 
                                 @if ($request->status == 'accepted')
                                     <a href="#" class="btn btn-secondary"><i class="fa-solid fa-comment"></i>
+                                        Avaliar</a>
+                                    <a href="#" class="btn btn-secondary"><i class="fa-solid fa-comment"></i>
                                         Abrir Chat</a>
-                                    <form action="{{ route('contratacao.finalizar', $request->id) }}" method="POST">
+                                    <form
+                                        action="{{ route('proposal.set-proposal-status', [
+                                            'id' => $request->id,
+                                            'status' => 'completed',
+                                        ]) }}"
+                                        method="POST">
                                         @csrf @method('PATCH')
                                         <button type="submit" class="btn btn-primary">Finalizar
                                             Serviço</button>

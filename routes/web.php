@@ -58,10 +58,11 @@ Route::middleware('auth')->group(function () {
         ->name('caregiver.remove.specialty');
 
 
-    // Route::view('/dashboard-caregiver-proposals', 'caregiver.caregiver-proposals')->name('caregiver.proposals');
-    Route::get('/dashboard-caregiver-proposals', [CaregiverController::class, 'showProposals'])->name('caregiver.proposals');
 
+    // CAREGIVER : PROPOSTAS - HIRE
 
+    Route::get('/dashboard-caregiver-proposals', [ProposalController::class, 'proposalHistory'])
+        ->name('caregiver.proposals');
 
 
     // CLIENTE : CONTRATAR - HIRE
@@ -73,6 +74,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard-hire-history', [ProposalController::class, 'hireHistory'])
         ->name('client.hire-history');
+
+
+
+    Route::patch(
+        '/caregiver/proposal/{id}/{status}',
+        [ProposalController::class, 'setProposalStatus']
+    )->name('proposal.set-proposal-status');
 
 
     // Route::view('/dashboard-cliente-historico', 'client.dashboard-client-historico')->name('dashboard.client.buscar');

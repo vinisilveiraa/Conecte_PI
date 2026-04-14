@@ -22,22 +22,87 @@ class ProposalController extends Controller
         return view('client.dashboard-hire-form', compact('caregiver'));
     }
 
-    // get
-    public function hireHistory()
+    // metodo para simplificar a busca de propostas, evitando repetição de código
+    // $relation: 'client' ou 'caregiver' para definir a relação a ser carregada
+    // $with: 'user' para carregar o usuário relacionado (cliente ou cuidador)
+    // $status: status das propostas a serem filtradas (opcional)
+
+    private function getProposal($relation, $with, $status)
     {
-        $client = Auth::user()->client;
-        $status = request('status');
+        // quando buscar proposals traga também o usuário relacionado (cliente ou cuidador)
+        $query = $relation->with($with);
 
-        $query = $client->proposals()->with('caregiver.user');
-
-        if ($status && $status !== 'all') {
+        // se tiver status, filtra por ele
+        if (!$status || $status === 'all') {
+            // mostrar tudo EXCETO canceladas e expiradas
+            $query->whereNotIn('status', ['cancelled', 'expired']);
+        } elseif ($status) {
+            // filtrar normalmente
             $query->where('status', $status);
         }
 
-        $requests = $query->orderBy('created_at', 'desc')->get();
+        // retorna em ordem de criação, do mais recente para o mais antigo
+        return $query->orderBy('created_at', 'desc')->get();
+    }
+
+    // metodo pra atualizar propostas quando cumpridas
+    // roda quando alguem abre, melhor pra localmente ne
+    private function autoUpdateProposals()
+    {
+        Proposal::where('status', 'accepted')
+            ->where('data_fim', '<=', now())
+            ->whereNull('completed_at')
+            ->update([
+                'status' => 'completed',
+                'completed_at' => now()
+            ]);
+
+        Proposal::where('status', 'pending')
+            ->where('data_inicio', '<=', now())
+            ->whereNull('expired_at')
+            ->update([
+                'status' => 'expired',
+                'expired_at' => now()
+            ]);
+    }
+
+    // get
+    // histórico de contratações do cliente (dashboard do cliente)
+    public function hireHistory()
+    {
+        $this->autoUpdateProposals();
+
+        $client = Auth::user()->client;
+        $status = request('status');
+
+        $requests = $this->getProposal(
+            $client->proposals(),
+            'caregiver.user',
+            $status
+        );
 
         return view('client.dashboard-hire-history', compact('requests'));
     }
+
+    // histórico de propostas do cuidador (dashboard do cuidador)
+    public function proposalHistory()
+    {
+        $this->autoUpdateProposals();
+
+        $caregiver = Auth::user()->caregiver;
+        $status = request('status');
+
+        $requests = $this->getProposal(
+            $caregiver->proposals(),
+            'client.user',
+            $status
+        );
+
+        return view('caregiver.caregiver-proposals', compact('requests'));
+    }
+
+
+
 
     // post
     public function hireCaregiver(Request $request)
@@ -82,7 +147,7 @@ class ProposalController extends Controller
             'data_inicio' => $validated['data_inicio'],
             'data_fim' => $validated['data_fim'],
 
-            'client_id' => $user->id,
+            'client_id' => $user->client->id,
             'caregiver_id' => $validated['caregiver_id'],
 
             'descricao_servico' => $validated['descricao_servico'],
@@ -93,5 +158,52 @@ class ProposalController extends Controller
         ]);
 
         return redirect()->route('client.hire-history')->with('success', 'Contratação solicitada com sucesso!');
+    }
+
+    public function setProposalStatus($id, $status)
+    {
+        $proposal = Proposal::findOrFail($id);
+        $statusses = ['pending', 'accepted', 'rejected', 'cancelled', 'completed', 'expired'];
+
+        if (!in_array($status, $statusses)) {
+            return back()->with('error', 'Status inválido');
+        }
+
+        // autorização
+        switch ($status) {
+            case 'accepted':
+            case 'rejected':
+                // apenas o cuidador pode aceitar ou recusar
+                if ($proposal->caregiver_id !== Auth::user()->caregiver->id) {
+                    return back()->with('error', 'Ação não autorizada');
+                }
+                break;
+
+            case 'cancelled':
+                // apenas o cliente pode cancelar
+                if ($proposal->client_id !== Auth::user()->client->id) {
+                    return back()->with('error', 'Ação não autorizada');
+                }
+                break;
+        }
+
+        // atualizar status
+        $proposal->status = $status;
+
+        if ($status === 'accepted') {
+            $proposal->accepted_at = now();
+        }
+
+        if ($status === 'completed') {
+            $proposal->completed_at = now();
+        }
+
+        if ($status === 'cancelled') {
+            $proposal->cancelled_at = now();
+        }
+
+        $proposal->save();
+
+        return back()->with('success', "Status atualizado para {$status}");
     }
 }
