@@ -75,6 +75,11 @@
     --transition-fast: 150ms ease-in-out;
     --transition-normal: 300ms ease-in-out;
     --transition-slow: 500ms ease-in-out;
+
+
+    /* Avaliação */
+    --star-amarelo: #ffc107;
+    --star-cinza: #e0e0e0;
 }
 
 /* ============================================
@@ -616,6 +621,13 @@ textarea {
 
 .visible {
     display: block !important;
+}
+
+.modal-dialog-centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
 }
 
 /* ============================================

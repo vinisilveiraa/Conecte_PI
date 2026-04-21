@@ -444,3 +444,42 @@ document.addEventListener('DOMContentLoaded', function () {
         console.log("ID:", id);
     });
 });
+
+
+// ============================================
+// Avaliaçao - MODAL
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('modalAvaliacao');
+
+    if (!modal) return;
+
+    modal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+
+        const id = button.dataset.id;
+        const nome = button.dataset.nome;
+        const foto = button.dataset.foto;
+        const inicio = button.dataset.inicio;
+        const fim = button.dataset.fim;
+
+
+        modal.querySelector('#modal-caregiver-id').value = id;
+        modal.querySelector('#modal-nome').textContent = nome;
+        modal.querySelector('#modal-inicio').textContent = inicio;
+        modal.querySelector('#modal-fim').textContent = fim;
+
+
+        // Atualiza imagem
+        const img = modal.querySelector('#modal-avatar');
+
+        if (foto) {
+            img.src = '/storage/caregivers/' + foto;
+        } else {
+            img.src = ''; // ou imagem padrão
+        }
+
+        console.log("ID:", id);
+    });
+});

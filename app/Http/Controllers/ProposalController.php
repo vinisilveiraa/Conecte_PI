@@ -81,6 +81,8 @@ class ProposalController extends Controller
             $status
         );
 
+        // dd($requests);
+
         return view('client.dashboard-hire-history', compact('requests'));
     }
 
@@ -205,5 +207,11 @@ class ProposalController extends Controller
         $proposal->save();
 
         return back()->with('success', "Status atualizado para {$status}");
+    }
+
+
+    public function rateCaregiver(Request $request)
+    {
+        dd($request->all());
     }
 }

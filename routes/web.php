@@ -74,6 +74,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard-hire-history', [ProposalController::class, 'hireHistory'])
         ->name('client.hire-history');
+    Route::post('/dashboard-hire-history/avaliar', [ProposalController::class, 'rateCaregiver'])
+        ->name('cliente.proposal.avaliar');
 
 
 

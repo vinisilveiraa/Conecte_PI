@@ -150,8 +150,12 @@
                                 @endif
 
                                 @if ($request->status == 'completed' && !$request->estrela)
-                                    <button class="btn btn-warning" data-bs-toggle="modal"
-                                        data-bs-target="#modalAvaliacao{{ $request->id }}">
+                                    <button class="btn btn-outline-warning" data-bs-toggle="modal"
+                                        data-bs-target="#modalAvaliacao"
+                                        data-id="{{ $request->caregiver_id }}"
+                                        data-nome="{{ $request->caregiver->user->nome }}"
+                                        data-foto="{{ $request->caregiver->user->foto }}"
+                                        data-inicio="{{ $request->data_inicio }}" data-fim="{{ $request->data_fim }}">
                                         <i class="fa-solid fa-star"></i> Avaliar Cuidador
                                     </button>
                                 @endif
@@ -170,5 +174,124 @@
         </div>
     </main>
 </div>
+
+
+
+
+
+
+
+<!-- Modal avaliação -->
+<div class="modal fade" id="modalAvaliacao" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content caregiver-modal-content">
+
+            <!-- Cabeçalho com fundo decorativo -->
+            <div class="modal-header-banner">
+                <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="modal-body p-0">
+                <!-- Perfil Principal -->
+                <div class="modal-perfil-header">
+                    <div class="caregiver-avatar-wrapper">
+                        <img id="modal-avatar" src="/storage/caregivers/default-avatar.png" alt="Avatar">
+                    </div>
+                    <div class="caregiver-basic-info">
+                        <h3 id="modal-nome" class="mb-0">Nome do Cuidador</h3>
+                    </div>
+                </div>
+
+                <!-- Detalhes do Perfil -->
+                <div class="modal-details p-md">
+
+                    <div class="info-section">
+
+                        <h4 class="section-subtitle">
+                            <i class="fa-solid fa-calendar mr-xs"></i>
+                            Período do Serviço
+                        </h4>
+                        <div class="info-item centered">
+                            <span id="modal-inicio"></span> - <span id="modal-fim"></span>
+                        </div>
+
+                    </div>
+
+                    <form action="{{ route('cliente.proposal.avaliar') }}" method="POST">
+                        @csrf
+
+                        <input type="hidden" name="caregiver_id" id="modal-caregiver-id">
+
+                        <div class="info-section mb-lg">
+                            <h4 class="section-subtitle">
+                                <i class="fa-solid fa-star"></i>
+                                Avaliação
+                            </h4>
+                            <div class="info-item centered">
+
+                                <div class="modal-avaliacao-estrelas">
+
+                                    <input type="radio" name="estrela" id="vazio" value="" checked>
+
+                                    <label for="estrela1"><i class="fas fa-star"></i></label>
+                                    <input type="radio" name="estrela" id="estrela1" value="1">
+
+                                    <label for="estrela2"><i class="fas fa-star"></i></label>
+                                    <input type="radio" name="estrela" id="estrela2" value="2">
+
+                                    <label for="estrela3"><i class="fas fa-star"></i></label>
+                                    <input type="radio" name="estrela" id="estrela3" value="3">
+
+                                    <label for="estrela4"><i class="fas fa-star"></i></label>
+                                    <input type="radio" name="estrela" id="estrela4" value="4">
+
+                                    <label for="estrela5"><i class="fas fa-star"></i></label>
+                                    <input type="radio" name="estrela" id="estrela5" value="5">
+
+                                </div>
+
+                                <div class="estrela-amount">
+                                    <span class="estrela-count" id="estrela-count">0</span><span
+                                        class="estrela-max">/5</span>
+                                </div>
+                            </div>
+
+                            <div class="info-item">
+
+                                <textarea name="comentario" id="comentario" class="form-control avaliacao-comentario"
+                                    placeholder="Deixe um comentário sobre o cuidador..."></textarea>
+
+                            </div>
+                        </div>
+                </div>
+            </div>
+
+            <div class="modal-footer border-0 p-md">
+                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Fechar</button>
+
+                <button type="submit" class="btn btn-primary">Avaliar</button>
+            </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var count = document.getElementById('estrela-count');
+
+    if (count) {
+        var stars = document.querySelectorAll('.modal-avaliacao-estrelas input[type="radio"]');
+        stars.forEach(function(star) {
+            star.addEventListener('change', function() {
+                count.textContent = this.value;
+            });
+        });
+    }
+</script>
+
 
 @include('components.footer')

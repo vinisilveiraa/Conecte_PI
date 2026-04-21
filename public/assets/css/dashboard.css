@@ -261,11 +261,16 @@
 
 .info-item {
     display: flex;
+    align-items: center;
     gap: var(--spacing-md);
     padding: var(--spacing-md);
     background-color: var(--color-light-gray);
     border-radius: var(--border-radius-md);
     margin-bottom: var(--spacing-md);
+}
+
+.info-item.centered {
+    justify-content: center;
 }
 
 .info-item svg {
@@ -1386,6 +1391,44 @@
     background: var(--color-danger);
     color: var(--color-white)
 }
+
+
+
+
+/* modal avaliação */
+
+.modal-avaliacao-estrelas {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-avaliacao-estrelas input[type=radio] {
+    display: none;
+}
+
+.modal-avaliacao-estrelas label i:before {
+    color: var(--star-amarelo);
+    font-size: 32px;
+}
+
+/* Pintar todas as estrelas à esquerda da selecionada */
+.modal-avaliacao-estrelas input[type="radio"]:checked~label i:before,
+.modal-avaliacao-estrelas input[type="radio"]:checked~label i.fas:before {
+    color: var(--star-cinza);
+}
+
+.estrela-count {
+    font-size: var(--font-size-2xl);
+    color: var(--color-text-light);
+}
+
+.estrela-max {
+    font-size: var(--font-size-md);
+    color: var(--color-text-light);
+}
+
 
 /* Responsividade */
 @media (max-width: 992px) {
