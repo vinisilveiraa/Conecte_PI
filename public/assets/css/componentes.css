@@ -978,6 +978,19 @@
     gap: var(--spacing-xl);
 }
 
+.hide-password-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.hide-password-wrap i {
+    position: absolute;
+    right: 5%;
+    font-size: 15px;
+    color: var(--color-primary)
+}
+
 .form-section {
     display: flex;
     flex-direction: column;

@@ -27,17 +27,24 @@
                     <div class="card caregiver-summary-card">
                         <div class="summary-avatar">
                             @if ($caregiver->user->foto == null)
-                                <div class="avatar-placeholder"><i class="fa-solid fa-user"></i></div>
+                                <img src="{{ asset('assets/imgs/default-avatar.svg') }}" alt="">
                             @else
                                 <img src="{{ asset('storage/caregivers/' . $caregiver->user->foto) }}"
                                     alt="{{ $caregiver->user->nome }}">
                             @endif
                         </div>
+
                         <h3>{{ $caregiver->user->nome }}</h3>
                         <div class="rating-stars mb-sm">
-                            <span class="text-primary">★★★★★</span>
-                            <span class="text-xs text-muted">(4.9)</span>
+                            @if ($caregiver->reviews_count > 0)
+                                <i class="fa-solid fa-star"></i>
+                                <span>{{ number_format($caregiver->reviews_avg_rating, 1) }}</span>
+                                <sub class="text-muted">({{ $caregiver->reviews_count }})</sub>
+                            @else
+                                <span class="text-muted rate-count">Sem avaliações</span>
+                            @endif
                         </div>
+
                         @if ($caregiver->bio == null)
                             <p class="text-sm text-center text-muted">Sem biografia disponível.</p>
                         @else

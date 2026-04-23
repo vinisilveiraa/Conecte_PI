@@ -215,12 +215,19 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="password">Senha</label>
-                            <input type="password" id="password" name="password" placeholder="">
+                            <div class="hide-password-wrap">
+                                <input type="password" id="password" name="password"
+                                    placeholder="">
+                                <i class="fas fa-eye" onclick="togglePasswordVisibility('password')"></i>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="password_confirmation">Confirmar Senha</label>
-                            <input type="password" id="password_confirmation" name="password_confirmation"
-                                placeholder="">
+                            <div class="hide-password-wrap">
+                                <input type="password" id="password_confirmation" name="password_confirmation"
+                                    placeholder="">
+                                <i class="fas fa-eye" onclick="togglePasswordVisibility('password_confirmation')"></i>
+                            </div>
                         </div>
                     </div>
                     {{-- erro --}}

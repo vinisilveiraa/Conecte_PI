@@ -14,6 +14,13 @@
                 <p class="text-muted">Gerencie suas propostas enviadas aos cuidadores em um só lugar.</p>
             </div>
 
+            @error('error')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @if (session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+
             <!-- NAVEGAÇÃO DE STATUS (FILTROS) -->
             <div class="status-nav-container mb-sm">
                 <div class="status-nav status-nav-first">
@@ -44,9 +51,8 @@
                         <div class="request-side-info">
                             <div class="avatar-container">
                                 @if ($request->caregiver->user->foto == null)
-                                    <div
-                                        class="request-user-avatar d-flex align-items-center justify-content-center bg-light-teal">
-                                        <i class="fa-solid fa-user text-primary" style="font-size: 32px;"></i>
+                                    <div class="request-user-avatar ">
+                                        <i class="fa-solid fa-user" style="font-size: 32px;"></i>
                                     </div>
                                 @else
                                     <img src="{{ asset('storage/caregivers/' . $request->caregiver->user->foto) }}"
@@ -54,10 +60,15 @@
                                 @endif
                             </div>
                             <h4 class="request-user-name">{{ $request->caregiver->user->nome }}</h4>
-                            <div class="rating-stars mb-sm">
-                                <span class="text-primary" style="font-size: 12px;">★★★★★</span>
-                                <span class="text-xs text-muted">(4.9)</span>
-                            </div>
+                            <span class="rating-stars mb-sm">
+                                @if ($request->caregiver->reviews->count() > 0)
+                                    <i class="fa-solid fa-star"></i>
+                                    <span>{{ number_format($request->caregiver->reviews->avg('rating'), 1) }}</span>
+                                    <span class="text-muted">({{ $request->caregiver->reviews->count() }})</span>
+                                @else
+                                    <span class="text-muted rate-count">Sem avaliações</span>
+                                @endif
+                            </span>
                             <span class="request-date-meta text-muted">Enviada em
                                 {{ $request->created_at }}</span>
 
@@ -134,8 +145,6 @@
 
                                 @if ($request->status == 'accepted')
                                     <a href="#" class="btn btn-secondary"><i class="fa-solid fa-comment"></i>
-                                        Avaliar</a>
-                                    <a href="#" class="btn btn-secondary"><i class="fa-solid fa-comment"></i>
                                         Abrir Chat</a>
                                     <form
                                         action="{{ route('proposal.set-proposal-status', [
@@ -149,14 +158,18 @@
                                     </form>
                                 @endif
 
-                                @if ($request->status == 'completed' && !$request->estrela)
+                                @if ($request->status == 'completed' && !$request->review)
                                     <button class="btn btn-outline-warning" data-bs-toggle="modal"
-                                        data-bs-target="#modalAvaliacao"
-                                        data-id="{{ $request->caregiver_id }}"
+                                        data-bs-target="#modalAvaliacao" data-id="{{ $request->caregiver_id }}"
+                                        data-proposal-id="{{ $request->id }}"
                                         data-nome="{{ $request->caregiver->user->nome }}"
                                         data-foto="{{ $request->caregiver->user->foto }}"
                                         data-inicio="{{ $request->data_inicio }}" data-fim="{{ $request->data_fim }}">
                                         <i class="fa-solid fa-star"></i> Avaliar Cuidador
+                                    </button>
+                                @elseif ($request->status == 'completed' && $request->review)
+                                    <button class="btn btn-outline" disabled>
+                                        <i class="fa-solid fa-check"></i> Cuidador Avaliado
                                     </button>
                                 @endif
                             </div>
@@ -197,7 +210,7 @@
                 <!-- Perfil Principal -->
                 <div class="modal-perfil-header">
                     <div class="caregiver-avatar-wrapper">
-                        <img id="modal-avatar" src="/storage/caregivers/default-avatar.png" alt="Avatar">
+                        <img id="modal-avatar" src="{{ asset('assets/imgs/default-avatar.svg') }}" alt="Avatar">
                     </div>
                     <div class="caregiver-basic-info">
                         <h3 id="modal-nome" class="mb-0">Nome do Cuidador</h3>
@@ -219,10 +232,10 @@
 
                     </div>
 
-                    <form action="{{ route('cliente.proposal.avaliar') }}" method="POST">
+                    <form action="{{ route('client.proposal.rate') }}" method="POST">
                         @csrf
 
-                        <input type="hidden" name="caregiver_id" id="modal-caregiver-id">
+                        <input type="hidden" name="proposal_id" id="modal-proposal-id">
 
                         <div class="info-section mb-lg">
                             <h4 class="section-subtitle">
@@ -233,34 +246,32 @@
 
                                 <div class="modal-avaliacao-estrelas">
 
-                                    <input type="radio" name="estrela" id="vazio" value="" checked>
-
                                     <label for="estrela1"><i class="fas fa-star"></i></label>
-                                    <input type="radio" name="estrela" id="estrela1" value="1">
+                                    <input type="radio" name="rating" id="estrela1" value="1" checked>
 
                                     <label for="estrela2"><i class="fas fa-star"></i></label>
-                                    <input type="radio" name="estrela" id="estrela2" value="2">
+                                    <input type="radio" name="rating" id="estrela2" value="2">
 
                                     <label for="estrela3"><i class="fas fa-star"></i></label>
-                                    <input type="radio" name="estrela" id="estrela3" value="3">
+                                    <input type="radio" name="rating" id="estrela3" value="3">
 
                                     <label for="estrela4"><i class="fas fa-star"></i></label>
-                                    <input type="radio" name="estrela" id="estrela4" value="4">
+                                    <input type="radio" name="rating" id="estrela4" value="4">
 
                                     <label for="estrela5"><i class="fas fa-star"></i></label>
-                                    <input type="radio" name="estrela" id="estrela5" value="5">
+                                    <input type="radio" name="rating" id="estrela5" value="5">
 
                                 </div>
 
                                 <div class="estrela-amount">
-                                    <span class="estrela-count" id="estrela-count">0</span><span
+                                    <span class="estrela-count" id="estrela-count">1</span><span
                                         class="estrela-max">/5</span>
                                 </div>
                             </div>
 
                             <div class="info-item">
 
-                                <textarea name="comentario" id="comentario" class="form-control avaliacao-comentario"
+                                <textarea name="comment" id="comentario" class="form-control avaliacao-comentario"
                                     placeholder="Deixe um comentário sobre o cuidador..."></textarea>
 
                             </div>

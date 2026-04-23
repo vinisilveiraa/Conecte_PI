@@ -9,8 +9,8 @@
     <div class="login-card">
         {{-- ERROR --}}
         @if (session('error'))
-        <div
-            style="
+            <div
+                style="
                 text-align:center;
                 padding:12px;
                 margin-bottom:20px;
@@ -19,11 +19,11 @@
                 font-weight:600;
                 box-shadow:0 2px 6px rgba(0,0,0,0.1);
             ">
-            <p style="font-size:1.1rem; margin:0; color:white">
-                {{ session('error') }}
-            </p>
-        </div>
-    @endif
+                <p style="font-size:1.1rem; margin:0; color:white">
+                    {{ session('error') }}
+                </p>
+            </div>
+        @endif
         <!-- Ícone -->
         <div class="login-icon">
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -38,18 +38,21 @@
         <h1>Entrar no Conecte</h1>
 
         <!-- Formulário -->
-        <form method="POST" action="{{route('login')}}">
+        <form method="POST" action="{{ route('login') }}">
             @csrf
             <!-- Campo E-mail -->
             <div class="form-group">
                 <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" placeholder="seu@email.com"  >
+                <input type="email" id="email" name="email" placeholder="seu@email.com">
             </div>
 
             <!-- Campo Senha -->
             <div class="form-group">
                 <label for="password">Senha</label>
-                <input type="password" id="password" name="password" placeholder="••••••••"  >
+                <div class="hide-password-wrap">
+                    <input type="password" id="password" name="password" placeholder="••••••••">
+                    <i class="fas fa-eye" onclick="togglePasswordVisibility('password')"></i>
+                </div>
             </div>
 
             <!-- Botão Login -->

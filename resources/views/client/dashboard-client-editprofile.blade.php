@@ -42,14 +42,16 @@
                             <div class="profile-avatar-edit">
 
                                 <img id="avatar-preview"
-                                    src="{{ Auth::user()->foto ? asset('storage/clients/' . Auth::user()->foto) : asset('storage/default-avatar.png') }}"
+                                    src="{{ Auth::user()->foto ? asset('storage/clients/' . Auth::user()->foto) : asset('assets/imgs/default-avatar.svg') }}"
                                     class="avatar-img">
+
 
                                 <label for="avatarInput" class="avatar-upload-btn">
                                     <i class="fa-solid fa-pencil"></i>
                                     <input type="file" name="foto" id="avatarInput" hidden
                                         onchange="previewImage(this, 'avatar-preview')">
                                 </label>
+
                             </div>
                             <h3>{{ Auth::user()->nome }}</h3>
                             <p class="profile-type">Cliente Conecte</p>
@@ -119,18 +121,22 @@
                                         class="form-control">
                                 </div>
                             </div>
+
                         </div>
 
                         <div class="form-actions mt-xl">
                             <a href="{{ route('dashboard.client') }}" class="btn btn-outline-primary">Cancelar</a>
                             <button type="submit" class="btn btn-primary btn-lg">Salvar Alterações</button>
                         </div>
+
                     </div>
                 </div>
             </form>
         </div>
     </main>
 </div>
+
+@include('components.footer')
 
 
 <script>

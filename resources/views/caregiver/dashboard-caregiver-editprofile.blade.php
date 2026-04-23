@@ -44,7 +44,7 @@
                             <div class="profile-avatar-edit">
 
                                 <img id="avatar-preview"
-                                    src="{{ Auth::user()->foto ? asset('storage/caregivers/' . Auth::user()->foto) : asset('storage/default-avatar.png') }}"
+                                    src="{{ Auth::user()->foto ? asset('storage/caregivers/' . Auth::user()->foto) : asset('assets/imgs/default-avatar.svg') }}"
                                     class="avatar-img">
 
                                 <label for="avatarInput" class="avatar-upload-btn">
@@ -53,6 +53,7 @@
                                 </label>
                             </div>
                             <h3>{{ Auth::user()->nome }}</h3>
+                            <p class="profile-type">Cuidador Conecte</p>
                             {{-- <span class="badge-tag">Cuidador Verificado</span> --}}
                         </div>
 
@@ -108,6 +109,7 @@
                             <div class="form-row mt-md">
                                 <div class="form-group col-12">
                                     <label>Certificado de Formação (Imagem)</label>
+
                                     <div class="file-upload-wrapper">
                                         <input type="file" name="certificado_cuidador" class="file-input"
                                             id="certificadoInput">
@@ -116,6 +118,7 @@
                                             <span id="file-name">Clique para atualizar seu certificado</span>
                                         </div>
                                     </div>
+
                                     <div class="certificado-preview" id="certificado-preview">
                                         @if (Auth::user()->caregiver->certificado_cuidador)
                                             <div id="current-certificado" class="current-certificado mt-sm">
@@ -128,13 +131,15 @@
                                                     <img src="{{ asset('storage/' . Auth::user()->caregiver->certificado_cuidador) }}"
                                                         alt="Certificado Atual">
                                                 @endif
+
                                             </div>
+                                        @endif
                                     </div>
-                                    @endif
+
                                 </div>
                             </div>
-
                         </div>
+
 
                         <!-- Endereço -->
                         <div class="card mb-md">
@@ -169,18 +174,22 @@
                                         class="form-control">
                                 </div>
                             </div>
+
                         </div>
+
 
                         <div class="form-actions mt-xl">
                             <a href="{{ route('dashboard.caregiver') }}" class="btn btn-outline-primary">Cancelar</a>
                             <button type="submit" class="btn btn-primary btn-lg">Atualizar Perfil
                                 Profissional</button>
                         </div>
+
                     </div>
                 </div>
-            </form>
         </div>
-    </main>
+        </form>
+</div>
+</main>
 </div>
 
 @include('components.footer')

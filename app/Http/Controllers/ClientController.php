@@ -36,11 +36,11 @@ class ClientController extends Controller
             $query->where('specialty_id', $specialtyId);
         })
             ->with(['user', 'specialties'])
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews')
             ->paginate(10);
 
         // RETORNAR OS CUIDADORES ENCONTRADOS PARA PAGINA select-specialty
         return redirect()->route('select.specialty')->with('caregivers', $caregivers);
     }
-
-
 }

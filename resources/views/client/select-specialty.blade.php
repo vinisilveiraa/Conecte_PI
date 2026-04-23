@@ -117,12 +117,13 @@
                                 <h3>{{ $caregiver->user->nome }}</h3>
 
                                 <div class="caregiver-rating">
-                                    <span class="rating-item">
-                                        <i class="fa-solid fa-star"></i>
-                                        @if ($caregiver->estrela == null)
-                                            <span class="text-muted">N/A</span>
+                                    <span class="rating-stars">
+                                        @if ($caregiver->reviews_count > 0)
+                                            <i class="fa-solid fa-star"></i>
+                                            <span>{{ number_format($caregiver->reviews_avg_rating, 1) }}</span>
+                                            <sub class="text-muted">({{ $caregiver->reviews_count }})</sub>
                                         @else
-                                            {{ $caregiver->estrela }}
+                                            <span class="text-muted rate-count">Sem avaliações</span>
                                         @endif
                                     </span>
                                 </div>
@@ -132,6 +133,8 @@
                                         data-bs-target="#perfilModal" data-id="{{ $caregiver->id }}"
                                         data-nome="{{ $caregiver->user->nome }}"
                                         data-foto="{{ $caregiver->user->foto }}"
+                                        data-rate="{{ number_format($caregiver->reviews_avg_rating, 1) }}"
+                                        data-count="{{ $caregiver->reviews_count }}"
                                         data-cidade="{{ $caregiver->user->address->cidade }}"
                                         data-bio="{{ $caregiver->bio }}"
                                         data-especialidades="{{ implode(', ', $caregiver->specialties->pluck('nome')->toArray()) }}">
@@ -164,7 +167,7 @@
                     <!-- Perfil Principal -->
                     <div class="modal-perfil-header">
                         <div class="caregiver-avatar-wrapper">
-                            <img id="modal-avatar" src="/storage/caregivers/default-avatar.png" alt="Avatar">
+                            <img id="modal-avatar" src=" {{ asset('assets/imgs/default-avatar.svg') }}" alt="Avatar">
                         </div>
                         <div class="caregiver-basic-info">
                             <h3 id="modal-nome" class="mb-0">Nome do Cuidador</h3>
@@ -181,7 +184,7 @@
                         <div class="info-section mb-lg">
                             <h4 class="section-subtitle">Bio</h4>
                             <p id="modal-bio" class="text-sm">
-
+                                Nenhuma bio disponível
                             </p>
                         </div>
 
@@ -199,8 +202,8 @@
                                     Avaliação</span>
                                 {{-- ! trocar aqui avalicao futuramente ! --}}
                                 <span class="info-value" id="modal-avaliacao">
-                                    <i class="fas fa-star"></i>
-                                    4.8 / 5
+                                    <span id="modal-rate">0.0</span>
+                                    <span class="text-muted" id="modal-count">(0)</span>
                                 </span>
                             </div>
                             <div class="info-item info-item-column">

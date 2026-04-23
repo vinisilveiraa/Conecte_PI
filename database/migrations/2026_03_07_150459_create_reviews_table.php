@@ -18,21 +18,24 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
 
-            $table->foreignId('revisor_id')
-                ->constrained('users')
-                ->cascadeOnDelete();
+            // $table->foreignId('revisor_id')
+            //     ->constrained('users')
+            //     ->cascadeOnDelete();
 
-            $table->foreignId('revisado_id')
-                ->constrained('users')
-                ->cascadeOnDelete();
+            // $table->foreignId('revisado_id')
+            //     ->constrained('users')
+            //     ->cascadeOnDelete();
 
-            $table->tinyInteger('avaliacao');
+            $table->foreignId("client_id")->constrained()->onDelete("cascade");
+            $table->foreignId("caregiver_id")->constrained()->onDelete("cascade");
 
-            $table->text('comentario')->nullable();
+            $table->tinyInteger('rating');
+
+            $table->text('comment')->nullable();
 
             $table->timestamps();
 
-            $table->unique(['proposal_id', 'revisor_id']);
+            $table->unique(['proposal_id']);
         });
     }
 

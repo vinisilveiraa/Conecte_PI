@@ -20,6 +20,10 @@ class CaregiverController extends Controller
     {
         $caregiver = Caregiver::where('user_id', Auth::user()->id)->firstOrFail();
 
+        if ($caregiver->specialties()->where('specialty_id', $id)->exists()) {
+            return back()->with('error', 'Especialidade já adicionada.');
+        }
+
         $caregiver->specialties()->attach($id, [
             'preco_minimo' => 0 // ou valor padrão
         ]);
@@ -55,5 +59,4 @@ class CaregiverController extends Controller
             'availableSpecialties'
         ));
     }
-
 }

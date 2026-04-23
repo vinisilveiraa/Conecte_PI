@@ -284,6 +284,36 @@ document.addEventListener('DOMContentLoaded', function () {
     setActiveNavLink();
 });
 
+
+// ============================================
+// ESCONDER/MOSTRAR SENHA
+// ============================================
+
+document.addEventListener('DOMContentLoaded', function () {
+    const togglePasswordIcons = document.querySelectorAll('.fa-eye');
+
+    togglePasswordIcons.forEach(icon => {
+        icon.addEventListener('click', function () {
+            const input = this.previousElementSibling;
+            if (input && input.type === 'password') {
+                input.type = 'text';
+                this.classList.remove('fa-eye');
+                this.classList.add('fa-eye-slash');
+            } else if (input) {
+                input.type = 'password';
+                this.classList.remove('fa-eye-slash');
+                this.classList.add('fa-eye');
+            }
+        });
+    });
+})
+
+
+
+
+
+
+
 // ============================================
 // PREVIEW DE IMAGEM NO CADASTRO
 // ============================================
@@ -413,11 +443,14 @@ document.addEventListener('DOMContentLoaded', function () {
         const bio = button.dataset.bio;
         const cidade = button.dataset.cidade;
         const especialidades = button.dataset.especialidades;
-
+        const rate = button.dataset.rate;
+        const count = button.dataset.count;
 
         modal.querySelector('#modal-nome').textContent = nome;
         modal.querySelector('#modal-cidade').textContent = cidade;
         modal.querySelector('#modal-bio').textContent = bio;
+        modal.querySelector('#modal-rate').textContent = rate;
+        modal.querySelector('#modal-count').textContent = `(${count})`;
 
         const especialidadesContainer = modal.querySelector('#modal-especialidades');
 
@@ -437,8 +470,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (foto) {
             img.src = '/storage/caregivers/' + foto;
-        } else {
-            img.src = ''; // ou imagem padrão
+        }
+        if (!bio) {
+            modal.querySelector('#modal-bio').textContent = "Nenhuma bio disponível";
         }
 
         console.log("ID:", id);
@@ -458,26 +492,22 @@ document.addEventListener('DOMContentLoaded', function () {
     modal.addEventListener('show.bs.modal', function (event) {
         const button = event.relatedTarget;
 
-        const id = button.dataset.id;
+        const proposalId = button.dataset.proposalId;
         const nome = button.dataset.nome;
         const foto = button.dataset.foto;
         const inicio = button.dataset.inicio;
         const fim = button.dataset.fim;
 
-
-        modal.querySelector('#modal-caregiver-id').value = id;
+        modal.querySelector('#modal-proposal-id').value = proposalId;
         modal.querySelector('#modal-nome').textContent = nome;
         modal.querySelector('#modal-inicio').textContent = inicio;
         modal.querySelector('#modal-fim').textContent = fim;
-
 
         // Atualiza imagem
         const img = modal.querySelector('#modal-avatar');
 
         if (foto) {
             img.src = '/storage/caregivers/' + foto;
-        } else {
-            img.src = ''; // ou imagem padrão
         }
 
         console.log("ID:", id);

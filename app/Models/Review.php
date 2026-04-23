@@ -9,10 +9,13 @@ class Review extends Model
 {
     protected $fillable = [
         'proposal_id',
-        'revisor_id',
-        'revisado_id',
-        'avaliacao',
-        'comentario'
+        'caregiver_id',
+        'client_id',
+        'rating',
+        'comment'
+
+        // 'revisor_id',
+        // 'revisado_id',
     ];
 
     public function proposal(): BelongsTo

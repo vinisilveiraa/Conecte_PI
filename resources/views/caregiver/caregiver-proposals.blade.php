@@ -52,7 +52,7 @@
                                 @if ($proposal->client->user->foto == null)
                                     <div
                                         class="request-user-avatar d-flex align-items-center justify-content-center bg-light-blue">
-                                        <i class="fa-solid fa-user text-primary" style="font-size: 32px;"></i>
+                                        <i class="fa-solid fa-user" style="font-size: 32px;"></i>
                                     </div>
                                 @else
                                     <img src="{{ asset('storage/clients/' . $proposal->client->user->foto) }}"

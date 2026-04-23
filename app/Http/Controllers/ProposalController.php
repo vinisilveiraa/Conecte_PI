@@ -6,6 +6,7 @@ use App\Models\Caregiver;
 use App\Models\User;
 use App\Models\Proposal;
 use App\Models\Specialty;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,10 @@ class ProposalController extends Controller
     public function hireForm($id)
     {
         // buscar cuidador
-        $caregiver = Caregiver::with('user.address')->findOrFail($id);
+        $caregiver = Caregiver::with(['user.address', 'reviews'])
+            ->withCount('reviews')
+            ->withAvg('reviews', 'rating')
+            ->findOrFail($id);
 
         return view('client.dashboard-hire-form', compact('caregiver'));
     }
@@ -26,7 +30,6 @@ class ProposalController extends Controller
     // $relation: 'client' ou 'caregiver' para definir a relação a ser carregada
     // $with: 'user' para carregar o usuário relacionado (cliente ou cuidador)
     // $status: status das propostas a serem filtradas (opcional)
-
     private function getProposal($relation, $with, $status)
     {
         // quando buscar proposals traga também o usuário relacionado (cliente ou cuidador)
@@ -77,7 +80,11 @@ class ProposalController extends Controller
 
         $requests = $this->getProposal(
             $client->proposals(),
-            'caregiver.user',
+            [
+                'caregiver.user',
+                'caregiver.reviews',
+                'review'
+            ],
             $status
         );
 
@@ -209,9 +216,49 @@ class ProposalController extends Controller
         return back()->with('success', "Status atualizado para {$status}");
     }
 
-
     public function rateCaregiver(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
+        $user = $request->user();
+
+        $rules = [
+            'proposal_id' => 'required|exists:proposals,id',
+            'rating' => 'required|integer|min:1|max:5',
+            'comment' => 'nullable|string|max:1000',
+        ];
+        $messages = [
+            'rating.required' => 'A avaliação é obrigatória',
+            'rating.integer' => 'A avaliação deve ser um número inteiro',
+            'rating.min' => 'A avaliação deve ser no mínimo :min estrela',
+            'rating.max' => 'A avaliação deve ser no máximo :max estrelas',
+            'comment.string' => 'O comentário deve ser uma string',
+            'comment.max' => 'O comentário deve ter no máximo :max caracteres',
+        ];
+
+        $validated = $request->validate($rules, $messages);
+
+        // pega a proposta, garantindo que ela exista, que pertença ao cliente e que esteja concluída
+        $proposal = Proposal::where('id', $validated['proposal_id'])
+            ->where('client_id', $user->client->id)
+            ->where('status', 'completed')
+            ->firstOrFail();
+
+        if ($proposal->review) {
+            return back()->with('error', 'Esta proposta já foi avaliada');
+        }
+
+        Review::create([
+            'proposal_id' => $proposal->id,
+            'caregiver_id' => $proposal->caregiver_id,
+            'client_id' => $proposal->client_id,
+            'rating' => $validated['rating'],
+            'comment' => $validated['comment'] ?? '',
+
+            // n sei se vai ser implementado
+            // 'revisor_id' => null,
+            // 'revisado_id' => null,
+        ]);
+
+        return back()->with('success', 'Cuidador avaliado com sucesso!');
     }
 }

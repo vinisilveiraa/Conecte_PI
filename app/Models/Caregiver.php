@@ -36,4 +36,8 @@ class Caregiver extends Model
         return $this->hasMany(Proposal::class);
     }
 
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
 }

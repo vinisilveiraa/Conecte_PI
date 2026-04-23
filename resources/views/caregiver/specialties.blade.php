@@ -24,7 +24,7 @@
                                 style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button class="tag-remove">&times;</button>
+                                <button class="tag-remove"><i class="fas fa-times"></i></button>
                             </form>
                         </span>
                     @endforeach
@@ -47,7 +47,7 @@
                                     style="display:inline;">
                                     @csrf
                                     <button type="submit" class="btn btn-outline btn-sm">
-                                        + {{ $specialty->nome }}
+                                        <i class="fas fa-plus specialty-add"></i> {{ $specialty->nome }}
                                     </button>
                                 </form>
                             @endif
@@ -64,7 +64,7 @@
                                     style="display:inline;">
                                     @csrf
                                     <button type="submit" class="btn btn-outline btn-sm">
-                                        + {{ $specialty->nome }}
+                                        <i class="fas fa-plus specialty-add"></i> {{ $specialty->nome }}
                                     </button>
                                 </form>
                             @endif
@@ -81,7 +81,7 @@
                                     style="display:inline;">
                                     @csrf
                                     <button type="submit" class="btn btn-outline btn-sm">
-                                        + {{ $specialty->nome }}
+                                        <i class="fas fa-plus specialty-add"></i> {{ $specialty->nome }}
                                     </button>
                                 </form>
                             @endif
@@ -98,7 +98,7 @@
                                     style="display:inline;">
                                     @csrf
                                     <button type="submit" class="btn btn-outline btn-sm">
-                                        + {{ $specialty->nome }}
+                                        <i class="fas fa-plus specialty-add"></i> {{ $specialty->nome }}
                                     </button>
                                 </form>
                             @endif
