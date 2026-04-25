@@ -119,9 +119,7 @@ class AuthController extends Controller
             ]);
         }
 
-        // ====================================================================
         // ENVIO DE E-MAIL
-        // ====================================================================
         // $link = route('login.link', $user->id);
 
         // Mail::to($user->email)->send(

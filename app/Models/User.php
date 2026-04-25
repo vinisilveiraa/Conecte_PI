@@ -8,11 +8,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Mail\ResetPasswordMail;
+use Illuminate\Support\Facades\Mail;
+
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
-     protected $table = 'users';
+    protected $table = 'users';
 
     protected $fillable = [
         'nome',
@@ -55,12 +58,21 @@ class User extends Authenticatable
         return $this->hasMany(Review::class, 'revisado_id');
     }
 
+    // email reset de senha
+    public function sendPasswordResetNotification($token)
+    {
+        $url = url(route('password.reset', [
+            'token' => $token,
+            'email' => $this->email,
+        ], false));
+
+        Mail::to($this->email)
+            ->send(new ResetPasswordMail($url, $this));
+    }
 
 
 
-
-
-
+    
 
 
     protected function casts(): array

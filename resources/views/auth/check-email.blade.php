@@ -26,10 +26,6 @@
                 Enviamos um e-mail para você.
             </p>
 
-            <p class="success-text-secondary">
-                Abra seu e-mail e clique no botão para acessar seu dashboard.
-            </p>
-
             <!-- CTA BUTTON -->
             <a href="{{ route('login') }}" class="success-button">
                 Ir para o login

@@ -812,6 +812,7 @@
 
 .recovery-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 60vh;
@@ -861,6 +862,7 @@
 .recovery-description {
     color: var(--color-text-light);
     margin-bottom: var(--spacing-lg);
+    text-align: center;
     font-size: 14px;
 }
 

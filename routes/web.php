@@ -5,6 +5,7 @@ use App\Http\Controllers\CaregiverController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProposalController;
 
 use App\Models\Client;
@@ -95,15 +96,17 @@ Route::middleware('auth')->group(function () {
 
 });
 
+// ROTAS DO MENU
+Route::view("/", "site.home")->name('home');
+Route::view("/sobre-nos", "site.sobre-nos")->name('sobre-nos');
+Route::view("/politica-privacidade", "site.politica-privacidade")->name('politica-privacidade');
+Route::view("/contatos", "site.contatos")->name('contatos');
+Route::post('/chatbot', [ChatbotController::class, 'responder']);
+
+
+
 // ROTAS PARA VISITANTES
 Route::middleware('guest')->group(function () {
-
-
-    // ROTAS NDO MENU
-    Route::view("/", "site.home")->name('home');
-    Route::view("/sobre-nos", "site.sobre-nos")->name('sobre-nos');
-    Route::view("/politica-privacidade", "site.politica-privacidade")->name('politica-privacidade');
-    Route::view("/contatos", "site.contatos")->name('contatos');
 
     // ROTAS PARA O LOGIN
     Route::view('/login', 'auth.login')->name('login');
@@ -115,9 +118,21 @@ Route::middleware('guest')->group(function () {
     Route::view("/register-client", "auth.register-client")->name('register.client');
     Route::view('/register-caregiver', 'auth.register-caregiver')->name('register.caregiver');
 
-    Route::post('/chatbot', [ChatbotController::class, 'responder']);
-});
 
+
+    // ESQUECI SENHA
+    Route::view('/forgot-password', 'site.forgot-password')
+        ->name('password.request');
+    Route::post('/forgot-password', [PasswordController::class, 'sendResetLinkEmail'])
+        ->name('password.email-sent');
+
+    Route::get('/reset-password/{token}', function ($token) {
+        return view('site.reset-password', ['token' => $token]);
+    })->name('password.reset');
+
+    Route::post('/password-update', [PasswordController::class, 'updatePassword'])
+        ->name('password.update');
+});
 
 
 // ROTA EXCLUSIVA PARA A CONFIRMAÇÃO DO EMAIL

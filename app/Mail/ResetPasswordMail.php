@@ -2,27 +2,26 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Attachment;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class WelcomeUserMail extends Mailable
+class ResetPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
+    public $url;
+    public $user;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(
-        public $user,
-        public $link
-    ) {
-        //
+    public function __construct($url, $user)
+    {
+        $this->url = $url;
+        $this->user = $user;
     }
 
     /**
@@ -31,7 +30,7 @@ class WelcomeUserMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Bem Vindo ao Conecte',
+            subject: 'Redefinição de senha - Conecte',
         );
     }
 
@@ -41,14 +40,18 @@ class WelcomeUserMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.welcome',
+            view: 'emails.reset-password',
+            with: [
+                'url' => $this->url,
+                'user' => $this->user,
+            ],
         );
     }
 
     /**
      * Get the attachments for the message.
      *
-     * @return array<int, Attachment>
+     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
      */
     public function attachments(): array
     {

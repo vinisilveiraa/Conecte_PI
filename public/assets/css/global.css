@@ -361,7 +361,6 @@ textarea {
 .alert-success {
     color: #0f5132;
     background-color: #d1e7dd;
-    border-color: #badbcc;
     font-size: var(--font-size-sm);
     padding: var(--spacing-sm) var(--spacing-md);
 }
@@ -370,7 +369,6 @@ textarea {
 .alert-danger {
     color: #842029;
     background-color: #f8d7da;
-    border-color: #f5c2c7;
     font-size: var(--font-size-sm);
     padding: var(--spacing-sm) var(--spacing-md);
 }
@@ -379,7 +377,6 @@ textarea {
 .alert-warning {
     color: #664d03;
     background-color: #fff3cd;
-    border-color: #ffecb5;
     font-size: var(--font-size-sm);
     padding: var(--spacing-sm) var(--spacing-md);
 }

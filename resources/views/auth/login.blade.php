@@ -9,21 +9,17 @@
     <div class="login-card">
         {{-- ERROR --}}
         @if (session('error'))
-            <div
-                style="
-                text-align:center;
-                padding:12px;
-                margin-bottom:20px;
-                background-color:#ff4d4f;
-                border-radius:6px;
-                font-weight:600;
-                box-shadow:0 2px 6px rgba(0,0,0,0.1);
-            ">
-                <p style="font-size:1.1rem; margin:0; color:white">
-                    {{ session('error') }}
-                </p>
+            <div class="alert alert-danger">
+                {{ session('error') }}
             </div>
         @endif
+        @if (session('status'))
+            <div class="alert alert-info">{{ session('status') }}</div>
+        @endif
+        @if (session('success'))
+            <div class="alert alert-info">{{ session('success') }}</div>
+        @endif
+        
         <!-- Ícone -->
         <div class="login-icon">
             <svg xmlns="http://www.w3.org/2000/svg"
@@ -64,10 +60,10 @@
         <!-- Links Footer -->
         <div class="login-footer">
             <p>
-                <a href="cadastro.php">Ainda não tem conta?</a>
+                <a href="{{ route('register') }}">Ainda não tem conta?</a>
             </p>
             <p>
-                <a href="recuperar-senha.php">Esqueceu a senha?</a>
+                <a href="{{ route('password.request') }}">Esqueceu a senha?</a>
             </p>
         </div>
     </div>
