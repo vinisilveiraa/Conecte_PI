@@ -9,38 +9,47 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    public function selectSpecialty()
+    public function searchCaregiver(Request $request)
     {
-
-        // CARREGAR ESPECIALIDADES
+        // leva pro front
         $specialties = Specialty::all();
 
-        return view('client.select-specialty', compact('specialties'));
-    }
+        // leva pro filtro
+        $selectedSpecialties = $request->input('specialties', []);
 
-    public function loadCaregivers(Request $request)
-    {
-        // RECEBE O ID DA ESPECIALIDADE ESCOLHIDA
-        $specialtyId =
-            $request->cuidados_pessoais ??
-            $request->saude ??
-            $request->acompanhamento ??
-            $request->cuidados_especializado;
+        // faz em partes, montando uma query
+        // primeiro pega o cuidador, carregando seus dados de usuario e especialidades
+        // tambem envia reviews, 3 mais recentes
+        $query = Caregiver::with([
+            'user',
+            'specialties',
+            'reviews' => function ($q) {
+                $q->with('user')
+                    ->latest()->take(3);
+            }
+        ])
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews');
 
-        if (empty($specialtyId)) {
-            return redirect()->route('select.specialty')->with("error", "Selecione ao menos uma especialidade para buscar cuidadores");
+        // se tiver especialidades, inclui elas na query
+        if (!empty($selectedSpecialties)) {
+            $query->whereHas('specialties', function ($q) use ($selectedSpecialties) {
+                $q->whereIn('specialty_id', $selectedSpecialties);
+            });
         }
 
-        // BUSCAR CUIDADORES QUE TEM ESTA ESPECIALIDADE CADASTRADA
-        $caregivers = Caregiver::whereHas('specialties', function ($query) use ($specialtyId) {
-            $query->where('specialty_id', $specialtyId);
-        })
-            ->with(['user', 'specialties'])
-            ->withAvg('reviews', 'rating')
-            ->withCount('reviews')
-            ->paginate(10);
+        // sorta de acordo
+        if ($request->sort == "reviews") {
+            $query->orderBy('reviews_count', 'desc');
+        } elseif ($request->sort == "rating") {
+            $query->orderBy('reviews_avg_rating', 'desc');
+        } elseif ($request->sort == "newest") {
+            $query->latest(); // usa created_at
+        }
 
-        // RETORNAR OS CUIDADORES ENCONTRADOS PARA PAGINA select-specialty
-        return redirect()->route('select.specialty')->with('caregivers', $caregivers);
+        // paginate sempre por ultimo
+        $caregivers = $query->paginate(10)->withQueryString();
+
+        return view('client.searchCaregiver', compact('specialties', 'caregivers'));
     }
 }

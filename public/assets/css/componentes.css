@@ -19,6 +19,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: var(--spacing-md);
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-lg);
@@ -136,6 +137,98 @@
     font-size: var(--font-size-xl);
     color: var(--color-text);
 }
+
+.navbar-user-container {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-profile-toggle {
+    background: var(--color-primary);
+    border: 1px solid var(--color-white);
+    padding: 6px 12px;
+    border-radius: var(--border-radius-xl);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-profile-toggle:hover {
+    background: var(--color-primary-dark);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transform: translateY(-0.5px);
+}
+
+.navbar-profile-toggle:active {
+    transform: translateY(0);
+}
+
+.navbar-profile-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar-profile-info i {
+    color: var(--color-white);
+}
+
+/* Avatar */
+.navbar-avatar,
+.navbar-avatar-placeholder {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-avatar-placeholder {
+    background: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #adb5bd;
+}
+
+/* Nome do Usuário */
+.navbar-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-white);
+}
+
+/* Ajustes no Dropdown do Bootstrap */
+.dropdown-menu {
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 180px;
+}
+
+.dropdown-item {
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: background 0.2s ease;
+}
+
+.dropdown-item i {
+    color: var(--color-primary);
+}
+
+.navbar-logout i {
+    color: var(--color-danger);
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-item.text-danger:hover {
+    background-color: #fff5f5;
+}
+
 
 @media (max-width: 768px) {
     .navbar-menu {

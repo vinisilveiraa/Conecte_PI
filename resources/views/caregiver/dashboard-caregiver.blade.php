@@ -14,6 +14,21 @@
         <div class="container">
             <h1 class="text-center">Bem vindo, <span>{{ Auth::user()->nome }}</span>!</h1>
 
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <span>
+                        @foreach ($errors->all() as $error)
+                            {{ $error }}
+                        @endforeach
+                    </span>
+                </div>
+            @endif
+
             <div class="dashboard-grid">
                 <!-- PERFIL CARD -->
                 <div class="profile-card">

@@ -7,6 +7,8 @@
  * Uso: <?php include 'components/footer.php'; ?>
 ?>
 ?>
+?>
+?>
 */
 ?>
 
@@ -59,11 +61,11 @@
             <div class="footer-section">
                 <h3>Links Rápidos</h3>
                 <ul class="footer-links">
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="cadastro.php">Como Funciona</a></li>
-                    <li><a href="cadastro.php">Encontre um Cuidador</a></li>
-                    <li><a href="sobre-nos.php">Sobre Nós</a></li>
-                    <li><a href="contatos.php">Contatos</a></li>
+                    <li><a href="{{ route('home') }}">Home</a></li>
+                    <li><a href="{{ route('register') }}">Como Funciona</a></li>
+                    <li><a href="{{ route('client.searchCaregiver') }}">Encontre um Cuidador</a></li>
+                    <li><a href="{{ route('sobre-nos') }}">Sobre Nós</a></li>
+                    <li><a href="{{ route('contatos') }}">Contatos</a></li>
                 </ul>
             </div>
 
@@ -71,7 +73,7 @@
             <div class="footer-section">
                 <h3>Institucional</h3>
                 <ul class="footer-links">
-                    <li><a href="#privacidade">Política de Privacidade</a></li>
+                    <li><a href="{{ route('politica-privacidade') }}">Política de Privacidade</a></li>
                     <li><a href="#termos">Termos de Uso</a></li>
                     <li><a href="#perguntas">Perguntas Frequentes</a></li>
                 </ul>
@@ -93,7 +95,9 @@
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous">
+</script>
 
 <script src="{{ asset('assets/js/main.js') }}"></script>
 

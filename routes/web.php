@@ -42,8 +42,8 @@ Route::middleware('auth')->group(function () {
 
     // CLIENT
     Route::view('/dashboard-client', 'client.dashboard-client')->name('dashboard.client');
-    Route::get("/select-specialty", [ClientController::class, 'selectSpecialty'])->name('select.specialty');
-    Route::post("/load-caregivers", [ClientController::class, 'loadCaregivers'])->name('load.caregivers');
+    Route::get("/searchCaregiver", [ClientController::class, 'searchCaregiver'])
+        ->name('client.searchCaregiver');
 
 
     // CAREGIVER
@@ -118,7 +118,8 @@ Route::middleware('guest')->group(function () {
     Route::view("/register-client", "auth.register-client")->name('register.client');
     Route::view('/register-caregiver', 'auth.register-caregiver')->name('register.caregiver');
 
-
+    Route::get("/searchCaregiver", [ClientController::class, 'searchCaregiver'])
+        ->name('client.searchCaregiver');
 
     // ESQUECI SENHA
     Route::view('/forgot-password', 'site.forgot-password')

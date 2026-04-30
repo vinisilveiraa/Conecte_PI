@@ -22,8 +22,8 @@
                     Encontre o cuidador ideal para suas necessidades ou ofereça seus serviços de cuidado de forma
                     fácil e segura.
                 </p>
-                <a href="{{ route('register') }}" class="btn btn-primary btn-lg">
-                    Quero saber mais
+                <a href="{{ route('client.searchCaregiver') }}" class="btn btn-primary btn-lg">
+                    Encontrar cuidador
                 </a>
             </div>
         </div>

@@ -80,6 +80,13 @@
     /* Avaliação */
     --star-amarelo: #ffc107;
     --star-cinza: #e0e0e0;
+
+    /* sidebar */
+    --sidebar-bg: #2c3e50;
+    --sidebar-collapsed-width: 80px;
+    --sidebar-expanded-width: 260px;
+    --transition-sidebar: 0.3s;
+
 }
 
 /* ============================================
@@ -326,6 +333,22 @@ textarea {
     color: var(--color-white);
 }
 
+.btn-outline {
+    background-color: transparent;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.btn-outline:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.btn-block {
+    width: 100%;
+    margin-top: var(--spacing-lg);
+}
+
 .btn-outline-secondary {
     background-color: transparent;
     color: var(--color-secondary);
@@ -340,6 +363,11 @@ textarea {
 .btn-lg {
     padding: var(--spacing-md) var(--spacing-xl);
     font-size: var(--font-size-lg);
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: var(--font-size-sm);
 }
 
 .btn-block {

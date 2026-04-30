@@ -4,7 +4,6 @@
 
 <div class="dashboard-wrapper">
     <!-- SIDEBAR CLIENTE -->
-    @include('components.dashboard-sidebar-cliente')
 
     <!-- MAIN CONTENT -->
     <main class="dashboard-content">

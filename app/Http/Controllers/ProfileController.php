@@ -66,17 +66,28 @@ class ProfileController extends Controller
         if ($request->filled('email')) {
             $user->email = $request->email;
         }
-        $user->telefone = $request->telefone;
+        if ($request->filled('telefone')) {
+            $user->telefone = $request->telefone;
+        }
         $user->save();
 
         // ADDRESS
         if ($user->address) {
-            $user->address->cep = $request->cep;
-            $user->address->logradouro = $request->logradouro;
-            $user->address->bairro = $request->bairro;
-            $user->address->cidade = $request->cidade;
+            if ($request->filled('cep')) {
+                $user->address->cep = $request->cep;
+            }
+            if ($request->filled('logradouro')) {
+                $user->address->logradouro = $request->logradouro;
+            }
+            if ($request->filled('bairro')) {
+                $user->address->bairro = $request->bairro;
+            }
+            if ($request->filled('cidade')) {
+                $user->address->cidade = $request->cidade;
+            }
             $user->address->save();
         }
+
 
         // CAREGIVER
         if ($user->role === 'caregiver') {
@@ -85,8 +96,6 @@ class ProfileController extends Controller
 
             $caregiver->coren = $request->coren;
             $caregiver->bio = $request->bio;
-
-
 
             // CERTIFICADO
             if ($request->hasFile('certificado_cuidador')) {
@@ -143,18 +152,16 @@ class ProfileController extends Controller
         $file = $request->file('foto');
         $filename = uniqid() . '.' . $file->getClientOriginalExtension();
 
-        $path = $user->role == 'caregiver'
-            ? 'storage/caregivers/'
-            : 'storage/clients/';
+        $folder = $user->role == 'caregiver'
+            ? 'caregivers'
+            : 'clients';
 
-        if (!file_exists(public_path($path))) {
-            mkdir(public_path($path), 0777, true);
-        }
+        // salva corretamente no storage
+        $file->storeAs($folder, $filename, 'public');
 
-        $file->move(public_path($path), $filename);
-
-        if ($oldFoto && file_exists(public_path($path . $oldFoto))) {
-            unlink(public_path($path . $oldFoto));
+        // remove antigo
+        if ($oldFoto) {
+            Storage::disk('public')->delete($folder . '/' . $oldFoto);
         }
 
         $user->foto = $filename;

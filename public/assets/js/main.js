@@ -439,62 +439,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // ============================================
-// PERFIL DO CUIDADOR - MODAL
-// ============================================
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    const modal = document.getElementById('perfilModal');
-
-    if (!modal) return;
-
-    modal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-
-        const id = button.dataset.id;
-        const nome = button.dataset.nome;
-        const foto = button.dataset.foto;
-        const bio = button.dataset.bio;
-        const cidade = button.dataset.cidade;
-        const especialidades = button.dataset.especialidades;
-        const rate = button.dataset.rate;
-        const count = button.dataset.count;
-
-        modal.querySelector('#modal-nome').textContent = nome;
-        modal.querySelector('#modal-cidade').textContent = cidade;
-        modal.querySelector('#modal-bio').textContent = bio;
-        modal.querySelector('#modal-rate').textContent = rate;
-        modal.querySelector('#modal-count').textContent = `(${count})`;
-
-        const especialidadesContainer = modal.querySelector('#modal-especialidades');
-
-        especialidadesContainer.innerHTML = '';
-        if (especialidades) {
-            especialidades.split(',').forEach(especialidade => {
-                const span = document.createElement('span');
-                span.className = 'badge-tag';
-                span.textContent = especialidade.trim();
-                especialidadesContainer.appendChild(span);
-            });
-        }
-
-
-        // Atualiza imagem
-        const img = modal.querySelector('#modal-avatar');
-
-        if (foto) {
-            img.src = '/storage/caregivers/' + foto;
-        }
-        if (!bio) {
-            modal.querySelector('#modal-bio').textContent = "Nenhuma bio disponível";
-        }
-
-        console.log("ID:", id);
-    });
-});
-
-
-// ============================================
 // Avaliaçao - MODAL
 // ============================================
 

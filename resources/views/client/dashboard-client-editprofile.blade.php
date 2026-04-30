@@ -4,7 +4,6 @@
 
 <div class="dashboard-wrapper">
     <!-- SIDEBAR CLIENTE -->
-    @include('components.dashboard-sidebar-cliente')
 
     <!-- MAIN CONTENT -->
     <main class="dashboard-content">
@@ -15,18 +14,17 @@
             </div>
 
             @if (session('success'))
-                <div class="alert alert-success mb-md">
+                <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
             @endif
-
             @if ($errors->any())
-                <div class="alert alert-warning mb-md">
-                    <ul style="list-style: none; padding-left: 0;">
+                <div class="alert alert-danger">
+                    <span>
                         @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                            {{ $error }}
                         @endforeach
-                    </ul>
+                    </span>
                 </div>
             @endif
 

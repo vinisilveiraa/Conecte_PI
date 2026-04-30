@@ -26,10 +26,11 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('register') }}">
-                    Cadastro
+                <a href="{{ route('client.searchCaregiver') }}">
+                    Encontrar Cuidador
                 </a>
             </li>
+
             <li>
                 <a href="{{ route('sobre-nos') }}">
                     Sobre Nós
@@ -40,11 +41,6 @@
                     Contatos
                 </a>
             </li>
-            <li>
-                <a href="{{ route('politica-privacidade') }}">
-                    Política de Privacidade
-                </a>
-            </li>
         </ul>
 
         <!-- Buttons -->
@@ -52,19 +48,60 @@
         <div class="navbar-buttons" id="navbarButtons">
 
             @auth
-                <a href="{{ route('logout') }}" class="navbar-btn navbar-btn-logout">
-                    Sair
-                </a>
+                <div class="navbar-user-container">
+                    <div class="dropdown">
+                        <button class="navbar-profile-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <div class="navbar-profile-info">
+                                @if (Auth::user()->foto)
+                                    <img src="{{ asset('storage/' . (auth()->user()->role === 'client' ? 'clients/' : 'caregivers/') . Auth::user()->foto) }}"
+                                        class="navbar-avatar" alt="Avatar">
+                                @else
+                                    <div class="navbar-avatar-placeholder">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                @endif
+                                <span class="navbar-name d-none d-sm-inline">
+                                    {{ explode(' ', Auth::user()->nome)[0] }}
+                                </span>
+                                <i class="fa-solid fa-chevron-down ms-2 small opacity-75"></i>
+                            </div>
+                        </button>
 
-                @if (auth()->user()->role === 'client')
-                    <a href="{{ route('dashboard.client') }}" class="navbar-btn navbar-btn-primary">
-                        Perfil
-                    </a>
-                @elseif(auth()->user()->role === 'caregiver')
-                    <a href="{{ route('dashboard.caregiver') }}" class="navbar-btn navbar-btn-primary">
-                        Perfil
-                    </a>
-                @endif
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
+                            <li>
+                                <a class="dropdown-item py-2"
+                                    href="{{ auth()->user()->role === 'client' ? route('dashboard.client') : route('dashboard.caregiver') }}">
+                                    <i class="fa-solid fa-user me-2"></i> Perfil
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2"
+                                    href="{{ auth()->user()->role === 'client' ? route('dashboard.client-editProfile') : route('dashboard.caregiver-editProfile') }}">
+                                    <i class="fa-solid fa-pencil me-2"></i> Editar Perfil
+                                </a>
+                            </li>
+
+                            @if (auth()->user()->role === 'client')
+                                <li>
+                                    <a class="dropdown-item py-2" href="{{ route('client.hire-history') }}">
+                                        <i class="fa-solid fa-clock-rotate-left me-2"></i> Historico
+                                    </a>
+                                </li>
+                            @elseif (auth()->user()->role === 'caregiver')
+                            @endif
+
+                            <li>
+                                <hr class="dropdown-divider opacity-50">
+                            </li>
+                            <li>
+                                <a class="dropdown-item py-2 text-danger navbar-logout" href="{{ route('logout') }}">
+                                    <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Sair
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             @endauth
 
             @guest

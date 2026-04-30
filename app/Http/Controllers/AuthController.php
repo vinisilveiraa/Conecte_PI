@@ -140,6 +140,6 @@ class AuthController extends Controller
                 return redirect()->route('dashboard.caregiver');
             }
         }
-        return redirect()->route('login')->with('error', 'Email ou senha incorretos !');
+        return redirect()->route('login')->with('error', 'E-mail ou senha incorretos!');
     }
 }// fim da classe

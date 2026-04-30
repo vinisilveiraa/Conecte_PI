@@ -16,20 +16,18 @@
                     <p class="text-muted">Mantenha seus dados e certificados em dia para atrair mais clientes.</p>
                 </div>
             </div>
-
             @if (session('success'))
-                <div class="alert alert-success mb-md">
+                <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
             @endif
-
             @if ($errors->any())
-                <div class="alert alert-warning mb-md">
-                    <ul style="list-style: none; padding-left: 0;">
+                <div class="alert alert-danger">
+                    <span>
                         @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
+                            {{ $error }}
                         @endforeach
-                    </ul>
+                    </span>
                 </div>
             @endif
 
