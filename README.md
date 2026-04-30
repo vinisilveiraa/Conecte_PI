@@ -17,8 +17,7 @@ Plataforma digital que conecta cuidadores de saúde a pacientes que necessitam d
 
 **Autores:**  
 - [Vinicius Leonardo Silveira](https://github.com/vinisilveiraa);
-- [William Matias de Oliveira](https://github.com/WilliamMatiasDeOliveira);
-- [Lucas Catto Silva](https://github.com/lucas-catto);
+- [William Matias de Oliveira](https://github.com/WilliamMatiasDeOliveira)
 
 ---
 
@@ -52,18 +51,7 @@ Plataforma digital que conecta cuidadores de saúde a pacientes que necessitam d
 
 ## 1. RESUMO DA APLICAÇÃO WEB 
 
-
-Atualmente, muitas famílias enfrentam dificuldades para encontrar cuidadores de confiança e devidamente qualificados. A busca por esses profissionais geralmente é feita de maneira informal, o que pode resultar em contratações inseguras.  
-
-Ao mesmo tempo, cuidadores experientes enfrentam dificuldades para divulgar seus serviços.  
-
-O aumento da expectativa de vida e a necessidade de cuidados especializados em casa tornam esse tema cada vez mais relevante.  
-
-Este sistema surge como uma resposta moderna, segura e eficiente para aproximar quem precisa de cuidados de quem está capacitado para oferecer.  
-
-Vivemos em um cenário tecnológico no qual muitas áreas já são digitalizadas. No entanto, o setor de cuidados domiciliares ainda carece de soluções organizadas.  
-
-Assim, a proposta desta aplicação é centralizar informações, filtrar cuidadores, permitir avaliações e facilitar o contato.
+Atualmente, muitas famílias enfrentam dificuldades para encontrar cuidadores de confiança e devidamente qualificados. A busca por esses profissionais geralmente é feita de maneira informal, o que pode resultar em contratações inseguras. Ao mesmo tempo, cuidadores experientes enfrentam dificuldades para divulgar seus serviços. O aumento da expectativa de vida e a necessidade de cuidados especializados em casa tornam esse tema cada vez mais relevante. Este sistema surge como uma resposta moderna, segura e eficiente para aproximar quem precisa de cuidados de quem está capacitado para oferecer. Vivemos em um cenário tecnológico no qual muitas áreas já são digitalizadas. No entanto, o setor de cuidados domiciliares ainda carece de soluções organizadas. Assim, a proposta desta aplicação é centralizar informações, filtrar cuidadores, permitir avaliações e facilitar o contato, oferecendo uma plataforma robusta para a gestão de propostas de serviço e perfis de usuários.
 <div align= "end"> 
     
 <sub> [↑ Voltar ao sumário](#0-sumário) </sub>
@@ -73,11 +61,12 @@ Assim, a proposta desta aplicação é centralizar informações, filtrar cuidad
 
 ## 2. OBJETIVO  
 
-- Facilitar a busca por cuidadores qualificados com base em filtros como especialidades.  
-- Criar perfis com avaliações de outros usuários.  
-- Valorizar o trabalho dos cuidadores, oferecendo visibilidade profissional.  
-- Agilizar o processo de contratação com comunicação e agendamento direto com o cuidador.  
-- Proporcionar segurança e confiabilidade no processo de seleção de cuidadores através de demonstração de seus currículos.  
+- Facilitar a busca por cuidadores qualificados com base em filtros como especialidades e localização.  
+- Criar perfis detalhados para cuidadores e clientes, permitindo avaliações e histórico de serviços.  
+- Valorizar o trabalho dos cuidadores, oferecendo visibilidade profissional e um canal seguro para propostas de serviço.  
+- Agilizar o processo de contratação com comunicação e agendamento direto com o cuidador, e gestão de propostas (aceite, recusa, cancelamento, conclusão).  
+- Proporcionar segurança e confiabilidade no processo de seleção de cuidadores através de demonstração de seus currículos e sistema de avaliação.  
+- Oferecer um chatbot para suporte e informações básicas aos usuários. 
 <div align= "end"> 
     
 <sub> [↑ Voltar ao sumário](#0-sumário) </sub>
@@ -92,7 +81,9 @@ Assim, a proposta desta aplicação é centralizar informações, filtrar cuidad
 - Utilização de metodologia ágil (Scrum).  
 
 **Com o quê?**  
-- Google Forms, Visual Paradigm, Figma, HTML, CSS, JavaScript, Laravel, MySQL.  
+- **Backend:** PHP 8.2+, Laravel 12, MySQL, MongoDB (para chatbot).  
+- **Frontend:** Blade Templates, HTML, CSS (TailwindCSS), JavaScript (Vite).  
+- **Ferramentas de Design e Modelagem:** Visual Paradigm, Figma.   
 
 **Onde?**  
 - Ambientes virtuais: entrevistas online, desenvolvimento em ambiente local e posterior hospedagem online.  
@@ -116,17 +107,21 @@ Este documento especifica as funcionalidades esperadas da aplicação.
 
 ### 4.1 Requisitos funcionais  
 
-- **RF01:** O sistema deve ser capaz de *CADASTRAR cuidadores* (nome, email, CPF, senha, telefone, foto, curriculo);
-- **RF02:** O sistema deve ser capaz de *CADASTRAR clientes* (nome, email, CPF, senha, telefone, foto);
-- **RF03:** Apos feito o cadastro, o usuario poderá realizar *LOGIN* na plataforma com ( email, senha ) tendo acesso ao sistema;
-- **RF04:** O cliente poderá vizualizar o perfil de qualquer cuidador cadastrado na plataforma através de filtro por especialidade;
-- **RF05:** O cuidador somente tera acesso ao perfil do contratante apos ter prestado serviço anteriormente;
-- **RF06:** O contratante só podera avaliar ( Deixar um like ) em quem ja prestou serviço a ele.
-- **RF07:** Os clientes poderão entrar em contato com cuidores atraves de um botão (WatsApp) fixado no card de apresentação do cuidador;
-- **RF08:** Os clientes poderão ver os curriculos dos cuidadores atraves de um botão fixado no card de apresentação do cuidador;
-- **RF09:** Todo cuidador já cadastrado poderá ser exibido na pagina de busca;
-- **RF10:** O cliente conseguirá ter acesso a todos os seus cuidadores já contratados, através de um botão "Histórico de Contratações" no seu dashboard. Onde sera exibido nome do cuidador data_inicio, data_fim da prestação de serviço;
-- **RF11:** O sistema deve fornecer uma barra de pesquisa para clientes para facilitar a busca por cuidadores por especialidade;
+- **RF01:** O sistema deve permitir o **cadastro de cuidadores** com informações como nome, email, CPF, senha, telefone, foto, currículo, Coren (opcional) ou certificado de cuidador (opcional), biografia e especialidades.
+- **RF02:** O sistema deve permitir o **cadastro de clientes** com nome, email, CPF, senha, telefone e foto.  
+- **RF03:** Após o cadastro, o usuário poderá realizar **login** na plataforma (email, senha) e ter acesso ao seu dashboard específico (cliente ou cuidador).  
+- **RF04:** O cliente poderá **visualizar o perfil de cuidadores** cadastrados na plataforma, com filtros por especialidade, localização e avaliações.  
+- **RF05:** O cuidador poderá **gerenciar suas especialidades**, adicionando ou removendo-as de seu perfil.  
+- **RF06:** O cliente poderá **enviar propostas de serviço** a cuidadores, especificando valor, datas de início e fim, descrição e endereço do serviço.  
+- **RF07:** O cuidador poderá **aceitar ou recusar propostas** de serviço recebidas.  
+- **RF08:** O cliente poderá **cancelar propostas** de serviço enviadas.  
+- **RF09:** O sistema deve **atualizar automaticamente o status das propostas** para 'concluída' após a data de término do serviço (se aceita) e para 'expirada' se a data de início for ultrapassada (se pendente).  
+- **RF10:** O cliente poderá **visualizar o histórico de contratações**, incluindo o status das propostas e informações do cuidador.  
+- **RF11:** O cuidador poderá **visualizar o histórico de propostas** recebidas, incluindo o status e informações do cliente.  
+- **RF12:** O cliente poderá **avaliar um cuidador** (rating de 1 a 5 estrelas e comentário) após a conclusão de um serviço.  
+- **RF13:** O sistema deve fornecer um **chatbot** para responder a perguntas frequentes e auxiliar os usuários.  
+- **RF14:** O sistema deve permitir a **recuperação de senha** via email.  
+- **RF15:** O sistema deve permitir a **edição do perfil** (dados pessoais e avatar) para clientes e cuidadores.
 
 ### 4.2 Requisitos não funcionais  
 
@@ -147,6 +142,14 @@ Este documento especifica as funcionalidades esperadas da aplicação.
 
 ## 5. REGRAS DE NEGÓCIO  
 
+- **Gestão de Propostas:** Uma proposta de serviço pode ter os status: `pending` (pendente), `accepted` (aceita), `rejected` (rejeitada), `completed` (concluída), `cancelled` (cancelada) ou `expired` (expirada).  
+- **Autorização de Ações:** Apenas o cuidador pode aceitar ou recusar uma proposta. Apenas o cliente pode cancelar uma proposta.  
+- **Conclusão Automática:** Propostas aceitas são automaticamente marcadas como `completed` após a `data_fim`. Propostas pendentes são automaticamente marcadas como `expired` se a `data_inicio` for ultrapassada.  
+- **Avaliação de Serviço:** Um cliente só pode avaliar um cuidador para uma proposta que esteja no status `completed` e que ainda não tenha sido avaliada.  
+- **Acesso a Perfil do Contratante:** O cuidador somente terá acesso ao perfil do contratante após ter prestado serviço anteriormente (proposta `completed`).
+- **Contato com Cuidadores:** Clientes podem entrar em contato com cuidadores através de um botão (WhatsApp) fixado no card de apresentação do cuidador.
+- **Visualização de Currículo:** Clientes podem ver os currículos dos cuidadores através de um botão fixado no card de apresentação do cuidador.
+
   ![Modelo de Regras de negocio](/Modelagens/documentacao/negocios_conecte.png)
 
 <div align= "end"> 
@@ -159,16 +162,17 @@ Este documento especifica as funcionalidades esperadas da aplicação.
 ## 6 - ESTUDO DE VIABILIDADE  
 
 ### 6.1. Viabilidade Técnica  
-Viável – Tecnologias adequadas, gratuitas e acessíveis.  
+Viável – Tecnologias adequadas, gratuitas e acessíveis (PHP, Laravel, MySQL, MongoDB, Vite, TailwindCSS).  
 
 ### 6.2. Viabilidade Econômica  
-Viável – Baixo investimento, uso de ferramentas gratuitas.  
+Viável – Baixo investimento, uso de ferramentas gratuitas e de código aberto.  
 
 ### 6.3. Viabilidade Operacional  
-Viável – Resolve problema real com aderência à LGPD.  
+Viável – Resolve problema real com aderência à LGPD, oferecendo uma plataforma funcional para conexão entre cuidadores e clientes.  
 
 ### 6.4. Viabilidade de Mercado  
-Viável – Nicho em expansão, pouca concorrência local, oportunidade estratégica.  
+Viável – Nicho em expansão, pouca concorrência local, oportunidade estratégica para digitalização de serviços de cuidado domiciliar.
+
 <div align= "end"> 
     
 <sub> [↑ Voltar ao sumário](#0-sumário) </sub>
@@ -177,6 +181,8 @@ Viável – Nicho em expansão, pouca concorrência local, oportunidade estraté
 ---
 
 ## 7. MODELO DE DADOS  
+
+O modelo de dados da aplicação é baseado em um banco de dados relacional MySQL para a maioria das informações de usuários, propostas e avaliações, e um banco de dados NoSQL MongoDB para o armazenamento das interações do chatbot. As principais entidades incluem: `Users` (clientes e cuidadores), `Clients`, `Caregivers`, `Specialties`, `Caregiver_Specialties` (tabela pivô), `Proposals`, `Payments` e `Reviews`. 
 
 ### 7.1 Modelo de Caso de Uso
 
@@ -204,11 +210,10 @@ Fonte: Elaborado pelos autores.
 
 ### 8.1 Paleta de cores  
 
-|    Nivel   |   Descrição   |   Hex   | Cor       
-|:----------:|:-------------:|:-------:|--------------------------------------------------|
-|  Primária  |   Azul Claro  | #D1E4F5 | ![](https://placehold.co/30x15/D1E4F5/D1E4F5.png) |
-| Secundária |   Azul Médio  | #7997B9 | ![](https://placehold.co/30x15/7997B9/7997B9.png)|
-|  Terciária |  Azul Escuro  | #5A7CA0 | ![](https://placehold.co/30x15/5A7CA0/5A7CA0.png) |
+|    Nivel   |  Descrição  |   Hex   | Cor       
+|:----------:|:-----------:|:-------:|--------------------------------------------------|
+|  Primária  |    Verde    | #17a2a2 | ![](https://placehold.co/30x15/17a2a2/17a2a2.png) |
+| Secundária |   Amarelo   | #f5a623 | ![](https://placehold.co/30x15/f5a623/f5a623.png)|
 
 ### 8.2 Cores e Estilo  
 A escolha das cores azul e branco para compor a página foi feita para transmitir sensações de confiança, tranquilidade e profissionalismo. 
@@ -220,17 +225,14 @@ A escolha das cores azul e branco para compor a página foi feita para transmiti
 Juntas, essas cores criam um ambiente acolhedor e confiável, essencial para uma plataforma voltada ao cuidado e bem-estar.
 
 ### 8.3 Tipografia  
-|  Descrição  |   Nome    |
-|:-----------:|:-----------
-|  Títulos    |  Poppins  |
-| Texto Padrão|   Nunito  |
-|    Logo     | Righteous |
+|  Descrição   |   Nome    |
+|:------------:|:-----------
+|  Primária    |  Segoe UI  |
+|  Secundária  |   Georgia  |
 
 ### 8.4 Imagotipo  
 
-O símbolo gráfico escolhido é um círculo em formato de medalha, contendo um coração branco ao centro. O círculo representa união, integridade e acolhimento, enquanto o coração reforça o propósito de cuidado e empatia da plataforma. A medalha sugere reconhecimento e confiança, valores essenciais para conectar cuidadores e pacientes.
 
-O nome da marca, "Conecte", utiliza a fonte Righteous, que transmite modernidade e tecnologia. Essa escolha reforça a proposta inovadora do sistema, ao mesmo tempo em que mantém uma identidade visual amigável e acessível. O conjunto cria uma imagem marcante, profissional e alinhada ao segmento de saúde. 
 <div align= "end"> 
     
 <sub> [↑ Voltar ao sumário](#0-sumário) </sub>
@@ -250,7 +252,23 @@ Protótipo disponível no Figma: [Link para o figma](https://www.figma.com)
 
 ## 10. APLICAÇÃO  
 
-A aplicação foi desenvolvida em PHP, com layout responsivo. Inclui login, busca, visualização de perfil e contato. Testes de usabilidade foram aplicados.  
+A aplicação foi desenvolvida utilizando **PHP 8.2+** e o framework **Laravel 12** para o backend, com **MySQL** como banco de dados relacional principal e **MongoDB** para o armazenamento de dados do chatbot. O frontend foi construído com **Blade Templates**, **HTML**, **CSS** (utilizando **TailwindCSS** para estilização) e **JavaScript** (com **Vite** para o processo de build).  
+
+As principais funcionalidades implementadas incluem:
+
+- **Autenticação e Autorização:** Cadastro de dois tipos de usuários (clientes e cuidadores) e sistema de login seguro.  
+- **Gestão de Perfis:** Clientes e cuidadores podem criar e editar seus perfis, incluindo informações pessoais, fotos e, para cuidadores, detalhes como currículo, Coren/certificado e especialidades.  
+- **Busca de Cuidadores:** Clientes podem pesquisar cuidadores utilizando filtros por especialidade e visualizar seus perfis detalhados.  
+- **Gestão de Propostas de Serviço:** Clientes podem enviar propostas de serviço a cuidadores, que por sua vez podem aceitar, recusar ou ter suas propostas automaticamente atualizadas para 'concluída' ou 'expirada'.  
+- **Histórico de Serviços:** Clientes e cuidadores podem visualizar seus respectivos históricos de contratações e propostas.  
+- **Sistema de Avaliação:** Clientes podem avaliar cuidadores após a conclusão de um serviço, contribuindo para a reputação dos profissionais.  
+- **Chatbot:** Um chatbot integrado oferece suporte e respostas a perguntas frequentes dos usuários.  
+- **Recuperação de Senha:** Funcionalidade para redefinição de senha via email.  
+
+O layout da aplicação é **responsivo**, garantindo uma experiência de usuário consistente em diferentes dispositivos (mobile, tablet e desktop). Testes de usabilidade foram aplicados durante o desenvolvimento para otimizar a experiência do usuário.
+
+**[IMAGEM PENDENTE: Capturas de tela da aplicação em funcionamento]**
+
 <div align= "end"> 
     
 <sub> [↑ Voltar ao sumário](#0-sumário) </sub>
@@ -260,9 +278,8 @@ A aplicação foi desenvolvida em PHP, com layout responsivo. Inclui login, busc
 
 ## 11. CONSIDERAÇÕES FINAIS  
 
-O desenvolvimento da aplicação permitiu compreender o processo de construção de sistemas web com foco social.  
+O desenvolvimento da aplicação permitiu compreender o processo de construção de sistemas web com foco social. Apesar das dificuldades (requisitos e validação), a aplicação tem potencial de impacto positivo, conectando cuidadores e famílias de forma segura e organizada. A plataforma oferece uma solução digital para um problema real, promovendo a segurança e a eficiência na contratação de serviços de cuidado domiciliar.
 
-Apesar das dificuldades (requisitos e validação), a aplicação tem potencial de impacto positivo, conectando cuidadores e famílias de forma segura e organizada.  
 <div align= "end"> 
     
 <sub> [↑ Voltar ao sumário](#0-sumário) </sub>
@@ -281,10 +298,14 @@ Apesar das dificuldades (requisitos e validação), a aplicação tem potencial 
 - VISUAL PARADIGM. Disponível em: <https://online.visual-paradigm.com>.  
 - LARAVEL. Documentação oficial. Disponível em: <https://laravel.com/docs>.  
 - MYSQL. Documentação oficial. Disponível em: <https://dev.mysql.com/doc/>.  
+- MONGODB. Documentação oficial. Disponível em: <https://www.mongodb.com/docs/>.
+- TAILWINDCSS. Documentação oficial. Disponível em: <https://tailwindcss.com/docs>.
+- VITE. Documentação oficial. Disponível em: <https://vitejs.dev/guide/>.
 - W3C. Web Accessibility Initiative (WAI). Disponível em: <https://www.w3.org/WAI/>.  
 - GOOGLE FORMS. Disponível em: <https://docs.google.com/forms/>.  
 - MDN Web Docs. HTML, CSS e JavaScript. Disponível em: <https://developer.mozilla.org/>.  
 - SCRUM GUIDES. The Scrum Guide. Disponível em: <https://scrumguides.org/>.
+
 <div align= "end"> 
     
 <sub> [↑ Voltar ao sumário](#0-sumário) </sub>
