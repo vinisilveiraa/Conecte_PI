@@ -11,7 +11,7 @@
             <div class="content-header mb-xl">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('select.specialty') }}">Buscar</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('client.searchCaregiver') }}">Buscar</a></li>
                         <li class="breadcrumb-item active">Contratação</li>
                     </ol>
                 </nav>
@@ -61,6 +61,13 @@
                                 <span class="value">5+ anos</span>
                             </div> --}}
                         </div>
+                    </div>
+                    <div class="card hire-summary-info">
+                        <ul>
+                            <li>Você só paga após aceitar</li>
+                            <li>Cancelamento gratuito</li>
+                            <li>Cuidador será notificado imediatamente</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -145,7 +152,7 @@
 
                         <div class="form-actions-hire mt-xl">
                             <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                <i class="fa-solid fa-paper-plane mr-sm"></i> Enviar Proposta de Contratação
+                                <i class="fa-solid fa-paper-plane mr-sm"></i> Enviar Proposta
                             </button>
                             <p class="text-center text-xs text-light mt-sm">
                                 O cuidador será notificado e poderá aceitar ou recusar sua proposta.

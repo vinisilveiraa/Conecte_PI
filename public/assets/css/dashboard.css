@@ -773,6 +773,8 @@
     box-shadow: var(--shadow-sm);
     text-align: center;
     transition: var(--transition-fast);
+
+    min-width: 25%;
 }
 
 .caregiver-card:hover {
@@ -807,10 +809,20 @@
     color: var(--color-text);
 }
 
+.caregiver-info {
+    display: flex;
+    flex-direction: column;
+}
+
 .caregiver-info span {
     font-size: var(--font-size-sm);
-    color: var(--color-text-light);
+    color: var(--color-text);
     font-weight: var(--font-weight-semibold);
+}
+
+.caregiver-info strong {
+    color: var(--color-danger);
+    font-size: var(--font-size-md);
 }
 
 .caregiver-rating {
@@ -847,6 +859,7 @@
 
 .caregiver-actions {
     display: flex;
+    justify-content: center;
     gap: var(--spacing-sm);
 }
 
@@ -1223,11 +1236,27 @@
     }
 }
 
+.hire-summary-info {
+    padding: var(--spacing-lg) var(--spacing-md);
+    color: var(--color-text);
+}
+
+.hire-summary-info ul {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.hire-summary-info li::marker {
+    color: var(--color-primary);
+}
+
 .caregiver-summary-card {
     padding: var(--spacing-lg);
     text-align: center;
     position: sticky;
     top: 90px;
+
+    margin-bottom: var(--spacing-md);
 }
 
 .summary-avatar {

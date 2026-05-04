@@ -110,7 +110,7 @@
                 <div class="form-section">
                     <h3 class="form-section-title">Endereço</h3>
 
-                    <div class="form-row" style="grid-template-columns: 1fr;">
+                    <div class="form-row">
                         <div class="form-group">
                             <label for="cep">CEP</label>
                             <input type="text" id="cep" name="cep"
@@ -124,13 +124,27 @@
                         </div>
                     </div>
 
-                    <div class="form-row">
+                    <div class="form-row" style="grid-template-columns: 1fr;">
                         <div class="form-group">
                             <label for="logradouro">Logradouro</label>
                             <input type="text" id="logradouro" name="logradouro"
                                 placeholder=""value="{{ old('logradouro') }}">
                             {{-- erro --}}
                             @error('logradouro')
+                                <div style="color:#ff0000;font-weight:bold">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="numero">Número</label>
+                            <input type="text" id="numero" name="numero"
+                                placeholder=""value="{{ old('numero') }}">
+                            {{-- erro --}}
+                            @error('numero')
                                 <div style="color:#ff0000;font-weight:bold">
                                     {{ $message }}
                                 </div>
@@ -172,6 +186,9 @@
                                 </div>
                             @enderror
                         </div>
+
+                        <input type="hidden" name="latitude" id="latitude">
+                        <input type="hidden" name="longitude" id="longitude">
                     </div>
                 </div>
 
@@ -216,8 +233,7 @@
                         <div class="form-group">
                             <label for="password">Senha</label>
                             <div class="hide-password-wrap">
-                                <input type="password" id="password" name="password"
-                                    placeholder="">
+                                <input type="password" id="password" name="password" placeholder="">
                                 <i class="fas fa-eye" onclick="togglePasswordVisibility('password')"></i>
                             </div>
                         </div>
@@ -263,24 +279,4 @@
 <!-- FOOTER -->
 @include('components.footer')
 
-<script>
-    document.getElementById('cep').addEventListener('blur', function() {
-
-        const cep = this.value.replace(/\D/g, '');
-
-        if (cep.length !== 8) return;
-
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
-            .then(response => response.json())
-            .then(data => {
-
-                if (data.erro) return;
-
-                document.getElementById('logradouro').value = data.logradouro;
-                document.getElementById('bairro').value = data.bairro;
-                document.getElementById('cidade').value = data.localidade;
-                document.getElementById('estado').value = data.uf;
-
-            });
-    });
-</script>
+<script></script>

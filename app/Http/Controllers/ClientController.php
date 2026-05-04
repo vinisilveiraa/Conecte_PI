@@ -6,11 +6,22 @@ use App\Models\Caregiver;
 use App\Models\User;
 use App\Models\Specialty;
 use Illuminate\Http\Request;
+use App\Helpers\DistanceHelper;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
     public function searchCaregiver(Request $request)
     {
+        $client = $request->user();
+
+        if (!Auth::guest()) {
+            $clientLat = $client->address->latitude;
+            $clientLng = $client->address->longitude;
+        }
+
+        $caregivers = Caregiver::with('user.address')->get();
+
         // leva pro front
         $specialties = Specialty::all();
 
@@ -21,7 +32,7 @@ class ClientController extends Controller
         // primeiro pega o cuidador, carregando seus dados de usuario e especialidades
         // tambem envia reviews, 3 mais recentes
         $query = Caregiver::with([
-            'user',
+            'user.address',
             'specialties',
             'reviews' => function ($q) {
                 $q->with('user')
@@ -49,6 +60,25 @@ class ClientController extends Controller
 
         // paginate sempre por ultimo
         $caregivers = $query->paginate(10)->withQueryString();
+
+        // calcula distancia
+
+        if (!Auth::guest()) {
+            foreach ($caregivers as $caregiver) {
+
+                $lat = $caregiver->user->address->latitude ?? null;
+                $lng = $caregiver->user->address->longitude ?? null;
+
+                if ($lat && $lng && $clientLat && $clientLng) {
+                    $caregiver->distance = round(
+                        DistanceHelper::calculate($clientLat, $clientLng, $lat, $lng),
+                        1
+                    );
+                } else {
+                    $caregiver->distance = null;
+                }
+            }
+        }
 
         return view('client.searchCaregiver', compact('specialties', 'caregivers'));
     }

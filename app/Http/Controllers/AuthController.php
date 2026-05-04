@@ -11,9 +11,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
+use App\Helpers\StringHelper;
 
 class AuthController extends Controller
 {
+
     public function store(Request $request)
     {
         // regras
@@ -25,10 +29,14 @@ class AuthController extends Controller
             'telefone' => 'required|min:9|max:11',
             'cep' => 'required',
             'logradouro' => 'required',
+            'numero' => 'required|max:5',
             'bairro' => 'required',
             'cidade' => 'required',
             'estado' => 'required|size:2',
-            'password' => 'required|confirmed|min:6|max:15'
+            'password' => 'required|confirmed|min:6|max:15',
+
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric'
         ];
         // se o user for caregiver
         // validar estes campos a mais
@@ -58,6 +66,10 @@ class AuthController extends Controller
 
             'cep.required' => 'O campo cep é obrigatório',
             'logradouro.required' => 'O campo logradouro é obrigatório',
+
+            'numero.required' => 'O campo número é obrigatório',
+            'numero.max' => 'Seu numero pode conter no máximo 5 dígitos',
+
             'bairro.required' => 'O campo bairro é obrigatório',
             'cidade.required' => 'O campo cidade é obrigatório',
             'estado.required' => 'O campo estado é obrigatório',
@@ -68,9 +80,11 @@ class AuthController extends Controller
         ]);
 
         // verificar se este usuario ja existe por email e cpf
-        $user = User::where('email', $data['email'])->where('cpf', $data['cpf'])->first();
-        if ($user) {
-            return redirect()->back()->with('error', 'Ja existe um usuario com esse email ou cpf !');
+        if (User::where('email', $data['email'])->first()) {
+            return redirect()->back()->with('error', 'E-mail já cadastrado!');
+        }
+        if (User::where('cpf', $data['cpf'])->first()) {
+            return redirect()->back()->with('error', 'CPF já cadastrado!');
         }
 
         // normalizando os dados
@@ -79,45 +93,88 @@ class AuthController extends Controller
         $data['cpf'] = $this->cleanInput($data['cpf']);
         $data['rg'] = $this->cleanInput($data['rg']);
 
-        // cria usuário
-        $user = User::create([
-            'nome' => $data['nome'],
-            'cpf' => $data['cpf'],
-            'rg' => $data['rg'],
-            'email' => $data['email'],
-            'telefone' => $data['telefone'],
-            'role' => $request->role,
-            'password' => Hash::make($data['password']),
-        ]);
+        DB::beginTransaction();
 
-        // cria endereço
-        Address::create([
-            'user_id' => $user->id,
-            'cep' => $data['cep'],
-            'logradouro' => $data['logradouro'],
-            'bairro' => $data['bairro'],
-            'cidade' => $data['cidade'],
-            'estado' => $data['estado'],
-            'latitude' => 0,
-            'longitude' => 0
-        ]);
+        try {
 
-        // cria tipo de usuário
-        if ($request->role === 'client') {
-            Client::create([
-                'user_id' => $user->id
+            if (empty($data['latitude']) || empty($data['longitude'])) {
+
+                $cidade = StringHelper::removeAccents($data['cidade']);
+                $logradouro = StringHelper::removeAccents($data['logradouro']);
+                $estado = $data['estado'];
+
+                // Construa o endereço de forma mais robusta
+                $fullAddress = "{$logradouro}, {$cidade}, {$estado}, Brasil";
+
+                $response = Http::withHeaders([
+                    'User-Agent' => 'ConecteApp/1.0'
+                ])->get('https://nominatim.openstreetmap.org/search', [
+                    'q' => $fullAddress,
+                    'format' => 'json',
+                    'limit' => 1,
+                    'countrycodes' => 'br'
+                ]);
+
+                $geo = $response->json();
+
+                if (!empty($geo) && isset($geo[0]['lat']) && isset($geo[0]['lon'])) {
+                    $data['latitude'] = (float) $geo[0]['lat'];
+                    $data['longitude'] = (float) $geo[0]['lon'];
+                } else {
+                    $data['latitude'] = 0;
+                    $data['longitude'] = 0;
+                }
+            }
+
+
+            // cria usuário
+            $user = User::create([
+                'nome' => $data['nome'],
+                'cpf' => $data['cpf'],
+                'rg' => $data['rg'],
+                'email' => $data['email'],
+                'telefone' => $data['telefone'],
+                'role' => $request->role,
+                'password' => Hash::make($data['password']),
             ]);
-        } else {
 
-            Caregiver::create([
+            // cria endereço
+            Address::create([
                 'user_id' => $user->id,
-                'coren' => $data['coren'] ?? null,
-                'certificado_cuidador' => $data['certificado_cuidador'] ?? null,
-                'bio' => $data['bio'] ?? null,
-                'estrela' => 0,
-                'verificado' => true
+                'cep' => $data['cep'],
+                'logradouro' => $data['logradouro'],
+                'numero' => $data['numero'],
+                'bairro' => $data['bairro'],
+                'cidade' => $data['cidade'],
+                'estado' => $data['estado'],
+                'latitude' => $data['latitude'],
+                'longitude' => $data['longitude']
             ]);
+
+            // cria tipo de usuário
+            if ($request->role === 'client') {
+                Client::create([
+                    'user_id' => $user->id
+                ]);
+            } else {
+
+                Caregiver::create([
+                    'user_id' => $user->id,
+                    'coren' => $data['coren'] ?? null,
+                    'certificado_cuidador' => $data['certificado_cuidador'] ?? null,
+                    'bio' => $data['bio'] ?? null,
+                    'estrela' => 0,
+                    'verificado' => true
+                ]);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return back()->with('error', 'Erro ao cadastrar usuário');
         }
+
 
         // ENVIO DE E-MAIL
         // $link = route('login.link', $user->id);
@@ -141,5 +198,19 @@ class AuthController extends Controller
             }
         }
         return redirect()->route('login')->with('error', 'E-mail ou senha incorretos!');
+    }
+
+    public function getCoordinates(Request $request)
+    {
+        $endereco = $request->endereco;
+
+        $response = Http::withHeaders([
+            'User-Agent' => 'ConecteApp/1.0 (seuemail@email.com)'
+        ])->get('https://nominatim.openstreetmap.org/search', [
+            'q' => $endereco,
+            'format' => 'json'
+        ]);
+
+        return response()->json($response->json());
     }
 }// fim da classe

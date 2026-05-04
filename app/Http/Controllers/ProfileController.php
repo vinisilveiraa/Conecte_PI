@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
+use App\Helpers\StringHelper;
 
 
 class ProfileController extends Controller
@@ -14,8 +16,6 @@ class ProfileController extends Controller
 
     public function updateProfile(Request $request)
     {
-        // dd($request->all());
-
         $user = $request->user();
 
         $rules = [
@@ -25,8 +25,13 @@ class ProfileController extends Controller
             'telefone' => 'nullable|string|max:11',
             'cep' => 'nullable|string|max:10',
             'logradouro' => 'nullable|string|max:255',
+            'numero' => 'nullable|max:5',
             'bairro' => 'nullable|string|max:255',
             'cidade' => 'nullable|string|max:255',
+            'estado' => 'required|size:2',
+
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric'
         ];
 
         if ($user->role === 'caregiver') {
@@ -59,7 +64,7 @@ class ProfileController extends Controller
             'certificado_cuidador.max' => 'O certificado deve ter no máximo : max KB',
         ];
 
-        $request->validate($rules, $messages);
+        $data = $request->validate($rules, $messages);
 
         // USER
         $user->nome = $request->nome;
@@ -70,6 +75,36 @@ class ProfileController extends Controller
             $user->telefone = $request->telefone;
         }
         $user->save();
+
+
+        // fallback se n der certo com o JS
+        if (empty($data['latitude']) || empty($data['longitude'])) {
+
+            $cidade = StringHelper::removeAccents($data['cidade']);
+            $logradouro = StringHelper::removeAccents($data['logradouro']);
+            $estado = $data['estado'];
+
+            $fullAddress = "{$logradouro}, {$cidade}, {$estado}, Brasil";
+
+            $response = Http::withHeaders([
+                'User-Agent' => 'ConecteApp/1.0'
+            ])->get('https://nominatim.openstreetmap.org/search', [
+                'q' => $fullAddress,
+                'format' => 'json',
+                'limit' => 1,
+                'countrycodes' => 'br'
+            ]);
+
+            $geo = $response->json();
+
+            if (!empty($geo) && isset($geo[0]['lat']) && isset($geo[0]['lon'])) {
+                $data['latitude'] = (float) $geo[0]['lat'];
+                $data['longitude'] = (float) $geo[0]['lon'];
+            } else {
+                $data['latitude'] = 0;
+                $data['longitude'] = 0;
+            }
+        }
 
         // ADDRESS
         if ($user->address) {
@@ -85,9 +120,11 @@ class ProfileController extends Controller
             if ($request->filled('cidade')) {
                 $user->address->cidade = $request->cidade;
             }
+            $user->address->numero = $request->numero;
+            $user->address->latitude = $request->latitude;
+            $user->address->longitude = $request->longitude;
             $user->address->save();
         }
-
 
         // CAREGIVER
         if ($user->role === 'caregiver') {

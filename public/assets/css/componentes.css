@@ -78,7 +78,7 @@
 
 .navbar-buttons {
     display: flex;
-    gap: var(--spacing-md);
+    gap: var(--spacing-sm);
     align-items: center;
 }
 
@@ -227,6 +227,64 @@
 
 .dropdown-item.text-danger:hover {
     background-color: #fff5f5;
+}
+
+.navbar-user-notify {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-notify-toggle {
+    background: var(--color-primary);
+    border: 1px solid var(--color-white);
+    padding: 12px 14px;
+    border-radius: var(--border-radius-xl);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    position: relative;
+}
+
+
+.notify-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+
+    background: var(--color-secondary-light);
+    color: white;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    padding: 2px 6px;
+    border-radius: 50%;
+
+    min-width: 18px;
+    text-align: center;
+
+    animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.navbar-notify-toggle i {
+    font-size: large;
+    color: white;
 }
 
 

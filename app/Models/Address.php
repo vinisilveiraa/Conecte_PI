@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Address extends Model
 {
-     protected $fillable = [
+    protected $fillable = [
         'numero',
         'logradouro',
         'bairro',

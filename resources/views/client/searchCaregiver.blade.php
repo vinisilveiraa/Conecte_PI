@@ -173,8 +173,15 @@
                                 <h3>{{ $caregiver->user->nome }}</h3>
 
                                 <div class="caregiver-info">
-                                    <span>{{ $caregiver->user->address->cidade }} -
-                                        {{ $caregiver->user->address->estado }}</span>
+
+                                    <span class="text-muted">
+                                        <i class="fa-solid fa-map-pin"></i>
+                                        @if ($caregiver->distance)
+                                            <strong>{{ $caregiver->distance }}</strong> km /
+                                        @endif
+                                        {{ $caregiver->user->address->cidade }} -
+                                        {{ $caregiver->user->address->estado }}
+                                    </span>
                                 </div>
 
                                 <div class="caregiver-rating">
@@ -209,14 +216,13 @@
                                         data-bs-target="#perfilModal" data-caregiver='@json($caregiverData)'>
                                         Mais
                                     </button>
-
-                                    @auth
+                                    @if (Auth::guest() || Auth::user()->role == 'caregiver')
+                                        <a href="{{ route('login') }}"
+                                            class="btn btn-outline btn-sm w-100">Cadastrar-se</a>
+                                    @elseif(Auth::user()->role == 'client')
                                         <a href="{{ route('client.hire.form', $caregiver->id) }}"
                                             class="btn btn-primary btn-sm">Contratar</a>
-                                    @else
-                                        <a href="{{ route('login') }}" class="btn btn-outline  btn-sm">Cadastrar-se</a>
-                                    @endauth
-
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
@@ -301,17 +307,17 @@
 
                 <div class="modal-footer border-0 p-md">
                     <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Fechar</button>
-                    @auth
+                    @if (!Auth::guest())
                         <a id="contratarBtn" class="btn btn-primary"
                             href="{{ route('client.hire.form', 0) }}">Contratar</a>
                     @else
                         <a href="{{ route('login') }}" class="btn btn-primary">Cadastrar</a>
                     @endauth
-                </div>
-
             </div>
+
         </div>
     </div>
+</div>
 </div>
 
 <script>

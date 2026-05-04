@@ -178,6 +178,10 @@ img {
 /* Botões */
 button,
 .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
     font-family: var(--font-family-sans);
     cursor: pointer;
     border: none;
@@ -330,6 +334,7 @@ textarea {
 
 .btn-outline-primary:hover {
     background-color: var(--color-primary);
+    border: 2px solid var(--color-primary);
     color: var(--color-white);
 }
 

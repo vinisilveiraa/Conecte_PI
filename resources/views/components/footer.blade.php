@@ -1,15 +1,4 @@
 <?php
-
-/**
- * COMPONENTE FOOTER
- * Rodapé reutilizável para todas as páginas
- *
- * Uso: <?php include 'components/footer.php'; ?>
-?>
-?>
-?>
-?>
-*/
 ?>
 
 <footer class="footer">

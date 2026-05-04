@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string("cidade");
             $table->string("cep", 10);
             $table->string("estado", 2);
-            $table->decimal("latitude", 10, 7);
-            $table->decimal("longitude", 10, 7);
+            $table->decimal("latitude", 10, 7)->nullable();
+            $table->decimal("longitude", 10, 7)->nullable();
             $table->foreignId("user_id")->constrained()->onDelete("cascade");
             $table->timestamps();
         });

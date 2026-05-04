@@ -93,33 +93,39 @@
                             <div class="form-row">
                                 <div class="form-group col-4">
                                     <label>CEP</label>
-                                    <input type="text" name="cep" value="{{ Auth::user()->address->cep }}"
-                                        class="form-control cep-mask">
+                                    <input type="text" name="cep" id="cep"
+                                        value="{{ Auth::user()->address->cep }}" class="form-control cep-mask">
                                 </div>
                                 <div class="form-group col-8">
                                     <label>Logradouro</label>
-                                    <input type="text" name="logradouro"
+                                    <input type="text" name="logradouro" id="logradouro"
                                         value="{{ Auth::user()->address->logradouro }}" class="form-control">
                                 </div>
                             </div>
                             <div class="form-row mt-sm">
                                 <div class="form-group col-5">
+                                    <label>Número</label>
+                                    <input type="text" name="numero" id="numero"
+                                        value="{{ Auth::user()->address->numero }}" class="form-control">
+                                </div>
+                                <div class="form-group col-5">
                                     <label>Bairro</label>
-                                    <input type="text" name="bairro" value="{{ Auth::user()->address->bairro }}"
-                                        class="form-control">
+                                    <input type="text" name="bairro" id="bairro"
+                                        value="{{ Auth::user()->address->bairro }}" class="form-control">
                                 </div>
                                 <div class="form-group col-5">
                                     <label>Cidade</label>
-                                    <input type="text" name="cidade" value="{{ Auth::user()->address->cidade }}"
-                                        class="form-control">
+                                    <input type="text" name="cidade" id="cidade"
+                                        value="{{ Auth::user()->address->cidade }}" class="form-control">
                                 </div>
                                 <div class="form-group col-2">
                                     <label>Estado</label>
-                                    <input type="text" name="estado" value="{{ Auth::user()->address->estado }}"
-                                        class="form-control">
+                                    <input type="text" name="estado" id="estado"
+                                        value="{{ Auth::user()->address->estado }}" class="form-control">
                                 </div>
                             </div>
-
+                            <input type="hidden" name="latitude" id="latitude">
+                            <input type="hidden" name="longitude" id="longitude">
                         </div>
 
                         <div class="form-actions mt-xl">
@@ -138,27 +144,6 @@
 
 
 <script>
-    const cepInput = document.querySelector('input[name="cep"]');
-
-    cepInput.addEventListener('blur', function() {
-        let cep = cepInput.value.replace(/\D/g, '');
-
-        if (cep.length !== 8) return;
-
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
-            .then(res => res.json())
-            .then(data => {
-                if (data.erro) return;
-
-                document.querySelector('input[name="logradouro"]').value = data.logradouro;
-                document.querySelector('input[name="bairro"]').value = data.bairro;
-                document.querySelector('input[name="cidade"]').value = data.localidade;
-            })
-            .catch(() => {
-                console.log('Erro ao buscar CEP');
-            });
-    });
-
     document.addEventListener('DOMContentLoaded', function() {
         const input = document.getElementById('avatarInput');
 

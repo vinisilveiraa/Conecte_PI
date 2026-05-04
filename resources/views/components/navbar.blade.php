@@ -52,6 +52,7 @@
                     <div class="dropdown">
                         <button class="navbar-profile-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
+
                             <div class="navbar-profile-info">
                                 @if (Auth::user()->foto)
                                     <img src="{{ asset('storage/' . (auth()->user()->role === 'client' ? 'clients/' : 'caregivers/') . Auth::user()->foto) }}"
@@ -99,6 +100,37 @@
                                     <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Sair
                                 </a>
                             </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="navbar-user-notify">
+                    <div class="dropdown">
+                        <button class="navbar-notify-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-bell"></i>
+
+                            @if (auth()->user()->unreadNotifications->count() > 0)
+                                <span class="notify-badge">
+                                    {{ auth()->user()->unreadNotifications->count() > 9 ? '9+' : auth()->user()->unreadNotifications->count() }}
+                                </span>
+                            @endif
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
+                            @if (auth()->user()->unreadNotifications->count() > 0)
+                                @foreach (auth()->user()->unreadNotifications as $notification)
+                                    <li>
+                                        <a href="{{ url('/notification/' . $notification->id) }}">
+                                            class="dropdown-item py-2">
+                                            {{ $notification->data['message'] }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @else
+                                <li>
+                                    <a href="dropdown-item py-2">
+                                        Nenhuma notificação recebida...
+                                    </a>
+                                </li>
+                            @endif
                         </ul>
                     </div>
                 </div>

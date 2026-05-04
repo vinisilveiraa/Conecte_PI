@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Proposal;
 use App\Models\Specialty;
 use App\Models\Review;
+use App\Notifications\NewProposalNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -111,8 +112,6 @@ class ProposalController extends Controller
     }
 
 
-
-
     // post
     public function hireCaregiver(Request $request)
     {
@@ -120,6 +119,7 @@ class ProposalController extends Controller
         // dd($request->all());
 
         $user = $request->user();
+        $caregiver = Caregiver::with('user')->findOrFail($request->caregiver_id);
 
         $rules = [
             'caregiver_id' => 'required|exists:caregivers,id',
@@ -151,7 +151,7 @@ class ProposalController extends Controller
 
         $validated = $request->validate($rules, $messages);
 
-        Proposal::create([
+        $proposal = Proposal::create([
             'valor_servico' => $validated['valor_servico'],
             'data_inicio' => $validated['data_inicio'],
             'data_fim' => $validated['data_fim'],
@@ -166,7 +166,14 @@ class ProposalController extends Controller
             // 'status' => pending,
         ]);
 
-        return redirect()->route('client.hire-history')->with('success', 'Contratação solicitada com sucesso!');
+
+        $caregiver->user->notify(
+            new NewProposalNotification($proposal)
+        );
+
+        return redirect()
+            ->route('client.hire-history')
+            ->with('success', 'Contratação solicitada com sucesso!');
     }
 
     public function setProposalStatus($id, $status)

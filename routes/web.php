@@ -12,12 +12,24 @@ use App\Models\Client;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Notifications\Notifiable;
 
 // esta rota é apenas para a vizualizaação da pagina de email
 Route::view("/teste", "auth.check-email")->name('check-email');
 
+// rota pra pega cordenada
+Route::get('/geocode', [AuthController::class, 'getCoordinates']);
 
 
+// Route::middleware('auth')->get('/notification/{id}', function ($id) {
+//     $notification = Auth::user()
+//         ->notifications()
+//         ->findOrFail($id);
+
+//     $notification->markAsRead();
+
+//     return redirect($notification->data['link']);
+// });
 
 
 // ROTAS PARA USUARIOS AUTENTICADOS
@@ -42,9 +54,6 @@ Route::middleware('auth')->group(function () {
 
     // CLIENT
     Route::view('/dashboard-client', 'client.dashboard-client')->name('dashboard.client');
-    Route::get("/searchCaregiver", [ClientController::class, 'searchCaregiver'])
-        ->name('client.searchCaregiver');
-
 
     // CAREGIVER
     Route::view('/dashboard-caregiver', 'caregiver.dashboard-caregiver')->name('dashboard.caregiver');
@@ -104,6 +113,11 @@ Route::view("/contatos", "site.contatos")->name('contatos');
 Route::post('/chatbot', [ChatbotController::class, 'responder']);
 
 
+Route::get("/searchCaregiver", [ClientController::class, 'searchCaregiver'])
+    ->name('client.searchCaregiver');
+
+
+
 
 // ROTAS PARA VISITANTES
 Route::middleware('guest')->group(function () {
@@ -118,9 +132,6 @@ Route::middleware('guest')->group(function () {
     Route::view("/register-client", "auth.register-client")->name('register.client');
     Route::view('/register-caregiver', 'auth.register-caregiver')->name('register.caregiver');
 
-    Route::get("/searchCaregiver", [ClientController::class, 'searchCaregiver'])
-        ->name('client.searchCaregiver');
-
     // ESQUECI SENHA
     Route::view('/forgot-password', 'site.forgot-password')
         ->name('password.request');
@@ -134,6 +145,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/password-update', [PasswordController::class, 'updatePassword'])
         ->name('password.update');
 });
+
 
 
 // ROTA EXCLUSIVA PARA A CONFIRMAÇÃO DO EMAIL
