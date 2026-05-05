@@ -342,6 +342,9 @@ textarea {
     background-color: transparent;
     color: var(--color-primary);
     border: 2px solid var(--color-primary);
+
+    display: flex;
+    gap: var(--spacing-sm);
 }
 
 .btn-outline:hover {
@@ -690,4 +693,46 @@ textarea {
     .section {
         padding: var(--spacing-lg) 0;
     }
+}
+
+
+/* CLASSES USADAS + */
+
+.form-group {
+    flex: 1;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.form-label {
+    display: block;
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 8px;
+    color: var(--color-text);
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    transition: border-color 0.2s;
+}
+
+.form-control:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(23, 162, 162, 0.1);
+}
+
+.card-title {
+    font-size: var(--font-size-lg);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.form-row {
+    display: flex;
+    gap: var(--spacing-md);
 }

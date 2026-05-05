@@ -23,6 +23,11 @@ class Review extends Model
         return $this->belongsTo(Proposal::class);
     }
 
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(Client::class);
+    }
+
     public function revisor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'revisor_id');

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Caregiver;
 use App\Models\Specialty;
+use App\Models\Proposal;
+use App\Models\Client;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -57,6 +60,42 @@ class CaregiverController extends Controller
         return view('caregiver.specialties', compact(
             'mySpecialties',
             'availableSpecialties'
+        ));
+    }
+
+    public function showDashboard()
+    {
+        $caregiverId = Auth::user()->caregiver->id;
+
+        $proposals = Proposal::with('client.user')
+            ->where('caregiver_id', $caregiverId)
+            ->where('status', 'accepted')
+            ->latest()
+            ->limit(3)
+            ->get();
+
+        $reviews = Review::with('client.user')
+            ->where('caregiver_id', $caregiverId)
+            ->latest()
+            ->limit(3)
+            ->get();
+
+        $totalProposals = Proposal::where('caregiver_id', $caregiverId)
+            ->where('status', 'completed')
+            ->count();
+
+        $totalReviews = Review::where('caregiver_id', $caregiverId)
+            ->count();
+
+        $averageRating = Review::where('caregiver_id', $caregiverId)
+            ->avg('rating');
+
+        return view('caregiver.dashboard-caregiver', compact(
+            'proposals',
+            'reviews',
+            'totalProposals',
+            'totalReviews',
+            'averageRating'
         ));
     }
 }

@@ -23,7 +23,9 @@
                 <span class="sidebar-text">Propostas</span>
             </a>
 
-            <a href="#" class="sidebar-menu-item" title="Avaliações">
+            <a href="{{ route('caregiver.showReviews') }}"
+                class="sidebar-menu-item {{ request()->routeIs('caregiver.showReviews') ? 'active' : '' }}"
+                title="Avaliações">
                 <i class="fa-solid fa-star"></i>
                 <span class="sidebar-text">Avaliações</span>
             </a>

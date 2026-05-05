@@ -86,7 +86,7 @@
                             @if (auth()->user()->role === 'client')
                                 <li>
                                     <a class="dropdown-item py-2" href="{{ route('client.hire-history') }}">
-                                        <i class="fa-solid fa-clock-rotate-left me-2"></i> Historico
+                                        <i class="fa-solid fa-clock-rotate-left me-2"></i> Propostas
                                     </a>
                                 </li>
                             @elseif (auth()->user()->role === 'caregiver')
@@ -118,10 +118,11 @@
                             @if (auth()->user()->unreadNotifications->count() > 0)
                                 @foreach (auth()->user()->unreadNotifications as $notification)
                                     <li>
-                                        <a href="{{ url('/notification/' . $notification->id) }}">
+                                        {{-- <a href="{{ route('notifications/$notification->id') }}"
                                             class="dropdown-item py-2">
+                                            <i class="fa-solid fa-exclamation"></i>
                                             {{ $notification->data['message'] }}
-                                        </a>
+                                        </a> --}}
                                     </li>
                                 @endforeach
                             @else

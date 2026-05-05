@@ -7,7 +7,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProposalController;
-
+use App\Http\Controllers\ReviewController;
+use App\Models\Caregiver;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -56,7 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::view('/dashboard-client', 'client.dashboard-client')->name('dashboard.client');
 
     // CAREGIVER
-    Route::view('/dashboard-caregiver', 'caregiver.dashboard-caregiver')->name('dashboard.caregiver');
+    Route::get('/dashboard-caregiver', [CaregiverController::class, 'showDashboard'])
+        ->name('dashboard.caregiver');
 
     Route::get("/caregiver-specialties", [CaregiverController::class, 'showSpecialties'])
         ->name('caregiver.specialties');
@@ -74,6 +76,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard-caregiver-proposals', [ProposalController::class, 'proposalHistory'])
         ->name('caregiver.proposals');
 
+    Route::get('/dashboard-reviews', [ReviewController::class, 'showReview'])
+        ->name('caregiver.showReviews');
+
 
     // CLIENTE : CONTRATAR - HIRE
     Route::get('/dashboard-hire-form/{id}', [ProposalController::class, 'hireForm'])
@@ -84,7 +89,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard-hire-history', [ProposalController::class, 'hireHistory'])
         ->name('client.hire-history');
-    Route::post('/dashboard-hire-history/rate', [ProposalController::class, 'rateCaregiver'])
+
+    // review
+    Route::post('/dashboard-hire-history/rate', [ReviewController::class, 'rateCaregiver'])
         ->name('client.proposal.rate');
 
 

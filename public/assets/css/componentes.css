@@ -11,7 +11,7 @@
     box-shadow: var(--shadow-sm);
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 1001;
     padding: var(--spacing-sm) 0;
 }
 
@@ -211,6 +211,10 @@
     border-radius: 8px;
     font-size: 0.9rem;
     transition: background 0.2s ease;
+}
+
+.dropdown-item:hover {
+    color: var(--color-primary);
 }
 
 .dropdown-item i {
