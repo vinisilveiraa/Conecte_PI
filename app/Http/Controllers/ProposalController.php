@@ -83,7 +83,10 @@ class ProposalController extends Controller
             $client->proposals(),
             [
                 'caregiver.user',
-                'caregiver.reviews',
+                'caregiver' => function ($q) {
+                    $q->withCount('reviews')
+                        ->withAvg('reviews', 'rating');
+                },
                 'review'
             ],
             $status

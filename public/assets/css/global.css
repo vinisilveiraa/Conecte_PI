@@ -182,6 +182,8 @@ button,
     align-items: center;
     justify-content: center;
 
+    gap: var(--spacing-sm);
+
     font-family: var(--font-family-sans);
     cursor: pointer;
     border: none;
@@ -342,9 +344,6 @@ textarea {
     background-color: transparent;
     color: var(--color-primary);
     border: 2px solid var(--color-primary);
-
-    display: flex;
-    gap: var(--spacing-sm);
 }
 
 .btn-outline:hover {

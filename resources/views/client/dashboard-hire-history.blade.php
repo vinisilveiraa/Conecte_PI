@@ -59,11 +59,11 @@
                                 @endif
                             </div>
                             <h4 class="request-user-name">{{ $request->caregiver->user->nome }}</h4>
-                            <span class="rating-stars mb-sm">
-                                @if ($request->caregiver->reviews->count() > 0)
+                            <span class="rating-stars mb-1">
+                                @if ($request->caregiver->reviews_count > 0)
                                     <i class="fa-solid fa-star"></i>
-                                    <span>{{ number_format($request->caregiver->reviews->avg('rating'), 1) }}</span>
-                                    <span class="text-muted">({{ $request->caregiver->reviews->count() }})</span>
+                                    <span>{{ number_format($request->caregiver->reviews_avg_rating, 1) }}</span>
+                                    <sub class="text-muted">({{ $request->caregiver->reviews_count }})</sub>
                                 @else
                                     <span class="text-muted rate-count">Sem avaliações</span>
                                 @endif
@@ -106,8 +106,10 @@
                             <div class="request-stats-grid">
                                 <div class="stat-item">
                                     <label><i class="fa-solid fa-calendar mr-xs"></i> Período</label>
-                                    <span>{{ $request->data_inicio }}</span>
-                                    <span>{{ $request->data_fim }}</span>
+                                    <span>
+                                        {{ \Carbon\Carbon::parse($request->data_inicio)->format('d/m/Y') }} -
+                                        {{ \Carbon\Carbon::parse($request->data_fim)->format('d/m/Y') }}
+                                    </span>
                                 </div>
 
                                 <div class="stat-item">
@@ -178,7 +180,7 @@
                     <div class="card text-center">
                         <i class="fa-solid fa-exclamation text-muted m-4" style="font-size: 40px;"></i>
                         <p class="text-muted">Você ainda não enviou nenhuma solicitação.</p>
-                        <a href="{{ route('select.specialty') }}" class="btn btn-primary">Buscar Cuidadores
+                        <a href="{{ route('client.searchCaregiver') }}" class="btn btn-primary">Buscar Cuidadores
                             Agora</a>
                     </div>
                 @endforelse
@@ -226,7 +228,7 @@
                             Período do Serviço
                         </h4>
                         <div class="info-item centered">
-                            <span id="modal-inicio"></span> - <span id="modal-fim"></span>
+                            <span id="modal-inicio"></span>-<span id="modal-fim"></span>
                         </div>
 
                     </div>

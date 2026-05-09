@@ -216,9 +216,11 @@
     margin-top: var(--spacing-xl);
 }
 
-.dashboard-grid-new .card {
+/* .
+dashboard-grid-new .card {
     min-height: 240px;
 }
+*/
 
 @media (min-width: 1024px) {
     .dashboard-grid-new {
@@ -228,7 +230,7 @@
 
 @media (min-width: 1440px) {
     .dashboard-grid-new {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
@@ -261,7 +263,8 @@
     background-color: var(--color-light-gray);
 }
 
-.review-user-wrap {
+.review-user-wrap,
+.proposal-item-wrap {
     display: flex;
     gap: var(--spacing-sm);
 }
@@ -286,6 +289,7 @@
     margin: 0;
     font-size: var(--font-size-base);
     color: var(--color-text);
+    margin-bottom: 2px;
 }
 
 .proposal-item .proposal-details p,
@@ -293,6 +297,7 @@
     margin: 0;
     font-size: var(--font-size-sm);
     color: var(--color-text-light);
+    line-height: 1;
 }
 
 .proposal-item .btn,
@@ -524,7 +529,7 @@
     font-weight: var(--font-weight-medium);
 }
 
-.feedback-feed-card  {
+.feedback-feed-card {
     display: flex;
     flex-direction: column;
     justify-content: stretch;
@@ -559,7 +564,7 @@
 }
 
 .feedback-feed-card .feedback-stat-highlight {
-    background: linear-gradient(135deg, #facc15, #fde68a);
+    background: var(--color-light-blue);
     border-radius: 12px;
     padding: 20px;
     text-align: center;
@@ -584,9 +589,17 @@
     font-size: 28px;
 }
 
-.feedback-feed-card .high { background: linear-gradient(135deg, #22c55e, #86efac); }
-.feedback-feed-card .mid  { background: linear-gradient(135deg, #facc15, #fde68a); }
-.feedback-feed-card .low  { background: linear-gradient(135deg, #ef4444, #fca5a5); }
+.feedback-feed-card .high {
+    background: linear-gradient(135deg, #22c0c5, #86e3ef);
+}
+
+.feedback-feed-card .mid {
+    background: linear-gradient(135deg, #fdd949, #fde68a);
+}
+
+.feedback-feed-card .low {
+    background: linear-gradient(135deg, #ef4444, #fca5a5);
+}
 
 /* ===================================== */
 /* BUSCA DE CUIDADORES */
@@ -725,18 +738,32 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    max-height: 200px;
-    overflow-y: auto;
+
+    max-height: 0;
+    overflow: hidden;
+
+    transition:
+        max-height 0.3s ease-out,
+        padding 0.3s ease-out;
+
     padding-right: 5px;
 }
 
-/* Scrollbar customizada para as opções */
+.filter-options.active {
+    max-height: 200px;
+    overflow-y: auto;
+
+    padding-top: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
+}
+
+/* Scrollbar */
 .filter-options::-webkit-scrollbar {
     width: 4px;
 }
 
 .filter-options::-webkit-scrollbar-thumb {
-    background: #ddd;
+    background: var(--color-medium-gray);
     border-radius: 10px;
 }
 
@@ -2134,32 +2161,6 @@ avaliacao cuidador
     align-items: center;
     cursor: pointer;
     padding: var(--spacing-xs) 0;
-}
-
-.filter-options {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-    padding-right: 5px;
-}
-
-.filter-options.active {
-    max-height: 200px;
-    overflow-y: auto;
-    padding-top: var(--spacing-sm);
-    padding-bottom: var(--spacing-sm);
-}
-
-.filter-options::-webkit-scrollbar {
-    width: 4px;
-}
-
-.filter-options::-webkit-scrollbar-thumb {
-    background: var(--color-medium-gray);
-    border-radius: 10px;
 }
 
 .checkbox-item {

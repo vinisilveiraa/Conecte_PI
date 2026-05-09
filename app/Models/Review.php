@@ -28,6 +28,11 @@ class Review extends Model
         return $this->belongsTo(Client::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function revisor(): BelongsTo
     {
         return $this->belongsTo(User::class, 'revisor_id');

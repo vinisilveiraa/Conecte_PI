@@ -13,6 +13,14 @@
             <h1 class="mb-4">Buscar Cuidadores</h1>
             <p></p>
 
+            @auth
+                @if (Auth::user()->role == 'caregiver')
+                    <p class="alert-info text-muted text-center mb-3 p-2">
+                        Cadastre-se como cliente para contratar cuidadores!
+                    </p>
+                @endif
+            @endauth
+
             @if (session('error'))
                 <div class="alert alert-danger">
                     {{ session('error') }}
@@ -54,7 +62,6 @@
                 </p>
             @endif
 
-
             <div class="search-wrapper">
                 <!-- FILTROS -->
                 <div class="filters-sidebar">
@@ -62,13 +69,22 @@
 
                     <form action="{{ route('client.searchCaregiver') }}" method="GET" id="filterForm">
 
+                        <div class="sidebar-actions mb-3">
+                            {{-- <button type="submit" class="btn-apply">
+                                Aplicar Filtros
+                            </button> --}}
+                            <a href="{{ route('client.searchCaregiver') }}" class="btn-clear">
+                                Limpar Filtros
+                            </a>
+                        </div>
+
                         {{-- Categoria: Cuidados Pessoais --}}
                         <div class="filter-section">
                             <div class="filter-title" onclick="toggleSection('sec-pessoais')">
                                 Cuidados Pessoais
                                 <i class="fas fa-chevron-down text-muted small"></i>
                             </div>
-                            <div class="filter-options" id="sec-pessoais">
+                            <div class="filter-options active" id="sec-pessoais">
                                 @foreach ($specialties as $specialty)
                                     @if ($specialty->categoria === 'Cuidados Pessoais')
                                         <label class="checkbox-item">
@@ -87,7 +103,7 @@
                                 Saúde
                                 <i class="fas fa-chevron-down text-muted small"></i>
                             </div>
-                            <div class="filter-options" id="sec-saude">
+                            <div class="filter-options active" id="sec-saude">
                                 @foreach ($specialties as $specialty)
                                     @if ($specialty->categoria === 'Saúde')
                                         <label class="checkbox-item">
@@ -106,7 +122,7 @@
                                 Acompanhamento
                                 <i class="fas fa-chevron-down text-muted small"></i>
                             </div>
-                            <div class="filter-options" id="sec-acompanhamento">
+                            <div class="filter-options active" id="sec-acompanhamento">
                                 @foreach ($specialties as $specialty)
                                     @if ($specialty->categoria === 'Acompanhamento')
                                         <label class="checkbox-item">
@@ -125,7 +141,7 @@
                                 Especializados
                                 <i class="fas fa-chevron-down text-muted small"></i>
                             </div>
-                            <div class="filter-options" id="sec-especializados">
+                            <div class="filter-options active" id="sec-especializados">
                                 @foreach ($specialties as $specialty)
                                     @if ($specialty->categoria === 'Especializados')
                                         <label class="checkbox-item">
@@ -138,14 +154,6 @@
                             </div>
                         </div>
 
-                        <div class="sidebar-actions">
-                            <button type="submit" class="btn-apply">
-                                Aplicar Filtros
-                            </button>
-                            <a href="{{ route('client.searchCaregiver') }}" class="btn-clear">
-                                Limpar Tudo
-                            </a>
-                        </div>
                     </form>
                 </div>
 
@@ -372,13 +380,12 @@
     function toggleSection(id) {
         const section = document.getElementById(id);
         const icon = section.previousElementSibling.querySelector('i');
-        const isHidden = getComputedStyle(section).display === "none";
 
-        if (isHidden) {
-            section.style.display = "flex";
+        section.classList.toggle('active');
+
+        if (section.classList.contains('active')) {
             icon.classList.replace('fa-chevron-right', 'fa-chevron-down');
         } else {
-            section.style.display = "none";
             icon.classList.replace('fa-chevron-down', 'fa-chevron-right');
         }
     }

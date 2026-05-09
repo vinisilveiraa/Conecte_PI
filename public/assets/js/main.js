@@ -458,8 +458,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         modal.querySelector('#modal-proposal-id').value = proposalId;
         modal.querySelector('#modal-nome').textContent = nome;
-        modal.querySelector('#modal-inicio').textContent = inicio;
-        modal.querySelector('#modal-fim').textContent = fim;
+
+        const data = new Date(inicio.replace(' ', 'T'));
+
+        modal.querySelector('#modal-inicio').textContent =
+            data.toLocaleDateString('pt-BR');
+
+        modal.querySelector('#modal-fim').textContent =
+            data.toLocaleDateString('pt-BR');
 
         // Atualiza imagem
         const img = modal.querySelector('#modal-avatar');

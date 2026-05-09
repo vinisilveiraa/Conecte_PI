@@ -98,8 +98,10 @@
                             <div class="request-stats-grid">
                                 <div class="stat-item">
                                     <label><i class="fa-solid fa-calendar mr-xs"></i> Período</label>
-                                    <span>{{ $proposal->data_inicio }} -
-                                        {{ $proposal->data_fim }}</span>
+                                    <span>
+                                        {{ \Carbon\Carbon::parse($proposal->data_inicio)->format('d/m/Y') }} -
+                                        {{ \Carbon\Carbon::parse($proposal->data_fim)->format('d/m/Y') }}
+                                    </span>
                                 </div>
                                 <div class="stat-item">
                                     <label><i class="fa-solid fa-location-dot mr-xs"></i> Localização</label>

@@ -37,19 +37,30 @@
                         @forelse ($proposals as $proposal)
                             @if ($proposal->status == 'pending' || $proposal->status == 'accepted')
                                 <div class="proposal-item">
-                                    <div class="proposal-avatar">
-                                        <i class="fa-solid fa-user-injured"></i>
+                                    <div class="proposal-item-wrap">
+                                        <div class="proposal-avatar">
+                                            @if ($proposal->client->user->foto == null)
+                                                <i class="fa-solid fa-user"></i>
+                                            @else
+                                                <img src="{{ asset('storage/users/' . $review->client->user->foto) }}"
+                                                    alt="{{ $review->client->user->nome }}">
+                                            @endif
+                                        </div>
+                                        <div class="proposal-details">
+                                            <h4> {{ $proposal->client->user->nome }} </h4>
+                                            <p> <span>{{ $proposal->created_at->format('d/m/Y') }}</span> </p>
+                                        </div>
                                     </div>
                                     <div class="proposal-details">
-                                        <h4> {{ $proposal->client->nome }} </h4>
-                                        <p>Status: <span> {{ $proposal->status }}</span>
-                                        </p>
+                                        <div class="request-badge badge-{{ $proposal->status }}">
+                                            {{ ucfirst($proposal->status) }}
+                                        </div>
                                     </div>
                                     {{-- <a href="" class="btn btn-sm btn-outline-primary">Ver Perfil</a> --}}
                                 </div>
                             @endif
                         @empty
-                            <p class="text-muted">Nenhum paciente atribuído ainda.</p>
+                            <p class="text-muted text-center">Nenhum paciente atribuído ainda.</p>
                         @endforelse
                     </div>
                 </div>
@@ -81,7 +92,7 @@
                                 </div>
                             </div>
                         @empty
-                            <p class="text-muted">Nenhuma análise recente.</p>
+                            <p class="text-muted text-center">Nenhuma análise recente.</p>
                         @endforelse
                     </div>
                 </div>
@@ -97,7 +108,7 @@
                                 <span class="alert-time"></span>
                             </div>
                         @empty
-                            <p class="text-muted">Nenhum alerta ou notificação recente.</p>
+                            <p class="text-muted text-center">Nenhum alerta ou notificação recente.</p>
                         @endforelse
                     </div>
                 </div>
@@ -121,38 +132,44 @@
                         </div>
 
                         <!-- DESTAQUE (nota grande) -->
-                        <div
-                            class="feedback-stat-highlight  {{ $averageRating >= 4 ? 'high' : ($averageRating >= 3 ? 'mid' : 'low') }}">
-                            <span class="stat-label">Média de avaliação</span>
-
-                            <div class="rating-big">
-                                {{ number_format($averageRating ?? 0, 1) }}
-                                <span class="star">★</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Antigo perfil e informações do usuário (movidos ou simplificados) -->
-                <div class="card profile-summary-card">
-                    <h3>Meu Perfil</h3>
-                    <div class="profile-avatar-summary">
-                        @if (Auth::user()->foto == null)
-                            <i class="fa-solid fa-user"></i>
-                        @else
-                            <img src="{{ asset('storage/caregivers/' . Auth::user()->foto) }}" alt="">
+                        @if (!$totalReviews)
+                            <div class="feedback-stat-highlight">
+                            @else
+                                <div
+                                    class="feedback-stat-highlight
+                                    {{ $averageRating >= 4 ? 'high' : ($averageRating >= 3 ? 'mid' : 'low') }}">
                         @endif
-                    </div>
-                    <h4>{{ ucwords(Auth::user()->nome) }}</h4>
-                    <p class="text-muted"></p>
-                    <a href="{{ route('dashboard.caregiver-editProfile') }}"
-                        class="btn btn-outline-primary btn-block mt-md">Editar Perfil</a>
-                </div>
 
+                        <span class="stat-label">Média de avaliação</span>
+
+                        <div class="rating-big">
+                            {{ number_format($averageRating ?? 0, 1) }}
+                            <span class="star">★</span>
+                        </div>
+                    </div>
+
+                </div>
             </div>
+
+            <!-- Antigo perfil e informações do usuário (movidos ou simplificados) -->
+            <div class="card profile-summary-card">
+                <h3>Meu Perfil</h3>
+                <div class="profile-avatar-summary">
+                    @if (Auth::user()->foto == null)
+                        <i class="fa-solid fa-user"></i>
+                    @else
+                        <img src="{{ asset('storage/caregivers/' . Auth::user()->foto) }}" alt="">
+                    @endif
+                </div>
+                <h4>{{ ucwords(Auth::user()->nome) }}</h4>
+                <p class="text-muted"></p>
+                <a href="{{ route('dashboard.caregiver-editProfile') }}"
+                    class="btn btn-outline-primary btn-block mt-md">Editar Perfil</a>
+            </div>
+
         </div>
-    </main>
+</div>
+</main>
 </div>
 
 

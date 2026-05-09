@@ -15,7 +15,7 @@ class ClientController extends Controller
     {
         $client = $request->user();
 
-        if (!Auth::guest()) {
+        if ($client && $client->address) {
             $clientLat = $client->address->latitude;
             $clientLng = $client->address->longitude;
         }
