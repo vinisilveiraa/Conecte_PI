@@ -8,12 +8,14 @@ use App\Models\Caregiver;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\StringHelper;
+use App\Helpers\SlugHelper;
 
 class AuthController extends Controller
 {
@@ -158,13 +160,22 @@ class AuthController extends Controller
                 ]);
             } else {
 
+                $slug = SlugHelper::generateUnique($request->slug);
+
+                do {
+                    $publicCode = 'CON-' . strtoupper(Str::random(4));
+                } while (Caregiver::where('public_code', $publicCode)->exists());
+
+
                 Caregiver::create([
                     'user_id' => $user->id,
+                    'slug' => $slug,
+                    'public_code' => $publicCode,
                     'coren' => $data['coren'] ?? null,
                     'certificado_cuidador' => $data['certificado_cuidador'] ?? null,
                     'bio' => $data['bio'] ?? null,
                     'estrela' => 0,
-                    'verificado' => true
+                    'verificado' => false
                 ]);
             }
 

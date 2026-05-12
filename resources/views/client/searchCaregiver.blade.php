@@ -209,6 +209,8 @@
                                     $caregiverData = [
                                         'id' => $caregiver->id,
                                         'nome' => $caregiver->user->nome,
+                                        'slug' => $caregiver->slug,
+                                        'profile_url' => route('caregiver.public-profile', $caregiver->slug),
                                         'foto' => $caregiver->user->foto,
                                         'cidade' => $caregiver->user->address->cidade ?? null,
                                         'bio' => $caregiver->bio,
@@ -316,8 +318,7 @@
                 <div class="modal-footer border-0 p-md">
                     <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Fechar</button>
                     @if (!Auth::guest())
-                        <a id="contratarBtn" class="btn btn-primary"
-                            href="{{ route('client.hire.form', 0) }}">Contratar</a>
+                        <a id="profileBtn" class="btn btn-primary">Ver Perfil</a>
                     @else
                         <a href="{{ route('login') }}" class="btn btn-primary">Cadastrar</a>
                     @endauth
@@ -371,8 +372,8 @@
                     container.innerHTML += `<span class="badge-tag">${nome}</span>`;
                 });
 
-                document.getElementById('contratarBtn').href =
-                    `/hire/${caregiver.id}`;
+                document.getElementById('profileBtn').href =
+                    caregiver.profile_url;
             });
         });
     });

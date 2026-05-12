@@ -79,7 +79,8 @@
                                     {{ $request->accepted_at }}</span>
                             @endif
 
-                            <a href="" class="btn btn-outline-primary w-100 mt-auto">Ver
+                            <a href="{{ route('caregivers.public-profile', $request->caregiver->slug) }}"
+                                class="btn btn-outline-primary w-100 mt-auto">Ver
                                 Perfil</a>
                         </div>
 
@@ -127,11 +128,11 @@
                             <!-- Ações Inferiores -->
                             <div class="request-actions-bar">
                                 @if ($request->status == 'pending')
-                                    <form action=" # " method="POST">
+                                    {{-- <form action=" # " method="POST">
                                         @csrf @method('PATCH')
                                         <button type="submit" class="btn btn-outline-warning">Editar
                                             Solicitação</button>
-                                    </form>
+                                    </form> --}}
                                     <form
                                         action="{{ route('proposal.set-proposal-status', [
                                             'id' => $request->id,

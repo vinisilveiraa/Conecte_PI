@@ -13,12 +13,23 @@ return new class extends Migration
     {
         Schema::create('caregivers', function (Blueprint $table) {
             $table->id();
-            $table->string('coren')->nullable();
+            $table->string('slug', 24)->unique();
+            $table->string('public_code')->unique();
+            $table->string('coren', 20)->nullable();
             $table->string('certificado_cuidador')->nullable();
+
+            $table->string('headline')->nullable();
             $table->text("bio")->nullable();
-            // $table->integer("like")->default(0);
-            // $table->integer("deslike")->default(0);
+            $table->integer('experience_years')->nullable();
+            $table->decimal('hour_price', 10, 2)->nullable();
+
             $table->boolean("verificado")->default(false);
+
+            $table->boolean("available_morning")->default(false);
+            $table->boolean("available_afternoon")->default(false);
+            $table->boolean("available_night")->default(false);
+            $table->boolean("available_weekends")->default(false);
+
             $table->foreignId("user_id")->constrained()->onDelete("cascade");
 
             $table->timestamps();

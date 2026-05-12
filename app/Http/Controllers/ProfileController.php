@@ -34,12 +34,6 @@ class ProfileController extends Controller
             'longitude' => 'nullable|numeric'
         ];
 
-        if ($user->role === 'caregiver') {
-            $rules['coren'] = 'nullable|string|max:50';
-            $rules['certificado_cuidador'] = 'nullable|file|mimes:jpg,png,pdf|max:2048';
-            $rules['bio'] = 'nullable|string|max:1000';
-        }
-
         $messages = [
             'email.email' => 'Digite um e-mail válido',
             'email.unique' => 'Este e-mail já está em uso',
@@ -125,31 +119,6 @@ class ProfileController extends Controller
             $user->address->longitude = $request->longitude;
             $user->address->save();
         }
-
-        // CAREGIVER
-        if ($user->role === 'caregiver') {
-
-            $caregiver = $user->caregiver;
-
-            $caregiver->coren = $request->coren;
-            $caregiver->bio = $request->bio;
-
-            // CERTIFICADO
-            if ($request->hasFile('certificado_cuidador')) {
-
-                // apaga antigo
-                if ($caregiver->certificado_cuidador) {
-                    Storage::disk('public')->delete($caregiver->certificado_cuidador);
-                }
-
-                $caminho = $request->file('certificado_cuidador')->store('certificados', 'public');
-
-                $caregiver->certificado_cuidador = $caminho;
-            }
-
-            $caregiver->save();
-        }
-
 
         if ($request->hasFile('foto')) {
             $this->handleAvatarUpload($request, $user);

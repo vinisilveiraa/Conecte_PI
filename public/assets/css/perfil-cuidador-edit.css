@@ -1,0 +1,93 @@
+/* ============================================
+   CSS Específico para a Página de Edição de Perfil do Cuidador
+   ============================================ */
+.slug-text {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.caregiver-profile-edit .card-title {
+    color: var(--color-primary);
+}
+
+.certificado-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--spacing-lg);
+    min-height: 150px;
+    /* Garante espaço para o preview */
+}
+
+.certificado-preview iframe,
+.certificado-preview img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* File Upload Wrapper (reutilizado do search) */
+.file-upload-wrapper {
+    position: relative;
+    width: 100%;
+    height: 120px;
+    border: 2px dashed var(--color-medium-gray);
+    border-radius: var(--border-radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    background: #fafafa;
+}
+
+.file-upload-wrapper:hover {
+    border-color: var(--color-primary);
+    background: var(--color-light-teal);
+}
+
+.file-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.file-dummy {
+    text-align: center;
+    color: var(--color-text-light);
+}
+
+.file-dummy p {
+    font-size: var(--font-size-sm);
+    margin: 0;
+}
+
+.file-dummy i {
+    font-size: 30px;
+    display: block;
+}
+
+/* Coluna da Direita: Formulário de Edição */
+.edit-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Mensagens de erro */
+.text-danger {
+    color: var(--color-danger);
+    font-size: var(--font-size-sm);
+    margin-top: 5px;
+}
+
+.caregiver-profile-edit .form-actions {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: flex-end;
+}

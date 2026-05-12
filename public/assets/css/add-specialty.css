@@ -1,0 +1,123 @@
+/* SPECIALTIES SECTION */
+.specialties-section {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+}
+
+.specialties-section h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+}
+
+.specialties-section p {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-lg);
+}
+
+.tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tags-container form {
+    padding: 0;
+    margin: 0;
+    line-height: normal;
+}
+
+
+.badge-tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--color-light-teal);
+    color: var(--color-primary-dark);
+    padding: 6px 22px;
+    border: 2px solid transparent;
+    border-radius: var(--border-radius-full);
+    font-size: 14px;
+    font-weight: var(--font-weight-medium);
+
+    transition: 100ms;
+}
+
+.badge-tag:hover {
+    transform: scale(1.05);
+    border: 2px solid var(--color-primary);
+}
+
+.tag-remove {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    cursor: pointer;
+    font-size: var(--font-size-lg);
+    padding: 0;
+    margin-left: var(--spacing-xs);
+}
+
+.tag-remove:hover {
+    opacity: 0.7;
+}
+
+.tag-remove i {
+    font-size: 18px;
+}
+
+.specialty-add i {
+    font-size: 16px;
+}
+
+/* ADD SPECIALTY SECTION */
+.add-specialty-section {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow-sm);
+}
+
+.add-specialty-section h2 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+}
+
+.add-specialty-section p {
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-xl);
+}
+
+.specialties-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.specialty-category {
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.specialty-category h3 {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    margin: 0;
+}
+
+.coming-soon {
+    color: var(--color-text-light);
+    font-size: var(--font-size-sm);
+    font-style: italic;
+    margin: 0;
+}

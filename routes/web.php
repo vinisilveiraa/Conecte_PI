@@ -21,6 +21,11 @@ Route::view("/teste", "auth.check-email")->name('check-email');
 // rota pra pega cordenada
 Route::get('/geocode', [AuthController::class, 'getCoordinates']);
 
+// rota pra certificados
+Route::get('/caregiver/certificate/{id}', [CaregiverController::class, 'certificate'])
+    ->middleware('auth')
+    ->name('caregiver.certificate');
+
 
 // Route::middleware('auth')->get('/notification/{id}', function ($id) {
 //     $notification = Auth::user()
@@ -45,6 +50,16 @@ Route::middleware('auth')->group(function () {
     // USER
     Route::view('/dashboard.caregiver-editProfile', 'caregiver.dashboard-caregiver-editprofile')
         ->name('dashboard.caregiver-editProfile');
+
+
+    Route::get('/caregiverProfile', [CaregiverController::class, 'UpdateCaregiverForm'])
+        ->name('caregiver.edit-Profile');
+
+    Route::post('/caregiverProfileUpdated', [CaregiverController::class, 'UpdateCaregiver'])
+        ->name('update.caregiver');
+    Route::get('/caregiver/check-slug', [CaregiverController::class, 'checkSlug'])
+        ->name('caregiver.check-slug');
+
     Route::view('/dashboard.client-edit Profile', 'client.dashboard-client-editprofile')
         ->name('dashboard.client-editProfile');
 
@@ -96,6 +111,9 @@ Route::middleware('auth')->group(function () {
 
 
 
+    Route::get('/cuidador/{slug}', [CaregiverController::class, 'PublicProfile'])
+        ->name('caregiver.public-profile');
+
     Route::patch(
         '/caregiver/proposal/{id}/{status}',
         [ProposalController::class, 'setProposalStatus']
@@ -122,7 +140,6 @@ Route::post('/chatbot', [ChatbotController::class, 'responder']);
 
 Route::get("/searchCaregiver", [ClientController::class, 'searchCaregiver'])
     ->name('client.searchCaregiver');
-
 
 
 

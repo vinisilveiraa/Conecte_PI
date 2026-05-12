@@ -234,14 +234,6 @@ dashboard-grid-new .card {
     }
 }
 
-.card h3 {
-    color: var(--color-primary-dark);
-    margin-bottom: var(--spacing-md);
-    font-size: var(--font-size-lg);
-    border-bottom: 1px solid var(--color-medium-gray);
-    padding-bottom: var(--spacing-sm);
-}
-
 .proposal-list,
 .review-list,
 .alert-list {
@@ -503,9 +495,11 @@ dashboard-grid-new .card {
     margin-bottom: var(--spacing-md);
 }
 
-.info-item.centered {
-    justify-content: center;
+.info-item-column {
+    display: flex;
+    flex-direction: column;
 }
+
 
 .info-item svg {
     width: 24px;
@@ -955,38 +949,6 @@ dashboard-grid-new .card {
     margin-bottom: var(--spacing-md);
 }
 
-.form-row {
-    display: flex;
-    gap: var(--spacing-md);
-}
-
-.form-group {
-    flex: 1;
-    flex-wrap: wrap;
-    flex-direction: column;
-}
-
-.form-label {
-    display: block;
-    font-weight: var(--font-weight-semibold);
-    margin-bottom: 8px;
-    color: var(--color-text);
-}
-
-.form-control {
-    width: 100%;
-    padding: 10px 15px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-md);
-    transition: border-color 0.2s;
-}
-
-.form-control:focus {
-    border-color: var(--color-primary);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(23, 162, 162, 0.1);
-}
-
 /* File Upload Style */
 .file-upload-wrapper {
     position: relative;
@@ -1325,6 +1287,7 @@ dashboard-grid-new .card {
     margin-bottom: var(--spacing-xs);
     font-weight: var(--font-weight-bold);
     border-left: 4px solid var(--color-primary);
+    border-bottom: 4px solid var(--color-primary);
     padding-left: 10px;
 }
 
@@ -1356,11 +1319,6 @@ dashboard-grid-new .card {
     background-color: var(--color-light-gray);
     padding: var(--spacing-sm);
     border-radius: var(--border-radius-md);
-}
-
-.info-item-column {
-    display: flex;
-    flex-direction: column;
 }
 
 .info-label {

@@ -19,7 +19,7 @@
         @if (session('success'))
             <div class="alert alert-info">{{ session('success') }}</div>
         @endif
-        
+
         <!-- Ícone -->
         <div class="login-icon">
             <svg xmlns="http://www.w3.org/2000/svg"

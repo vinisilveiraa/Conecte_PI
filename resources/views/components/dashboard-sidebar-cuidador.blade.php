@@ -4,7 +4,7 @@
         <div class="sidebar-header">
             <div class="sidebar-brand">
                 <i class="fa-solid fa-heart-pulse sidebar-icon-main"></i>
-                <span class="sidebar-text brand-name">Dashboard</span>
+                <span class="sidebar-text brand-name">Painel Cuidador</span>
             </div>
         </div>
 

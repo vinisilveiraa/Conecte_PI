@@ -13,9 +13,18 @@ class Caregiver extends Model
     protected $fillable =
     [
         'user_id',
+        'slug',
+        'public_code',
         'coren',
         'certificado_cuidador',
+        'headline',
         'bio',
+        'experience_years',
+        'hour_price',
+        'available_morning',
+        'available_afternoon',
+        'available_night',
+        'available_weekends',
     ];
 
     public function user(): BelongsTo

@@ -141,8 +141,8 @@
                                 @if ($proposal->status == 'accepted')
                                     <a href="#" class="btn btn-secondary"><i class="fa-solid fa-comment"></i>
                                         Abrir Chat</a>
-                                    <button class="btn btn-outline-primary" disabled>Aguardando
-                                        Finalização</button>
+                                    {{-- <button class="btn btn-outline-primary" disabled>Aguardando
+                                        Finalização</button> --}}
                                 @endif
                             </div>
                         </div>

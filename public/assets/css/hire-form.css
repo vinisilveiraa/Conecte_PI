@@ -1,0 +1,99 @@
+
+/* HIRE PAGE STYLES */
+.hire-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: var(--spacing-xl);
+    align-items: start;
+}
+
+@media (max-width: 992px) {
+    .hire-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.hire-summary-info {
+    padding: var(--spacing-lg) var(--spacing-md);
+    color: var(--color-text);
+}
+
+.hire-summary-info ul {
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.hire-summary-info li::marker {
+    color: var(--color-primary);
+}
+
+.caregiver-summary-card {
+    padding: var(--spacing-lg);
+    text-align: center;
+    position: sticky;
+    top: 90px;
+
+    margin-bottom: var(--spacing-md);
+}
+
+.summary-avatar {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto var(--spacing-md);
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--color-light-teal);
+}
+
+.summary-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.summary-info {
+    text-align: left;
+}
+
+.info-line {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: var(--font-size-sm);
+}
+
+.info-line .label {
+    color: var(--color-text-light);
+}
+
+.info-line .value {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+/* Input Group Custom */
+.input-group-custom {
+    display: flex;
+    align-items: center;
+}
+
+.input-prefix {
+    background: var(--color-light-gray);
+    border: 1px solid var(--color-border);
+    border-right: none;
+    padding: 15px 20px;
+    border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
+    color: var(--color-text-light);
+    font-weight: 600;
+}
+
+.input-group-custom .form-control {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-actions-hire .btn-block {
+    width: 100%;
+    padding: 15px;
+    font-size: var(--font-size-lg);
+}

@@ -1,0 +1,61 @@
+/* ============================================
+   ELEMENTOS DE LANDING PAGE
+   ============================================ */
+
+/* CARDS ESPECÍFICOS */
+.card-icon { text-align: center; padding: var(--spacing-lg); }
+.card-icon .icon { margin: 0 auto var(--spacing-md); }
+.card-icon h3 { color: var(--color-text); margin-bottom: var(--spacing-md); }
+.card-icon p { color: var(--color-text-light); font-size: var(--font-size-sm); }
+
+.card-list { padding: var(--spacing-lg); }
+.card-list h3 { color: var(--color-text); margin-bottom: var(--spacing-md); text-align: center; }
+.card-list .icon { margin: 0 auto var(--spacing-md); }
+.card-list ul { list-style: none; margin: 0; padding: 0; }
+.card-list li { display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-sm); color: var(--color-text-light); font-size: var(--font-size-sm); }
+.card-list li::before { content: '✓'; color: var(--color-primary); font-weight: var(--font-weight-bold); flex-shrink: 0; }
+
+.card-border-left { border-left: 4px solid var(--color-primary); padding-left: var(--spacing-lg); }
+.card-border-left-secondary { border-left: 4px solid var(--color-secondary); padding-left: var(--spacing-lg); }
+
+/* PASSOS / STEPS */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--spacing-lg); }
+.step { text-align: center; padding: var(--spacing-lg); }
+.step-number {
+    position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; background-color: var(--color-primary); color: var(--color-white);
+    border-radius: var(--border-radius-full); font-weight: var(--font-weight-bold); font-size: var(--font-size-md); margin-bottom: var(--spacing-md);
+}
+.step-icon { display: flex; align-items: center; justify-content: center; height: 32px; width: 32px; }
+.step h3 { color: var(--color-text); margin-bottom: var(--spacing-sm); }
+.step p { color: var(--color-text-light); font-size: var(--font-size-sm); }
+
+/* COLABORADORES */
+.collaborator {
+    display: flex; align-items: center; gap: var(--spacing-lg); padding: var(--spacing-lg);
+    background-color: var(--color-white); border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md); margin-bottom: var(--spacing-lg);
+}
+.collaborator-avatar {
+    display: flex; align-items: center; justify-content: center; width: 60px; height: 60px;
+    background-color: var(--color-light-teal); color: var(--color-primary); border-radius: var(--border-radius-full);
+    font-weight: var(--font-weight-bold); font-size: var(--font-size-xl); flex-shrink: 0;
+}
+.collaborator-content h3 { color: var(--color-text); margin-bottom: var(--spacing-xs); }
+.collaborator-role { color: var(--color-text-light); font-size: var(--font-size-sm); margin-bottom: var(--spacing-sm); }
+.collaborator-links { display: flex; gap: var(--spacing-md); }
+.collaborator-links a { color: var(--color-primary); font-size: var(--font-size-sm); font-weight: var(--font-weight-semibold); text-decoration: none; transition: color var(--transition-fast); }
+
+/* CONTATO */
+.contact-section { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); }
+.contact-item { padding: var(--spacing-lg); background-color: var(--color-white); border-radius: var(--border-radius-lg); box-shadow: var(--shadow-md); }
+.contact-item h3 { display: flex; align-items: center; gap: var(--spacing-sm); margin-bottom: var(--spacing-lg); color: var(--color-text); }
+.contact-button {
+    display: flex; align-items: center; gap: var(--spacing-md); padding: var(--spacing-md);
+    background-color: var(--color-light-teal); border-radius: var(--border-radius-lg); text-decoration: none; color: var(--color-text); margin-bottom: var(--spacing-md); transition: background-color var(--transition-fast);
+}
+
+@media (max-width: 768px) {
+    .collaborator { flex-direction: column; text-align: center; }
+    .collaborator-links { justify-content: center; }
+}

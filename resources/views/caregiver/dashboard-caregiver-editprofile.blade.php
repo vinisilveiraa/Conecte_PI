@@ -54,13 +54,6 @@
                             <p class="profile-type">Cuidador Conecte</p>
                             {{-- <span class="badge-tag">Cuidador Verificado</span> --}}
                         </div>
-
-                        <div class="card mt-md">
-                            <label class="form-label">Sua Bio Profissional</label>
-                            <textarea name="bio" class="form-control" rows="6"
-                                placeholder="Ex: Sou especialista em cuidados pós-operatórios com 5 anos de experiência...">{{ Auth::user()->caregiver->bio }}</textarea>
-                            <small class="text-muted">Destaque suas principais competências aqui.</small>
-                        </div>
                     </div>
 
                     <!-- COLUNA DIREITA: Formulários -->
@@ -94,7 +87,7 @@
                         </div>
 
                         <!-- Documentação (Exclusivo Cuidador) -->
-                        <div class="card mb-md card-border-primary">
+                        {{-- <div class="card mb-md card-border-primary">
                             <h3 class="card-title"><i class="fa-solid fa-id-card mr-sm"></i> Credenciais e
                                 Certificados</h3>
                             <div class="form-row">
@@ -137,7 +130,7 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
 
                         <!-- Endereço -->
@@ -185,8 +178,7 @@
 
                         <div class="form-actions mt-xl">
                             <a href="{{ route('dashboard.caregiver') }}" class="btn btn-outline-primary">Cancelar</a>
-                            <button type="submit" class="btn btn-primary btn-lg">Atualizar Perfil
-                                Profissional</button>
+                            <button type="submit" class="btn btn-primary btn-lg">Atualizar Perfil de Usuário</button>
                         </div>
 
                     </div>
@@ -200,8 +192,6 @@
 @include('components.footer')
 
 <script>
-
-
     document.addEventListener('DOMContentLoaded', function() {
         const input = document.getElementById('avatarInput');
 
@@ -228,71 +218,70 @@
     }
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-        const input = document.getElementById('certificadoInput');
-        const container = document.getElementById('certificado-preview');
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const input = document.getElementById('certificadoInput');
+    //     const container = document.getElementById('certificado-preview');
 
-        if (!input || !container) return;
+    //     if (!input || !container) return;
 
-        input.addEventListener('change', function() {
-            const file = this.files[0];
+    //     input.addEventListener('change', function() {
+    //         const file = this.files[0];
 
-            // ❌ nenhum arquivo
-            if (!file) {
-                container.style.display = 'none';
-                container.innerHTML = '';
-                return;
-            }
+    //         if (!file) {
+    //             container.style.display = 'none';
+    //             container.innerHTML = '';
+    //             return;
+    //         }
 
-            const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+    //         const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
 
-            if (!validTypes.includes(file.type)) {
-                container.style.display = 'block';
-                container.innerHTML = '<p style="color:#b00;">Tipo de arquivo não suportado</p>';
-                return;
-            }
+    //         if (!validTypes.includes(file.type)) {
+    //             container.style.display = 'block';
+    //             container.innerHTML = '<p style="color:#b00;">Tipo de arquivo não suportado</p>';
+    //             return;
+    //         }
 
-            if (file.size > 2 * 1024 * 1024) {
-                container.style.display = 'block';
-                container.innerHTML = '<p style="color:#b00;">Arquivo muito grande (máx 2MB)</p>';
-                return;
-            }
+    //         if (file.size > 2 * 1024 * 1024) {
+    //             container.style.display = 'block';
+    //             container.innerHTML = '<p style="color:#b00;">Arquivo muito grande (máx 2MB)</p>';
+    //             return;
+    //         }
 
-            const reader = new FileReader();
+    //         const reader = new FileReader();
 
-            reader.onload = function(e) {
-                const url = e.target.result;
+    //         reader.onload = function(e) {
+    //             const url = e.target.result;
 
-                // limpa preview antigo
-                container.innerHTML = '';
-                container.style.display = 'block';
+    //             // limpa preview antigo
+    //             container.innerHTML = '';
+    //             container.style.display = 'block';
 
-                if (file.type.startsWith('image/')) {
-                    const img = document.createElement('img');
-                    img.src = url;
-                    img.style.maxWidth = '100%';
-                    img.style.borderRadius = '8px';
-                    img.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+    //             if (file.type.startsWith('image/')) {
+    //                 const img = document.createElement('img');
+    //                 img.src = url;
+    //                 img.style.maxWidth = '100%';
+    //                 img.style.borderRadius = '8px';
+    //                 img.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
 
-                    container.appendChild(img);
-                } else if (file.type === 'application/pdf') {
-                    const iframe = document.createElement('iframe');
-                    iframe.src = url;
-                    iframe.width = '100%';
-                    iframe.height = '400px';
-                    iframe.style.border = '1px solid #eee';
-                    iframe.style.borderRadius = '8px';
+    //                 container.appendChild(img);
+    //             } else if (file.type === 'application/pdf') {
+    //                 const iframe = document.createElement('iframe');
+    //                 iframe.src = url;
+    //                 iframe.width = '100%';
+    //                 iframe.height = '400px';
+    //                 iframe.style.border = '1px solid #eee';
+    //                 iframe.style.borderRadius = '8px';
 
-                    container.appendChild(iframe);
-                }
-            };
+    //                 container.appendChild(iframe);
+    //             }
+    //         };
 
-            reader.onerror = function() {
-                container.style.display = 'block';
-                container.innerHTML = '<p style="color:#b00;">Erro ao carregar o arquivo</p>';
-            };
+    //         reader.onerror = function() {
+    //             container.style.display = 'block';
+    //             container.innerHTML = '<p style="color:#b00;">Erro ao carregar o arquivo</p>';
+    //         };
 
-            reader.readAsDataURL(file);
-        });
-    });
+    //         reader.readAsDataURL(file);
+    //     });
+    // });
 </script>

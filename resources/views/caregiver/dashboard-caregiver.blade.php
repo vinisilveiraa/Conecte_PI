@@ -30,7 +30,7 @@
                 </div>
             @endif
 
-            <div class="dashboard-grid-new">
+            <div class="dashboard-cuidador">
                 <div class="card proposal-overview-card">
                     <h3>Minhas Propostas Ativas</h3>
                     <div class="proposal-list">
@@ -151,7 +151,6 @@
                 </div>
             </div>
 
-            <!-- Antigo perfil e informações do usuário (movidos ou simplificados) -->
             <div class="card profile-summary-card">
                 <h3>Meu Perfil</h3>
                 <div class="profile-avatar-summary">
@@ -162,9 +161,9 @@
                     @endif
                 </div>
                 <h4>{{ ucwords(Auth::user()->nome) }}</h4>
-                <p class="text-muted"></p>
-                <a href="{{ route('dashboard.caregiver-editProfile') }}"
-                    class="btn btn-outline-primary btn-block mt-md">Editar Perfil</a>
+                <p class="text-muted">{{ Auth::user()->caregiver->headline ?? 'Defina sua headline' }}</p>
+                <a href="{{ route('caregiver.public-profile', Auth::user()->caregiver->slug) }}"
+                    class="btn btn-outline-primary btn-block mt-md">Ver Perfil</a>
             </div>
 
         </div>

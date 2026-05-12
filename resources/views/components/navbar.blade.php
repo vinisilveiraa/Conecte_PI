@@ -73,9 +73,19 @@
                             <li>
                                 <a class="dropdown-item py-2"
                                     href="{{ auth()->user()->role === 'client' ? route('dashboard.client') : route('dashboard.caregiver') }}">
-                                    <i class="fa-solid fa-user me-2"></i> Perfil
+                                    <i class="fa-solid fa-user me-2"></i> Painel
                                 </a>
                             </li>
+
+                            @if (auth()->user()->role === 'caregiver')
+                                <li>
+                                    <a class="dropdown-item py-2"
+                                        href="{{ route('caregiver.public-profile', Auth::user()->caregiver->slug) }}">
+                                        <i class="fa-solid fa-book-medical me-2"></i> Meu Perfil
+                                    </a>
+                                </li>
+                            @endif
+
                             <li>
                                 <a class="dropdown-item py-2"
                                     href="{{ auth()->user()->role === 'client' ? route('dashboard.client-editProfile') : route('dashboard.caregiver-editProfile') }}">
@@ -89,7 +99,6 @@
                                         <i class="fa-solid fa-clock-rotate-left me-2"></i> Propostas
                                     </a>
                                 </li>
-                            @elseif (auth()->user()->role === 'caregiver')
                             @endif
 
                             <li>
