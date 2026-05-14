@@ -88,7 +88,8 @@
                                 <label for="headline" class="form-label">Título Profissional (Headline)</label>
                                 <input type="text" id="headline" name="headline" class="form-control"
                                     value="{{ old('headline', $caregiver->headline ?? '') }}"
-                                    placeholder="Ex: Cuidador(a) com experiência em idosos e pós-cirúrgicos">
+                                    placeholder="Ex: Cuidador(a) com experiência em idosos e pós-cirúrgicos"
+                                    maxlength="120">
                                 @error('headline')
                                     <div class="text-danger mt-2">{{ $message }}</div>
                                 @enderror
@@ -121,7 +122,7 @@
                                     <input type="number" id="experience_years" name="experience_years"
                                         class="form-control"
                                         value="{{ old('experience_years', $caregiver->experience_years ?? 0) }}"
-                                        min="0">
+                                        min="0" maxlength="100">
                                     @error('experience_years')
                                         <div class="text-danger mt-2">{{ $message }}</div>
                                     @enderror

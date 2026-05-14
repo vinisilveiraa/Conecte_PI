@@ -160,7 +160,7 @@ class AuthController extends Controller
                 ]);
             } else {
 
-                $slug = SlugHelper::generateUnique($request->slug);
+                $slug = SlugHelper::generateUnique($request->nome);
 
                 do {
                     $publicCode = 'CON-' . strtoupper(Str::random(4));

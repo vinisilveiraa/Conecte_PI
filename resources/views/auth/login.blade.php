@@ -45,7 +45,7 @@
             <!-- Campo Senha -->
             <div class="form-group">
                 <label for="password">Senha</label>
-                <div class="hide-password-wrap">
+                <div class="form-icon-wrapper">
                     <input type="password" id="password" name="password" placeholder="••••••••">
                     <i class="fas fa-eye" onclick="togglePasswordVisibility('password')"></i>
                 </div>

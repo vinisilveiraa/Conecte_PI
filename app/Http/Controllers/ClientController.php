@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Specialty;
 use Illuminate\Http\Request;
 use App\Helpers\DistanceHelper;
+use App\Helpers\SlugHelper;
 use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
@@ -14,13 +15,13 @@ class ClientController extends Controller
     public function searchCaregiver(Request $request)
     {
         $client = $request->user();
+        $clientLat = null;
+        $clientLng = null;
 
         if ($client && $client->address) {
             $clientLat = $client->address->latitude;
             $clientLng = $client->address->longitude;
         }
-
-        $caregivers = Caregiver::with('user.address')->get();
 
         // leva pro front
         $specialties = Specialty::all();
@@ -35,7 +36,7 @@ class ClientController extends Controller
             'user.address',
             'specialties',
             'reviews' => function ($q) {
-                $q->with('user')
+                $q->with('user:id,nome')
                     ->latest()->take(3);
             }
         ])
@@ -58,11 +59,27 @@ class ClientController extends Controller
             $query->latest(); // usa created_at
         }
 
+
+        if ($request->filled('search')) {
+
+            $search = $request->search;
+            $slug = SlugHelper::format($search);
+
+            $query->whereHas('user', function ($q) use ($search, $slug) {
+
+                $q->where(function ($sub) use ($search, $slug) {
+
+                    $sub->where('slug', 'like', "%{$slug}%")
+                        ->orWhere('nome', 'like', "%{$search}%")
+                        ->orWhere('public_code', 'like', "%{$search}%");
+                });
+            });
+        }
+
         // paginate sempre por ultimo
         $caregivers = $query->paginate(10)->withQueryString();
 
         // calcula distancia
-
         if (!Auth::guest()) {
             foreach ($caregivers as $caregiver) {
 

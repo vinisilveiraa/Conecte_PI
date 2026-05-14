@@ -87,7 +87,7 @@
                         <p class="profile-bio text-center">Nenhuma informação aqui</p>
                     @else
                         <h3 class="profile-headline">{{ $caregiver->headline ?? 'Nenhuma headline definida' }}</h3>
-                        <p class="profile-bio">{{ $caregiver->bio ?? 'Nenhuma bio definida' }}</p>
+                        <span class="profile-bio">{{ $caregiver->bio ?? 'Nenhuma bio definida' }}</span>
                     @endif
                 </section>
 
@@ -110,9 +110,9 @@
                         <li><i class="fas fa-briefcase"></i> <strong>Membro Conecte desde:</strong>
                             {{ $caregiver->created_at->format('d/m/Y') }}</li>
                         <li><i class="fas fa-briefcase"></i> <strong>Experiência:</strong>
-                            {{ $caregiver->experience_years ?? 0 }}</li>
-                        <li><i class="fas fa-dollar-sign"></i> <strong>Valor Base:</strong> R$
-                            {{ $caregiver->hour_value ?? '0.00' }}</li>
+                            {{ $caregiver->experience_years ?? 0 }} anos</li>
+                        <li><i class="fas fa-dollar-sign"></i> <strong>Valor Hora:</strong> R$
+                            {{ $caregiver->hour_price ?? '0.00' }}</li>
                     </ul>
                 </section>
 
@@ -164,7 +164,7 @@
                                 </div>
                             </div>
                         @empty
-                            <p class="text-muted">Ainda não há avaliações para este cuidador.</p>
+                            <p class="text-muted text-center">Ainda não há avaliações para este cuidador.</p>
                         @endforelse
                     </div>
                 </section>

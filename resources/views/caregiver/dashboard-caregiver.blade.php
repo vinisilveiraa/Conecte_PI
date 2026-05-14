@@ -101,7 +101,7 @@
                 <div class="card">
                     <h3>Alertas e Notificações</h3>
                     <div class="alert-list">
-                        @forelse (auth()->user()->notifications as $notification)
+                        @forelse (auth()->user()->unreadNotifications as $notification)
                             <div class="alert-item">
                                 <i class="fa-solid fa-bell"></i>
                                 <p>{{ $notification->data['message'] }}</p>

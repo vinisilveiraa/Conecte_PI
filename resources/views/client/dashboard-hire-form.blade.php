@@ -151,8 +151,10 @@
                         </div>
 
                         <div class="form-actions-hire mt-xl">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                <i class="fa-solid fa-paper-plane mr-sm"></i> Enviar Proposta
+                            <button type="submit" class="btn btn-primary btn-lg btn-block"
+                                onclick="this.disabled=true; this.form.submit();">
+                                <i class="fa-solid fa-paper-plane mr-sm"></i>
+                                Enviar Proposta
                             </button>
                             <p class="text-center text-xs text-light mt-sm">
                                 O cuidador será notificado e poderá aceitar ou recusar sua proposta.

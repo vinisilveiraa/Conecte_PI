@@ -8,6 +8,7 @@ use App\Models\Proposal;
 use App\Models\Specialty;
 use App\Models\Review;
 use App\Notifications\NewProposalNotification;
+use App\Notifications\NewStatusNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -222,6 +223,18 @@ class ProposalController extends Controller
         }
 
         $proposal->save();
+
+        if ($status === 'accepted' || $status === 'rejected') {
+            $proposal->client->user->notify(
+                new NewStatusNotification($proposal)
+            );
+        }
+        if ($status === 'cancelled') {
+            $proposal->caregiver->user->notify(
+                new NewStatusNotification($proposal)
+            );
+        }
+
 
         return back()->with('success', "Status atualizado para {$status}");
     }

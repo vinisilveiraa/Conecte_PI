@@ -8,10 +8,11 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\Proposal;
 
-class NewProposalNotification extends Notification
+class NewStatusNotification extends Notification
 {
     use Queueable;
-    protected $proposal;
+    public $proposal;
+
     /**
      * Create a new notification instance.
      */
@@ -20,7 +21,6 @@ class NewProposalNotification extends Notification
         $this->proposal = $proposal;
     }
 
-
     /**
      * Get the notification's delivery channels.
      *
@@ -28,7 +28,7 @@ class NewProposalNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database', 'mail']; // salva no banco + envia email
+        return ['database']; //importante mudar isso
     }
 
     /**
@@ -37,12 +37,9 @@ class NewProposalNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Nova proposta recebida')
-            ->view('emails.new-proposal', [
-                'proposal' => $this->proposal,
-                'user' => $notifiable,
-                'url' => route('caregiver.proposals')
-            ]);
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
@@ -52,9 +49,25 @@ class NewProposalNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
+        $status = $this->proposal->status;
+
+        $message = match ($status) {
+            'accepted' => 'Sua proposta foi aceita!',
+            'rejected' => 'Sua proposta foi rejeitada.',
+            'cancelled' => 'Uma proposta foi cancelada.',
+            default => 'O status da proposta foi atualizado.'
+        };
+
+        $link = match ($notifiable->role) {
+            'caregiver' => route('caregiver.proposals'),
+            'client' => route('client.hire-history'),
+            default => '/',
+        };
+
         return [
-            'message' => 'Nova proposta recebida!',
-            'link' => route('caregiver.proposals')
+            'message' => $message,
+            'link' => $link,
+            'status' => $status
         ];
     }
 }

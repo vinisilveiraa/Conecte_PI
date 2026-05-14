@@ -79,7 +79,7 @@
                                     {{ $request->accepted_at }}</span>
                             @endif
 
-                            <a href="{{ route('caregivers.public-profile', $request->caregiver->slug) }}"
+                            <a href="{{ route('caregiver.public-profile', $request->caregiver->slug) }}"
                                 class="btn btn-outline-primary w-100 mt-auto">Ver
                                 Perfil</a>
                         </div>
@@ -140,8 +140,9 @@
                                         ]) }}"
                                         method="POST">
                                         @csrf @method('PATCH')
-                                        <button type="submit" class="btn btn-outline-danger">Cancelar
-                                            Solicitação</button>
+                                        <button type="submit" class="btn btn-outline-danger">
+                                            <i class="fa-solid fa-x"></i>
+                                            Cancelar Solicitação</button>
                                     </form>
                                 @endif
 

@@ -255,6 +255,9 @@ class CaregiverController extends Controller
             'experience_years.integer' =>
             'Os anos de experiência devem ser um número inteiro.',
 
+            'experience_years.max' =>
+            'Os anos de experiência não pode ser maior que 80.',
+
             'experience_years.min' =>
             'Os anos de experiência não podem ser negativos.',
         ];

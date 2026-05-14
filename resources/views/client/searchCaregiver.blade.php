@@ -44,15 +44,22 @@
                         @endif
                     @endforeach
 
-                    <select name="sort" onchange="this.form.submit()">
-                        <option value="">Ordenar por</option>
-                        <option value="rating" {{ request('sort') == 'rating' ? 'selected' : '' }}>Melhor avaliados
-                        </option>
-                        <option value="reviews" {{ request('sort') == 'reviews' ? 'selected' : '' }}>Mais avaliações
-                        </option>
-                        <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Mais recentes
-                        </option>
-                    </select>
+                    <div class="search-header-filters">
+                        <select name="sort" onchange="this.form.submit()">
+                            <option value="">Ordenar por</option>
+                            <option value="rating" {{ request('sort') == 'rating' ? 'selected' : '' }}>Melhor avaliados
+                            </option>
+                            <option value="reviews" {{ request('sort') == 'reviews' ? 'selected' : '' }}>Mais avaliações
+                            </option>
+                            <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>Mais recentes
+                            </option>
+                        </select>
+                        <div class="form-icon-wrapper">
+                            <input type="text" name="search" placeholder="Buscar cuidador..."
+                                value="{{ request('search') }}" class="form-control">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
                 </form>
             </div>
 
@@ -178,14 +185,18 @@
                                             alt="">
                                     @endif
                                 </div>
-                                <h3>{{ $caregiver->user->nome }}</h3>
+
+                                <div class="caregiver-main-info">
+                                    <h3 class="mb-0">{{ $caregiver->user->nome }}</h3>
+                                </div>
 
                                 <div class="caregiver-info">
 
                                     <span class="text-muted">
+                                        <p class="text-muted">{{ '@' . $caregiver->slug }}</p>
                                         <i class="fa-solid fa-map-pin"></i>
                                         @if ($caregiver->distance)
-                                            <strong>{{ $caregiver->distance }}</strong> km /
+                                            <strong>{{ $caregiver->distance }} km </strong>|
                                         @endif
                                         {{ $caregiver->user->address->cidade }} -
                                         {{ $caregiver->user->address->estado }}
@@ -210,9 +221,11 @@
                                         'id' => $caregiver->id,
                                         'nome' => $caregiver->user->nome,
                                         'slug' => $caregiver->slug,
+                                        'public_code' => $caregiver->public_code,
                                         'profile_url' => route('caregiver.public-profile', $caregiver->slug),
                                         'foto' => $caregiver->user->foto,
                                         'cidade' => $caregiver->user->address->cidade ?? null,
+                                        'headline' => $caregiver->headline,
                                         'bio' => $caregiver->bio,
                                         'created_at' => $caregiver->created_at->toISOString(),
                                         'rating' => number_format($caregiver->reviews_avg_rating, 1),
@@ -268,6 +281,8 @@
                         </div>
                         <div class="caregiver-basic-info">
                             <h3 id="modal-nome" class="mb-0">Nome do Cuidador</h3>
+                            <span id="modal-slug" class="mb-0 text-muted">Slug do Cuidador</span>
+                            <span id="modal-public_code" class="mb-0 text-muted">Código Público</span>
                             <p class="font-weight-semibold mb-1">Membro desde: <span id="modal-created"></span></p>
                             {{-- <div class="rating-stars">
                                 <span class="text-secondary">★★★★★</span>
@@ -281,7 +296,10 @@
                     <div class="modal-perfil-details p-md">
                         <div class="info-section mb-lg">
                             <h4 class="section-subtitle">Bio</h4>
-                            <p id="modal-bio" class="text-sm">
+                            <p id="modal-headline" class="text-lg text-regular mb-0">
+                                Nenhuma headline disponível
+                            </p>
+                            <p id="modal-bio" class="text-md">
                                 Nenhuma bio disponível
                             </p>
                         </div>
@@ -340,6 +358,8 @@
                 const date = new Date(caregiver.created_at);
 
                 document.getElementById('modal-nome').innerText = caregiver.nome;
+                document.getElementById('modal-slug').innerText = `@${caregiver.slug} |`;
+                document.getElementById('modal-public_code').innerText = caregiver.public_code;
 
                 document.getElementById('modal-avatar').src =
                     caregiver.foto ?
@@ -353,8 +373,10 @@
                         year: 'numeric'
                     });
 
+                document.getElementById('modal-headline').innerText =
+                    caregiver.headline ?? 'Nenhuma headline disponível';
                 document.getElementById('modal-bio').innerText =
-                    caregiver.bio ?? 'Nenhuma bio disponível';
+                    `"${caregiver.bio}"` ?? 'Nenhuma bio disponível';
 
                 document.getElementById('modal-rate').innerText =
                     caregiver.rating ?? '0.0';

@@ -40,9 +40,9 @@
     color: var(--color-primary-dark);
 }
 
-.navbar-brand-icon {
-    width: 32px;
-    height: 32px;
+.navbar-brand-icon i {
+    width: 100%;
+    height: 100%;
     display: flex;
 }
 

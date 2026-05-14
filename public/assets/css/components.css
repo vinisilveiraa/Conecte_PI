@@ -428,3 +428,21 @@ button:disabled,
 .modal-footer .btn {
     flex: 1;
 }
+
+.form-icon-wrapper {
+    position: relative;
+}
+
+.form-icon-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+    /* Espaço para o ícone */
+}
+
+.form-icon-wrapper i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+}

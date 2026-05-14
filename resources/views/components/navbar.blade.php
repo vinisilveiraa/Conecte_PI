@@ -3,10 +3,15 @@
         <!-- Logo/Brand -->
         <a href="{{ route('home') }}" class="navbar-brand">
             <span class="navbar-brand-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                    <!--!Font Awesome Free v7.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+                <svg width="32" height="32" viewBox="0 0 70 90" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
-                        d="M241 87.1l15 20.7 15-20.7C296 52.5 336.2 32 378.9 32 452.4 32 512 91.6 512 165.1l0 2.6c0 112.2-139.9 242.5-212.9 298.2-12.4 9.4-27.6 14.1-43.1 14.1s-30.8-4.6-43.1-14.1C139.9 410.2 0 279.9 0 167.7l0-2.6C0 91.6 59.6 32 133.1 32 175.8 32 216 52.5 241 87.1z"
+                        d="M35 6C51.0163 6 64 18.9837 64 35C64 51.0163 51.0163 64 35 64C18.9837 64 6 51.0163 6 35C6 18.9837 18.9837 6 35 6ZM50.416 21.9365C46.5933 18.0218 40.3959 18.0218 36.5732 21.9365L35 23.5479L33.4268 21.9365C29.6041 18.0218 23.4067 18.0218 19.584 21.9365C14.8581 26.7766 14.8058 34.5906 19.4277 39.4961L19.4258 39.498L34.2529 54.6836C34.6393 55.0793 35.2515 55.1039 35.666 54.7578L35.7471 54.6836L50.5742 39.498L50.5723 39.4961C55.1942 34.5906 55.1419 26.7766 50.416 21.9365Z"
+                        fill="currentColor" />
+                    <path
+                        d="M52.7559 64C52.9089 64.2351 52.999 64.515 52.999 64.8164V86.1504C52.9989 86.8211 52.741 87.7852 51.9883 88.5859C51.2223 89.4006 49.9879 90 48.124 90C47.1573 89.9999 46.0815 89.45 45.0166 88.668C43.932 87.8714 42.7746 86.7699 41.6309 85.5361C39.3414 83.0664 37.0554 80.0123 35.4385 77.6533C35.2289 77.3481 34.77 77.348 34.5605 77.6533C32.9436 80.0123 30.6577 83.0664 28.3682 85.5361C27.2243 86.77 26.0671 87.8713 24.9824 88.668C23.9175 89.4501 22.8418 90 21.875 90C20.0112 90 18.7767 89.4006 18.0107 88.5859C17.2581 87.7853 17.0001 86.821 17 86.1504V64.8164C17.0001 64.5211 17.0859 64.2459 17.2334 64.0137L34.9678 68.4189L52.7559 64Z"
+                        fill="currentColor" />
+                    <path
+                        d="M66.5574 35C66.5574 17.5713 52.4287 3.44262 35 3.44262C17.5713 3.44262 3.44262 17.5713 3.44262 35C3.44262 52.4287 17.5713 66.5574 35 66.5574C52.4287 66.5574 66.5574 52.4287 66.5574 35ZM70 35C70 54.33 54.33 70 35 70C15.67 70 0 54.33 0 35C0 15.67 15.67 0 35 0C54.33 0 70 15.67 70 35Z"
                         fill="currentColor" />
                 </svg>
             </span>
@@ -117,26 +122,29 @@
                         <button class="navbar-notify-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-bell"></i>
 
-                            @if (auth()->user()->unreadNotifications->count() > 0)
+                            @php
+                                $notifications = auth()->user()->unreadNotifications;
+                            @endphp
+
+                            @if ($notifications->count() > 0)
                                 <span class="notify-badge">
-                                    {{ auth()->user()->unreadNotifications->count() > 9 ? '9+' : auth()->user()->unreadNotifications->count() }}
+                                    {{ $notifications->count() > 9 ? '9+' : $notifications->count() }}
                                 </span>
                             @endif
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
-                            @if (auth()->user()->unreadNotifications->count() > 0)
-                                @foreach (auth()->user()->unreadNotifications as $notification)
+                            @if ($notifications->count() > 0)
+                                @foreach ($notifications as $notification)
                                     <li>
-                                        {{-- <a href="{{ route('notifications/$notification->id') }}"
+                                        <a href="{{ route('notification.read', $notification->id) }}"
                                             class="dropdown-item py-2">
-                                            <i class="fa-solid fa-exclamation"></i>
                                             {{ $notification->data['message'] }}
-                                        </a> --}}
+                                        </a>
                                     </li>
                                 @endforeach
                             @else
                                 <li>
-                                    <a href="dropdown-item py-2">
+                                    <a class="dropdown-item py-2">
                                         Nenhuma notificação recebida...
                                     </a>
                                 </li>

@@ -14,6 +14,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Notifications\DatabaseNotification;
+
 
 // esta rota é apenas para a vizualizaação da pagina de email
 Route::view("/teste", "auth.check-email")->name('check-email');
@@ -26,16 +28,21 @@ Route::get('/caregiver/certificate/{id}', [CaregiverController::class, 'certific
     ->middleware('auth')
     ->name('caregiver.certificate');
 
+Route::middleware('auth')->get('/notification/{id}', function ($id) {
 
-// Route::middleware('auth')->get('/notification/{id}', function ($id) {
-//     $notification = Auth::user()
-//         ->notifications()
-//         ->findOrFail($id);
+    $notification = Auth::user()
+        ->notifications
+        ->where('id', $id)
+        ->first();
 
-//     $notification->markAsRead();
+    if (!$notification) {
+        abort(404);
+    }
 
-//     return redirect($notification->data['link']);
-// });
+    $notification->markAsRead();
+
+    return redirect($notification->data['link']);
+})->name('notification.read');
 
 
 // ROTAS PARA USUARIOS AUTENTICADOS
