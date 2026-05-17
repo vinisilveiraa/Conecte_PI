@@ -107,6 +107,13 @@
                             @endif
 
                             <li>
+                                <a class="dropdown-item py-2"
+                                    href="{{ auth()->user()->role === 'client' ? route('client.chat') : route('caregiver.chat') }}">
+                                    <i class="fa-solid fa-comments me-2"></i> Chat
+                                </a>
+                            </li>
+
+                            <li>
                                 <hr class="dropdown-divider opacity-50">
                             </li>
                             <li>

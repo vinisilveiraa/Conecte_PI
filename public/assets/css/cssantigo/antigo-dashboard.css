@@ -29,6 +29,30 @@
     width: var(--sidebar-expanded-width);
 }
 
+.dashboard-sidebar {
+    width: 260px;
+    transition: all 0.3s ease;
+}
+
+.dashboard-sidebar.collapsed {
+    width: 90px;
+}
+
+/* Esconde os textos */
+.dashboard-sidebar.collapsed .sidebar-text {
+    display: none;
+}
+
+/* Centraliza os ícones */
+.dashboard-sidebar.collapsed .sidebar-menu-item {
+    justify-content: center;
+}
+
+/* Ajusta footer */
+.dashboard-sidebar.collapsed .sidebar-user-card {
+    justify-content: center;
+}
+
 .sidebar-content {
     display: flex;
     flex-direction: column;

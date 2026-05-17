@@ -128,9 +128,9 @@
                             <input type="hidden" name="longitude" id="longitude">
                         </div>
 
-                        <div class="form-actions mt-xl">
+                        <div class="form-actions text-right">
                             <a href="{{ route('dashboard.client') }}" class="btn btn-outline-primary">Cancelar</a>
-                            <button type="submit" class="btn btn-primary btn-lg">Salvar Alterações</button>
+                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         </div>
 
                     </div>

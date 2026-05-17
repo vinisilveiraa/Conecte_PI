@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/perfil-cuidador.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/perfil-cuidador-edit.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('assets/css/chat.css') }}">
 
     {{-- link font awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">

@@ -1,4 +1,5 @@
-<aside class="dashboard-sidebar" id="dashboardSidebar">
+<aside class="dashboard-sidebar {{ request()->routeIs('caregiver.chat') ? 'fixed-collapsed' : '' }}"
+    id="dashboardSidebar">
     <div class="sidebar-content">
         <!-- Header -->
         <div class="sidebar-header">
@@ -35,6 +36,13 @@
                 title="Especialidades">
                 <i class="fa-solid fa-hand-holding-medical"></i>
                 <span class="sidebar-text">Especialidades</span>
+            </a>
+
+            <a href="{{ route('caregiver.chat') }}"
+                class="sidebar-menu-item {{ request()->routeIs('caregiver.chat') ? 'active' : '' }}"
+                title="Chat">
+                <i class="fa-solid fa-comments"></i>
+                <span class="sidebar-text">Chat</span>
             </a>
         </nav>
 

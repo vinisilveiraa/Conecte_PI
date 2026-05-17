@@ -8,6 +8,7 @@ use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\ProposalController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ChatController;
 use App\Models\Caregiver;
 use App\Models\Client;
 use App\Models\User;
@@ -78,7 +79,6 @@ Route::middleware('auth')->group(function () {
     // CLIENT
     Route::view('/dashboard-client', 'client.dashboard-client')->name('dashboard.client');
 
-    // CAREGIVER
     Route::get('/dashboard-caregiver', [CaregiverController::class, 'showDashboard'])
         ->name('dashboard.caregiver');
 
@@ -132,9 +132,24 @@ Route::middleware('auth')->group(function () {
 
     // Route::get('/dashboard-caregiver-especialidades', [CaregiverController::class, 'createSpecialty'])->name('dashboard.caregiverespecialidades');
     // Route::view('/dashboard-caregiver-propostas', 'caregiver.dashboard-caregiver-propostas')->name('dashboard.caregiver.propostas');
+});
 
+Route::middleware('auth')->group(function () {
 
+    Route::view('/ChatCliente', 'client.chat-area')
+        ->name('client.chat');
+    Route::view('/ChatCuidador', 'caregiver.chat-area')
+        ->name('caregiver.chat');
 
+    Route::get('/chat/conversations', [ChatController::class, 'listConversations'])->name('chat.conversations');
+
+    Route::get('/chat/{conversation_id}/messages', [ChatController::class, 'getMessages'])->name('chat.messages');
+
+    Route::post('/chat/create', [ChatController::class, 'createChat'])->name('chat.create');
+
+    Route::post('/chat/send', [ChatController::class, 'sendMessage'])->name('chat.send');
+
+    Route::post('/chat/{conversation_id}/read', [ChatController::class, 'markAsRead'])->name('chat.markAsRead');
 });
 
 // ROTAS DO MENU

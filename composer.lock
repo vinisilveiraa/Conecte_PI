@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1c97b3867af1a2b30021d95bdbf5a9b",
+    "content-hash": "57159649ac1b440e38fcc0170a8ff01d",
     "packages": [
         {
             "name": "brick/math",
@@ -2021,16 +2021,16 @@
         },
         {
             "name": "mongodb/laravel-mongodb",
-            "version": "5.7.0",
+            "version": "5.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mongodb/laravel-mongodb",
-                "reference": "0071a45e79741f316f9b8e3a0372c8881ba5f81f"
+                "reference": "6e371e8e6deb9193f99a84c578e6c9d0a960e43a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mongodb/laravel-mongodb/zipball/0071a45e79741f316f9b8e3a0372c8881ba5f81f",
-                "reference": "0071a45e79741f316f9b8e3a0372c8881ba5f81f",
+                "url": "https://api.github.com/repos/mongodb/laravel-mongodb/zipball/6e371e8e6deb9193f99a84c578e6c9d0a960e43a",
+                "reference": "6e371e8e6deb9193f99a84c578e6c9d0a960e43a",
                 "shasum": ""
             },
             "require": {
@@ -2124,7 +2124,7 @@
                 "issues": "https://www.mongodb.com/support",
                 "security": "https://www.mongodb.com/security"
             },
-            "time": "2026-03-20T12:20:25+00:00"
+            "time": "2026-04-15T12:18:12+00:00"
         },
         {
             "name": "mongodb/mongodb",

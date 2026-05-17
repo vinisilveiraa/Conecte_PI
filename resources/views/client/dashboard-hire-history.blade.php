@@ -147,8 +147,17 @@
                                 @endif
 
                                 @if ($request->status == 'accepted')
-                                    <a href="#" class="btn btn-secondary"><i class="fa-solid fa-comment"></i>
-                                        Abrir Chat</a>
+                                    <form action="{{ route('chat.create') }}" method="POST">
+                                        @csrf
+
+                                        <input type="hidden" name="proposal_id" value="{{ $request->id }}">
+
+                                        <button type="submit" class="btn btn-outline-primary">
+                                            <i class="fa-solid fa-comment"></i>
+                                            Abrir Chat
+                                        </button>
+                                    </form>
+
                                     <form
                                         action="{{ route('proposal.set-proposal-status', [
                                             'id' => $request->id,

@@ -1,4 +1,4 @@
-@section('title', 'Editar Perfil Profissional')
+@section('title', 'Editar Perfil')
 @include('components.header-dashboard')
 @include('components.navbar')
 
@@ -13,7 +13,7 @@
             <div class="content-header mb-xl">
                 <div class="">
                     <h1>Editar Perfil <span>Profissional</span></h1>
-                    <p class="text-muted">Mantenha seus dados e certificados em dia para atrair mais clientes.</p>
+                    <p class="text-muted">Mantenha seus dados de úsuario em dia.</p>
                 </div>
             </div>
             @if (session('success'))
@@ -46,7 +46,7 @@
                                     class="avatar-img">
 
                                 <label for="avatarInput" class="avatar-upload-btn">
-                                    <i class="fa-solid fa-camera"></i>
+                                    <i class="fa-solid fa-pencil"></i>
                                     <input type="file" name="foto" id="avatarInput" hidden>
                                 </label>
                             </div>
@@ -176,9 +176,9 @@
                         </div>
 
 
-                        <div class="form-actions mt-xl">
+                        <div class="form-actions text-right">
                             <a href="{{ route('dashboard.caregiver') }}" class="btn btn-outline-primary">Cancelar</a>
-                            <button type="submit" class="btn btn-primary btn-lg">Atualizar Perfil de Usuário</button>
+                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         </div>
 
                     </div>

@@ -1,5 +1,5 @@
 {{-- TITLE --}}
-@section('title', 'Dashboard Cliente')
+@section('title', 'Painel Cuidador')
 {{-- HEADER --}}
 @include('components.header-dashboard')
 <!-- NAVBAR -->
@@ -42,8 +42,8 @@
                                             @if ($proposal->client->user->foto == null)
                                                 <i class="fa-solid fa-user"></i>
                                             @else
-                                                <img src="{{ asset('storage/users/' . $review->client->user->foto) }}"
-                                                    alt="{{ $review->client->user->nome }}">
+                                                <img src="{{ asset('storage/clients/' . $proposal->client->user->foto) }}"
+                                                    alt="">
                                             @endif
                                         </div>
                                         <div class="proposal-details">
@@ -75,8 +75,8 @@
                                         @if ($review->client->user->foto == null)
                                             <i class="fa-solid fa-user"></i>
                                         @else
-                                            <img src="{{ asset('storage/users/' . $review->client->user->foto) }}"
-                                                alt="{{ $review->client->user->nome }}">
+                                            <img src="{{ asset('storage/clients/' . $review->client->user->foto) }}"
+                                                alt="">
                                         @endif
                                     </div>
                                     <div class="review-details">
@@ -121,7 +121,7 @@
                         <!-- TOPO (2 pequenos) -->
                         <div class="feedback-stats-top">
                             <div class="stat-small">
-                                <span class="stat-label">Propostas aceitas</span>
+                                <span class="stat-label">Propostas</span>
                                 <span class="stat-value">{{ $totalProposals }}</span>
                             </div>
 
