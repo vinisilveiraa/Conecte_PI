@@ -19,158 +19,142 @@
         </a>
 
         <!-- Menu Toggle (Mobile) -->
-        <button class="navbar-toggle" id="navbarToggle" onclick="">
-            ☰
-        </button>
+        <a class="navbar-toggle" id="navbarToggle">
+            <i class="fa-solid fa-bars"></i>
+        </a>
 
-        <!-- Menu Links -->
-        <ul class="navbar-menu" id="navbarMenu">
-            <li>
-                <a href="{{ route('home') }}">
-                    Home
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('client.searchCaregiver') }}">
-                    Encontrar Cuidador
-                </a>
-            </li>
+        <div class="navbar-mobile" id="navbarMobile">
 
-            <li>
-                <a href="{{ route('sobre-nos') }}">
-                    Sobre Nós
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('contatos') }}">
-                    Contatos
-                </a>
-            </li>
-        </ul>
+            <ul class="navbar-menu" id="navbarMenu">
+                <li><a href="{{ route('home') }}">Home</a></li>
+                <li><a href="{{ route('client.searchCaregiver') }}">Encontrar Cuidador</a></li>
+                <li> <a href="{{ route('sobre-nos') }}"> Sobre Nós </a></li>
+                <li><a href="{{ route('contatos') }}">Contatos</a></li>
+            </ul>
 
-        <!-- Buttons -->
+            <!-- Buttons -->
 
-        <div class="navbar-buttons" id="navbarButtons">
+            <div class="navbar-buttons" id="navbarButtons">
 
-            @auth
-                <div class="navbar-user-container">
-                    <div class="dropdown">
-                        <button class="navbar-profile-toggle" type="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                @auth
+                    <div class="navbar-user-container">
+                        <div class="dropdown">
+                            <button class="navbar-profile-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
 
-                            <div class="navbar-profile-info">
-                                @if (Auth::user()->foto)
-                                    <img src="{{ asset('storage/' . (auth()->user()->role === 'client' ? 'clients/' : 'caregivers/') . Auth::user()->foto) }}"
-                                        class="navbar-avatar" alt="Avatar">
-                                @else
-                                    <div class="navbar-avatar-placeholder">
-                                        <i class="fa-solid fa-user"></i>
-                                    </div>
-                                @endif
-                                <span class="navbar-name d-none d-sm-inline">
-                                    {{ explode(' ', Auth::user()->nome)[0] }}
-                                </span>
-                                <i class="fa-solid fa-chevron-down ms-2 small opacity-75"></i>
-                            </div>
-                        </button>
+                                <div class="navbar-profile-info">
+                                    @if (Auth::user()->foto)
+                                        <img src="{{ asset('storage/' . (auth()->user()->role === 'client' ? 'clients/' : 'caregivers/') . Auth::user()->foto) }}"
+                                            class="navbar-avatar" alt="Avatar">
+                                    @else
+                                        <div class="navbar-avatar-placeholder">
+                                            <i class="fa-solid fa-user"></i>
+                                        </div>
+                                    @endif
+                                    <span class="navbar-name d-none d-sm-inline">
+                                        {{ explode(' ', Auth::user()->nome)[0] }}
+                                    </span>
+                                    <i class="fa-solid fa-chevron-down ms-2 small opacity-75"></i>
+                                </div>
+                            </button>
 
-                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
-                            <li>
-                                <a class="dropdown-item py-2"
-                                    href="{{ auth()->user()->role === 'client' ? route('dashboard.client') : route('dashboard.caregiver') }}">
-                                    <i class="fa-solid fa-user me-2"></i> Painel
-                                </a>
-                            </li>
-
-                            @if (auth()->user()->role === 'caregiver')
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
                                 <li>
                                     <a class="dropdown-item py-2"
-                                        href="{{ route('caregiver.public-profile', Auth::user()->caregiver->slug) }}">
-                                        <i class="fa-solid fa-book-medical me-2"></i> Meu Perfil
+                                        href="{{ auth()->user()->role === 'client' ? route('dashboard.client') : route('dashboard.caregiver') }}">
+                                        <i class="fa-solid fa-user me-2"></i> Painel
                                     </a>
                                 </li>
-                            @endif
 
-                            <li>
-                                <a class="dropdown-item py-2"
-                                    href="{{ auth()->user()->role === 'client' ? route('dashboard.client-editProfile') : route('dashboard.caregiver-editProfile') }}">
-                                    <i class="fa-solid fa-pencil me-2"></i> Editar Perfil
-                                </a>
-                            </li>
-
-                            @if (auth()->user()->role === 'client')
-                                <li>
-                                    <a class="dropdown-item py-2" href="{{ route('client.hire-history') }}">
-                                        <i class="fa-solid fa-clock-rotate-left me-2"></i> Propostas
-                                    </a>
-                                </li>
-                            @endif
-
-                            <li>
-                                <a class="dropdown-item py-2"
-                                    href="{{ auth()->user()->role === 'client' ? route('client.chat') : route('caregiver.chat') }}">
-                                    <i class="fa-solid fa-comments me-2"></i> Chat
-                                </a>
-                            </li>
-
-                            <li>
-                                <hr class="dropdown-divider opacity-50">
-                            </li>
-                            <li>
-                                <a class="dropdown-item py-2 text-danger navbar-logout" href="{{ route('logout') }}">
-                                    <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Sair
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="navbar-user-notify">
-                    <div class="dropdown">
-                        <button class="navbar-notify-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-bell"></i>
-
-                            @php
-                                $notifications = auth()->user()->unreadNotifications;
-                            @endphp
-
-                            @if ($notifications->count() > 0)
-                                <span class="notify-badge">
-                                    {{ $notifications->count() > 9 ? '9+' : $notifications->count() }}
-                                </span>
-                            @endif
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
-                            @if ($notifications->count() > 0)
-                                @foreach ($notifications as $notification)
+                                @if (auth()->user()->role === 'caregiver')
                                     <li>
-                                        <a href="{{ route('notification.read', $notification->id) }}"
-                                            class="dropdown-item py-2">
-                                            {{ $notification->data['message'] }}
+                                        <a class="dropdown-item py-2"
+                                            href="{{ route('caregiver.public-profile', Auth::user()->caregiver->slug) }}">
+                                            <i class="fa-solid fa-book-medical me-2"></i> Meu Perfil
                                         </a>
                                     </li>
-                                @endforeach
-                            @else
+                                @endif
+
                                 <li>
-                                    <a class="dropdown-item py-2">
-                                        Nenhuma notificação recebida...
+                                    <a class="dropdown-item py-2"
+                                        href="{{ auth()->user()->role === 'client' ? route('dashboard.client-editProfile') : route('dashboard.caregiver-editProfile') }}">
+                                        <i class="fa-solid fa-pencil me-2"></i> Editar Perfil
                                     </a>
                                 </li>
-                            @endif
-                        </ul>
-                    </div>
-                </div>
-            @endauth
 
-            @guest
-                <a href="{{ route('register') }}" class="navbar-btn navbar-btn-primary">
-                    Cadastro
-                </a>
-                <a href="{{ route('login') }}" class="navbar-btn navbar-btn-primary">
-                    Login
-                </a>
-            @endguest
+                                @if (auth()->user()->role === 'client')
+                                    <li>
+                                        <a class="dropdown-item py-2" href="{{ route('client.hire-history') }}">
+                                            <i class="fa-solid fa-clock-rotate-left me-2"></i> Propostas
+                                        </a>
+                                    </li>
+                                @endif
+
+                                <li>
+                                    <a class="dropdown-item py-2"
+                                        href="{{ auth()->user()->role === 'client' ? route('client.chat') : route('caregiver.chat') }}">
+                                        <i class="fa-solid fa-comments me-2"></i> Chat
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <hr class="dropdown-divider opacity-50">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item py-2 text-danger navbar-logout" href="{{ route('logout') }}">
+                                        <i class="fa-solid fa-arrow-right-from-bracket me-2"></i> Sair
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="navbar-user-notify">
+                        <div class="dropdown">
+                            <button class="navbar-notify-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="fa-solid fa-bell"></i>
+
+                                @php
+                                    $notifications = auth()->user()->unreadNotifications;
+                                @endphp
+
+                                @if ($notifications->count() > 0)
+                                    <span class="notify-badge">
+                                        {{ $notifications->count() > 9 ? '9+' : $notifications->count() }}
+                                    </span>
+                                @endif
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
+                                @if ($notifications->count() > 0)
+                                    @foreach ($notifications as $notification)
+                                        <li>
+                                            <a href="{{ route('notification.read', $notification->id) }}"
+                                                class="dropdown-item py-2">
+                                                {{ $notification->data['message'] }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                @else
+                                    <li>
+                                        <a class="dropdown-item py-2">
+                                            Nenhuma notificação recebida...
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </div>
+                    </div>
+                @endauth
+
+                @guest
+                    <a href="{{ route('register') }}" class="navbar-btn navbar-btn-primary">
+                        Cadastro
+                    </a>
+                    <a href="{{ route('login') }}" class="navbar-btn navbar-btn-primary">
+                        Login
+                    </a>
+                @endguest
+            </div>
         </div>
     </div>
 </nav>
-
-<script src="../js/main.js"></script>

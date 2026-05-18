@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('Conecte - Página carregada');
 
     // Inicializar funcionalidades
-    initNavbar();
     initSmoothScroll();
     initFormValidation();
 });
@@ -20,28 +19,37 @@ document.addEventListener('DOMContentLoaded', function () {
 // NAVBAR - MOBILE MENU
 // ============================================
 
-function initNavbar() {
+document.addEventListener('DOMContentLoaded', () => {
+
     const navbarToggle = document.getElementById('navbarToggle');
+    const navbarMobile = document.getElementById('navbarMobile');
 
-    if (navbarToggle) {
-        navbarToggle.addEventListener('click', function (e) {
-            e.stopPropagation();
-            toggleNavbar();
-        });
-    }
+    // Abrir / fechar menu
+    navbarToggle.addEventListener('click', () => {
 
-    // Fechar menu ao clicar fora
-    document.addEventListener('click', function (e) {
-        const navbar = document.querySelector('.navbar');
-        const menu = document.getElementById('navbarMenu');
-        const buttons = document.getElementById('navbarButtons');
+        navbarMobile.classList.toggle('active');
 
-        if (navbar && !navbar.contains(e.target) && menu && buttons) {
-            menu.classList.remove('active');
-            buttons.classList.remove('active');
+        navbarToggle.innerHTML =
+            navbarMobile.classList.contains('active')
+                ? '<i class="fa-solid fa-xmark"></i>'
+                : '<i class="fa-solid fa-bars"></i>';
+    });
+
+    // Fechar ao clicar fora
+    document.addEventListener('click', (e) => {
+
+        if (
+            !navbarMobile.contains(e.target) &&
+            !navbarToggle.contains(e.target)
+        ) {
+            navbarMobile.classList.remove('active');
+
+            navbarToggle.innerHTML =
+                '<i class="fa-solid fa-bars"></i>';
         }
     });
-}
+
+});
 
 function toggleNavbar() {
     const menu = document.getElementById('navbarMenu');
@@ -420,9 +428,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    window.enviarMensagemBotao = function (texto) {
+
+        input.value = texto;
+
+        sendMessage();
+    }
+
     function appendMessage(text, side) {
         const msgDiv = document.createElement('div');
-        msgDiv.classList.add('message', side);
+        msgDiv.classList.add('bot-message', side);
         msgDiv.innerHTML = text;
         messagesContainer.appendChild(msgDiv);
 

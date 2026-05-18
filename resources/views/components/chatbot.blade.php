@@ -16,8 +16,16 @@
         </div>
 
         <div id="chat-messages" class="chatbot-messages">
-            <div class="message bot">
-                Olá! 👋 Como posso ajudar você a encontrar o cuidado ideal hoje?
+            <div class="bot-message bot">
+                Olá! 👋 Como posso ajudar você a encontrar o cuidado ideal hoje?\
+
+                <div class="chatbot-buttons">
+                    <button onclick="enviarMensagemBotao('Quero buscar cuidadores')">Buscar cuidadores</button>
+                    <button onclick="enviarMensagemBotao('Preciso de ajuda com minha conta')">Ajuda com conta</button>
+                    <button onclick="enviarMensagemBotao('Gostaria de saber mais sobre o Conecte')">Sobre o
+                        Conecte</button>
+                </div>
+
             </div>
         </div>
 

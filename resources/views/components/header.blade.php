@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/landing-elements.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/registro.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/chatbot.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/password.css') }}">
 
     <!-- 4. DASHBOARD E ÁREAS ESPECÍFICAS (Importar na área administrativa) -->
     <link rel="stylesheet" href="{{ asset('assets/css/tabelas.css') }}">

@@ -157,7 +157,7 @@ Route::view("/", "site.home")->name('home');
 Route::view("/sobre-nos", "site.sobre-nos")->name('sobre-nos');
 Route::view("/politica-privacidade", "site.politica-privacidade")->name('politica-privacidade');
 Route::view("/contatos", "site.contatos")->name('contatos');
-Route::post('/chatbot', [ChatbotController::class, 'responder']);
+Route::post('/chatbot', [ChatbotController::class, 'enviarMensagem']);
 
 
 Route::get("/searchCaregiver", [ClientController::class, 'searchCaregiver'])

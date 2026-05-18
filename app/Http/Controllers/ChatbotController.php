@@ -3,38 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ChatbotResposta;
-use App\Models\ChatLog;
-use Illuminate\Support\Facades\Auth;
+use App\Services\ChatbotService;
 
 class ChatbotController extends Controller
 {
-    public function responder(Request $request)
-    {
-        $mensagem = strtolower($request->mensagem);
-        $respostaFinal = "Desculpe, não entendi. Pode reformular?";
+    public function enviarMensagem(
+        Request $request,
+        ChatbotService $chatbot
+    ) {
 
-        $respostas = ChatbotResposta::all();
-
-        foreach ($respostas as $resposta) {
-            foreach ($resposta->gatilhos as $gatilho) {
-                if (str_contains($mensagem, $gatilho)) {
-                    $respostaFinal = $resposta->resposta;
-                    break 2;
-                }
-            }
-        }
-
-        // salva log
-        ChatLog::create([
-            'user_id' => Auth::id(),
-            'mensagem' => $mensagem,
-            'resposta' => $respostaFinal,
-            'data' => now()
-        ]);
+        $resposta = $chatbot->responder(
+            $request->mensagem
+        );
 
         return response()->json([
-            'resposta' => $respostaFinal
+            'resposta' => $resposta
         ]);
     }
 }
