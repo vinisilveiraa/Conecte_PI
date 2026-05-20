@@ -14,7 +14,7 @@
             <div class="profile-main-info-wrap">
                 <div class="profile-main-info">
                     <div class="profile-avatar-large">
-                        <img src="{{ $caregiver->user->foto ? asset('storage/caregivers' . $caregiver->user->foto) : asset('assets/imgs/default-avatar.svg') }}"
+                        <img src="{{ asset('storage/caregivers/' . $caregiver->user->foto) ?: asset('assets/imgs/default-avatar.svg') }}"
                             alt="Foto de {{ $caregiver->user->nome }}">
                     </div>
                     <div class="profile-details">
@@ -67,9 +67,6 @@
                         <a href="{{ route('client.hire.form', $caregiver->id) }}" class="btn btn-primary btn-lg">
                             <i class="fas fa-file-contract"></i> Enviar Proposta
                         </a>
-                        <button class="btn btn-outline-primary btn-lg" onclick="openChat({{ $caregiver->user_id }})">
-                            <i class="fas fa-comment"></i> Entrar em Contato
-                        </button>
                     @else
                         {{-- Outro cuidador vendo o perfil --}}
                         <span class="badge bg-light text-dark p-3 border">Visualizando como Profissional</span>
@@ -87,7 +84,7 @@
                         <p class="profile-bio text-center">Nenhuma informação aqui</p>
                     @else
                         <h3 class="profile-headline">{{ $caregiver->headline ?? 'Nenhuma headline definida' }}</h3>
-                        <span class="profile-bio">{{ $caregiver->bio ?? 'Nenhuma bio definida' }}</span>
+                        <span class="profile-bio">"{{ $caregiver->bio ?? 'Nenhuma bio definida' }}"</span>
                     @endif
                 </section>
 
@@ -119,19 +116,20 @@
                 <section class="profile-section card">
                     <h2 class="card-title">Certificados</h2>
                     <div class="certificates-list">
-                        <div class="certificate-item">
-                            @if (isset($caregiver->certificado_cuidador) && $caregiver->certificado_cuidador)
+                        @if (isset($caregiver->certificado_cuidador) && $caregiver->certificado_cuidador)
+                            <div class="certificate-item">
                                 @if (pathinfo($caregiver->certificado_cuidador, PATHINFO_EXTENSION) == 'pdf')
                                     <iframe src="{{ route('caregiver.certificate', $caregiver->id) }}" width="100%"
-                                        height="150px"></iframe>
+                                        height="400px"></iframe>
                                 @else
                                     <img src="{{ route('caregiver.certificate', $caregiver->id) }}" alt="Certificado">
                                 @endif
-                            @else
-                                <i class="fa-solid fa-folder text-center"></i>
-                                <p class="text-muted text-center">Nenhum certificado cadastrado.</p>
-                            @endif
-                        </div>
+                            </div>
+                        @else
+                            <i class="fa-solid fa-folder text-center"></i>
+                            <p class="text-muted text-center">Nenhum certificado cadastrado.</p>
+                        @endif
+
                     </div>
                 </section>
 

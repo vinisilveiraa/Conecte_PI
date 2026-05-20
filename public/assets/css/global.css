@@ -197,6 +197,10 @@ select:focus {
     border-color: var(--color-primary);
 }
 
+strong {
+    color: var(--color-primary);
+}
+
 
 /* Utilidades de Texto e Espaçamento */
 .text-lg {
@@ -261,6 +265,10 @@ select:focus {
 
 .mt-xl {
     margin-top: var(--spacing-xl);
+}
+
+.mb-xs {
+    margin-bottom: var(--spacing-xs);
 }
 
 .mb-sm {

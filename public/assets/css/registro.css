@@ -165,6 +165,9 @@
     .cadastro-form-section {
         padding: var(--spacing-lg);
         max-height: auto;
+        overflow-y: hidden;
+        min-height: 100vh;
+        max-height: none;
     }
 }
 

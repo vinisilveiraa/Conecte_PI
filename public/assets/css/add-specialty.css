@@ -24,12 +24,17 @@
     gap: 8px;
 }
 
+.tags-container.small {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
 .tags-container form {
     padding: 0;
     margin: 0;
     line-height: normal;
 }
-
 
 .badge-tag {
     display: flex;
@@ -45,6 +50,12 @@
     font-weight: var(--font-weight-medium);
 
     transition: 100ms;
+}
+
+.badge-tag.small {
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: var(--font-weight-light);
 }
 
 .badge-tag:hover {

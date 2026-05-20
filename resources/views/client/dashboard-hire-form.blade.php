@@ -33,7 +33,9 @@
                             @endif
                         </div>
 
-                        <h3>{{ $caregiver->user->nome }}</h3>
+                        <h3 class="mb-0">{{ $caregiver->user->nome }}</h3>
+                        <p class="profile-username mb-2">{{ '@' . $caregiver->slug }} | Código:
+                            #{{ $caregiver->public_code }}</p>
                         <div class="rating-stars mb-sm">
                             @if ($caregiver->reviews_count > 0)
                                 <i class="fa-solid fa-star"></i>
@@ -44,11 +46,12 @@
                             @endif
                         </div>
 
-                        @if ($caregiver->bio == null)
+                        @if ($caregiver->headline == null)
                             <p class="text-sm text-center text-muted">Sem biografia disponível.</p>
                         @else
-                            <p class="text-sm text-center">{{ $caregiver->bio }}</p>
+                            <p class="text-sm text-center">{{ $caregiver->headline }}</p>
                         @endif
+
                         <hr class="my-md">
                         <div class="summary-info">
                             <div class="info-line">
@@ -56,14 +59,43 @@
                                 <span class="value">{{ $caregiver->user->address->cidade }},
                                     {{ $caregiver->user->address->estado }}</span>
                             </div>
-                            {{-- <div class="info-line">
+                            <div class="info-line">
                                 <span class="label">Experiência:</span>
-                                <span class="value">5+ anos</span>
-                            </div> --}}
+                                <span class="value">{{ $caregiver->experience_years }}+ anos</span>
+                            </div>
+                            <div class="info-line">
+                                <span class="label">Disponibilidade:</span>
+                            </div>
+                            <div class="availability-schedule tags-container small mb-xs">
+                                @if ($caregiver->available_morning)
+                                    <span class="badge-tag small">Manhã</span>
+                                @endif
+                                @if ($caregiver->available_afternoon)
+                                    <span class="badge-tag small">Tarde</span>
+                                @endif
+                                @if ($caregiver->available_night)
+                                    <span class="badge-tag small">Noite</span>
+                                @endif
+                                @if ($caregiver->available_weekends)
+                                    <span class="badge-tag small">Fim de Semana</span>
+                                @endif
+                            </div>
+                            <div class="info-line">
+                                <span class="label">Especialidades:</span>
+                            </div>
+                            <div class="availability-schedule tags-container small">
+                                @foreach ($caregiver->specialties->take(3) as $specialty)
+                                    <span class="badge-tag small">{{ $specialty->nome }}</span>
+                                @endforeach
+                                @if ($caregiver->specialties->count() > 3)
+                                    <span class="badge-tag small">+{{ $caregiver->specialties->count() - 3 }}</span>
+                                @endif
+                            </div>
+
                         </div>
                     </div>
                     <div class="card hire-summary-info">
-                        <ul>
+                        <ul class="text-sm text-muted">
                             <li>Você só paga após aceitar</li>
                             <li>Cancelamento gratuito</li>
                             <li>Cuidador será notificado imediatamente</li>
@@ -78,21 +110,24 @@
                         <input type="hidden" name="caregiver_id" value="{{ $caregiver->id }}">
 
                         <div class="card mb-md">
-                            <h3 class="card-title"><i class="fa-solid fa-calendar-days mr-sm"></i> Período do Serviço
+                            <h3 class="card-title"><i class="fa-solid fa-calendar-days mr-sm"></i> Período do
+                                Serviço
                             </h3>
                             <div class="form-row">
                                 <div class="form-group col-6">
                                     <label class="form-label">Data de Início</label>
-                                    <input type="date" name="data_inicio" class="form-control" required>
+                                    <input type="date" name="data_inicio" class="form-control" id="data_inicio"
+                                        min="{{ now()->toDateString() }}" required>
                                     @error('data_inicio')
-                                        <div class="alert alert-warning">
+                                        <div class="alert-danger">
                                             {{ $message }}
                                         </div>
                                     @enderror
                                 </div>
                                 <div class="form-group col-6">
                                     <label class="form-label">Data de Fim</label>
-                                    <input type="date" name="data_fim" class="form-control" required>
+                                    <input type="date" name="data_fim" id="data_fim"
+                                        class="form-control"min="{{ now()->toDateString() }}" required>
                                     @error('data_fim')
                                         <div class=" alert-danger">
                                             {{ $message }}
@@ -118,7 +153,14 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
-                                    <small class="text-muted">Defina o valor total, recomendado R$:15,00/hora.</small>
+                                    <small class="text-muted">
+                                        @if ($caregiver->hour_price)
+                                            Valor definido minimo pelo cuidador:
+                                            <strong>{{ $caregiver->hour_price }}/hora</strong>
+                                        @else
+                                            Defina o valor total,recomendado R$:15,00/hora
+                                        @endif
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -168,3 +210,17 @@
 </div>
 
 @include('components.footer')
+
+<script>
+    const dataInicio = document.getElementById('data_inicio');
+    const dataFim = document.getElementById('data_fim');
+
+    dataInicio.addEventListener('change', function() {
+        dataFim.min = this.value;
+
+        // limpa a data fim se ela for menor
+        if (dataFim.value < this.value) {
+            dataFim.value = '';
+        }
+    });
+</script>

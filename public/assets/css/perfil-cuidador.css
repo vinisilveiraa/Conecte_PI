@@ -138,6 +138,10 @@
     font-size: var(--font-size-base);
     color: var(--color-text-light);
     line-height: 1.7;
+
+    padding: var(--spacing-sm);
+    background-color: var(--color-light-teal);
+    border-radius: var(--border-radius-md);
 }
 
 .specialties-list {
@@ -153,6 +157,11 @@
     border-radius: var(--border-radius-full);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-medium);
+}
+
+.specialty-badge.small {
+    padding: 2px 8px;
+    font-size: var(--font-size-xs);
 }
 
 .professional-info-list {

@@ -296,7 +296,7 @@
 @media (max-width: 768px) {
 
     .navbar-container {
-        position: relative;
+        width: 100%;
     }
 
     /* BOTÃO */
@@ -311,29 +311,17 @@
 
     /* MENU MOBILE */
     .navbar-mobile {
-
         display: none;
-
         position: absolute;
-
         top: calc(100% + 10px);
-
         left: 0;
-
         width: 100%;
-
         background: white;
-
         padding: 20px;
-
         border-radius: 16px;
-
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-
         z-index: 9999;
-
         flex-direction: column;
-
         align-items: stretch;
     }
 
@@ -343,19 +331,12 @@
 
     /* MENU */
     .navbar-menu {
-
         display: flex;
-
         flex-direction: column;
-
         width: 100%;
-
         gap: 0;
-
         padding: 0;
-
         margin: 0;
-
         list-style: none;
     }
 
@@ -364,27 +345,20 @@
     }
 
     .navbar-menu a {
-
         display: block;
-
         width: 100%;
-
         padding: 14px 0;
-
         border-bottom: 1px solid #eee;
     }
 
     /* BOTÕES */
     .navbar-buttons {
-
         display: flex;
-
-        flex-direction: column;
-
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
         width: 100%;
-
         gap: 12px;
-
         margin-top: 20px;
     }
 
@@ -396,9 +370,7 @@
     /* PROFILE BUTTON */
     .navbar-profile-toggle,
     .navbar-notify-toggle {
-
         width: 100%;
-
         justify-content: center;
     }
 }

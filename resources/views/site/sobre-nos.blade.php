@@ -86,29 +86,17 @@
 
         <!-- Colaborador 1 -->
         <div class="collaborator">
-            <div class="collaborator-avatar">W</div>
+            <div class="collaborator-avatar">V</div>
             <div class="collaborator-content">
-                <h3>William Matias de Oliveira</h3>
+                <h3>Vinicius Leonardo Silveira</h3>
                 <div class="collaborator-role">Desenvolvedor</div>
                 <div class="collaborator-links">
-                    <a href="https://github.com" target="_blank">Github</a>
-                    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+                    <a href="https://github.com/vinisilveiraa" target="_blank">Github</a>
+                    <a href="https://linkedin.com/in/vinisilveiraa" target="_blank">LinkedIn</a>
                 </div>
             </div>
         </div>
 
-        <!-- Colaborador 2 -->
-        <div class="collaborator">
-            <div style="text-align: right; flex: 1;">
-                <h3 style="margin-bottom: 0.5rem;">Vinicius Leonardo Silveira</h3>
-                <div class="collaborator-role">Desenvolvedor</div>
-                <div class="collaborator-links" style="justify-content: flex-end;">
-                    <a href="https://github.com" target="_blank">Github</a>
-                    <a href="https://linkedin.com" target="_blank">LinkedIn</a>
-                </div>
-            </div>
-            <div class="collaborator-avatar" style="margin-left: auto;">V</div>
-        </div>
     </div>
 </section>
 

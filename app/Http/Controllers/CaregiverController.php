@@ -27,9 +27,8 @@ class CaregiverController extends Controller
         $caregiver = Caregiver::findOrFail($id);
 
         // REGRAS DE ACESSO
-        // ex: só dono ou admin ou clientes autenticados
-
-        if (Auth::id() !== $caregiver->user_id) {
+        // ex: só dono ou admin ou clientes autenticados, ta aberto pra todos por enquanto
+        if (!Auth::check()) {
             abort(403);
         }
 

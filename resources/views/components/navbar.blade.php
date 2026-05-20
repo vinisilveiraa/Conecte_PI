@@ -51,8 +51,16 @@
                                             <i class="fa-solid fa-user"></i>
                                         </div>
                                     @endif
+                                    @php
+                                        $nameParts = explode(' ', trim(Auth::user()->nome));
+                                        $firstName = \Illuminate\Support\Str::limit($nameParts[0] ?? '', 12, '');
+                                        $lastInitial =
+                                            isset($nameParts[1]) && $nameParts[1] !== ''
+                                                ? ' ' . mb_substr($nameParts[1], 0, 1)
+                                                : '';
+                                    @endphp
                                     <span class="navbar-name d-none d-sm-inline">
-                                        {{ explode(' ', Auth::user()->nome)[0] }}
+                                        {{ $firstName . $lastInitial . '.' }}
                                     </span>
                                     <i class="fa-solid fa-chevron-down ms-2 small opacity-75"></i>
                                 </div>

@@ -188,12 +188,11 @@
 
                                 <div class="caregiver-main-info">
                                     <h3 class="mb-0">{{ $caregiver->user->nome }}</h3>
+                                    <p class="text-muted mb-xs">{{ '@' . $caregiver->slug }}</p>
                                 </div>
 
                                 <div class="caregiver-info">
-
                                     <span class="text-muted">
-                                        <p class="text-muted">{{ '@' . $caregiver->slug }}</p>
                                         <i class="fa-solid fa-map-pin"></i>
                                         @if ($caregiver->distance)
                                             <strong>{{ $caregiver->distance }} km </strong>|
@@ -299,7 +298,7 @@
                             <p id="modal-headline" class="text-lg text-regular mb-0">
                                 Nenhuma headline disponível
                             </p>
-                            <p id="modal-bio" class="text-md">
+                            <p id="modal-bio" class="modal-bio text-md">
                                 Nenhuma bio disponível
                             </p>
                         </div>
@@ -391,7 +390,8 @@
                 container.innerHTML = '';
 
                 caregiver.especialidades.forEach(nome => {
-                    container.innerHTML += `<span class="badge-tag">${nome}</span>`;
+                    container.innerHTML +=
+                        `<span class="badge-tag small">${nome}</span>`;
                 });
 
                 document.getElementById('profileBtn').href =

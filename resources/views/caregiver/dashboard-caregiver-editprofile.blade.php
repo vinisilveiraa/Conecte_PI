@@ -86,53 +86,6 @@
                             </div>
                         </div>
 
-                        <!-- Documentação (Exclusivo Cuidador) -->
-                        {{-- <div class="card mb-md card-border-primary">
-                            <h3 class="card-title"><i class="fa-solid fa-id-card mr-sm"></i> Credenciais e
-                                Certificados</h3>
-                            <div class="form-row">
-                                <div class="form-group col-12">
-                                    <span class="text-muted text-right">você deve nos fornecer pelo menos um *</span>
-                                    <label>Número do COREN</label>
-                                    <input type="text" name="coren" value="{{ Auth::user()->caregiver->coren }}"
-                                        class="form-control" placeholder="Ex: 123.456-SP">
-                                </div>
-                            </div>
-                            <div class="form-row mt-md">
-                                <div class="form-group col-12">
-                                    <label>Certificado de Formação (Imagem)</label>
-
-                                    <div class="file-upload-wrapper">
-                                        <input type="file" name="certificado_cuidador" class="file-input"
-                                            id="certificadoInput">
-                                        <div class="file-dummy">
-                                            <i class="fa-solid fa-certificate mb-sm"></i>
-                                            <span id="file-name">Clique para atualizar seu certificado</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="certificado-preview" id="certificado-preview">
-                                        @if (Auth::user()->caregiver->certificado_cuidador)
-                                            <div id="current-certificado" class="current-certificado mt-sm">
-                                                <p>Certificado Atual:</p>
-
-                                                @if (str_ends_with(Auth::user()->caregiver->certificado_cuidador, '.pdf'))
-                                                    <iframe
-                                                        src="{{ asset('storage/' . Auth::user()->caregiver->certificado_cuidador) }}"></iframe>
-                                                @else
-                                                    <img src="{{ asset('storage/' . Auth::user()->caregiver->certificado_cuidador) }}"
-                                                        alt="Certificado Atual">
-                                                @endif
-
-                                            </div>
-                                        @endif
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div> --}}
-
-
                         <!-- Endereço -->
                         <div class="card mb-md">
                             <h3 class="card-title"><i class="fa-solid fa-location-dot mr-sm"></i> Onde você atende?

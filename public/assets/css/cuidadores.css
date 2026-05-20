@@ -215,6 +215,12 @@
     color: #333;
 }
 
+.modal-bio {
+    background-color: var(--color-light-teal);
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-md);
+}
+
 @media (max-width: 768px) {
     .filters-sidebar {
         position: static;
@@ -270,7 +276,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
 }
 
 .caregiver-main-info h3 {
@@ -310,7 +315,7 @@
     display: flex;
     justify-content: center;
     gap: var(--spacing-md);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
 }
 
 .rating-stars {
@@ -351,5 +356,9 @@
 
     .caregivers-grid {
         grid-template-columns: 1fr;
+    }
+
+    .empty-state {
+        margin-bottom: var(--spacing-md);
     }
 }
