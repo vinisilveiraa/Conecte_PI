@@ -102,7 +102,8 @@ dashboard-grid-new .card {
     color: var(--color-primary);
 }
 
-.proposal-item .proposal-avatar img {
+.proposal-item .proposal-avatar img,
+.review-item .review-icon img {
     width: 100%;
     height: 100%;
     border-radius: var(--border-radius-full);
@@ -123,6 +124,16 @@ dashboard-grid-new .card {
     font-size: var(--font-size-sm);
     color: var(--color-text-light);
     line-height: 1;
+}
+
+.proposal-actions {
+    display: flex;
+    width: 100%;
+}
+
+.proposal-actions .btn {
+    flex: 1;
+    margin: 0 var(--spacing-xs);
 }
 
 /* Alerts Card */

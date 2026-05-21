@@ -117,7 +117,7 @@
                                 <div class="form-group col-6">
                                     <label class="form-label">Data de Início</label>
                                     <input type="date" name="data_inicio" class="form-control" id="data_inicio"
-                                        min="{{ now()->toDateString() }}" required>
+                                        min="{{ now()->toDateString() }}" value="{{ old('data_inicio') }}" required>
                                     @error('data_inicio')
                                         <div class="alert-danger">
                                             {{ $message }}
@@ -127,7 +127,8 @@
                                 <div class="form-group col-6">
                                     <label class="form-label">Data de Fim</label>
                                     <input type="date" name="data_fim" id="data_fim"
-                                        class="form-control"min="{{ now()->toDateString() }}" required>
+                                        class="form-control"min="{{ now()->toDateString() }}"
+                                        value="{{ old('data_fim') }}" required>
                                     @error('data_fim')
                                         <div class=" alert-danger">
                                             {{ $message }}
@@ -146,7 +147,7 @@
                                     <div class="input-group-custom">
                                         <span class="input-prefix">R$</span>
                                         <input type="number" step="0.01" name="valor_servico" class="form-control"
-                                            placeholder="0,00" required>
+                                            placeholder="0,00" value="{{ old('valor_servico') }}" required>
                                     </div>
                                     @error('valor_servico')
                                         <div class=" alert-danger">
@@ -171,7 +172,7 @@
                             <div class="form-group mb-md">
                                 <label class="form-label">Descrição das Atividades</label>
                                 <textarea name="descricao_servico" class="form-control" rows="4"
-                                    placeholder="Descreva as necessidades do paciente, rotinas e cuidados específicos..." required></textarea>
+                                    placeholder="Descreva as necessidades do paciente, rotinas e cuidados específicos..." required>{{ old('descricao_servico') }}</textarea>
                                 @error('descricao_servico')
                                     <div class=" alert-danger">
                                         {{ $message }}
@@ -182,7 +183,7 @@
                                 <label class="form-label">Endereço do Serviço</label>
                                 <input type="text" name="endereco_servico" class="form-control"
                                     placeholder="Rua, número, bairro e cidade"
-                                    value="{{ Auth::user()->address->logradouro }}, {{ Auth::user()->address->bairro }}"
+                                    value="{{ old('endereco_servico', Auth::user()->address->logradouro . ', ' . Auth::user()->address->bairro) }}"
                                     required>
                                 @error('endereco_servico')
                                     <div class=" alert-danger">

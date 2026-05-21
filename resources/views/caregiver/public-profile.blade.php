@@ -51,20 +51,20 @@
             <div class="profile-actions">
                 @guest
                     {{-- Visitante: Redireciona para login ou mostra modal --}}
-                    <a href="{{ route('login') }}" class="btn btn-primary btn-lg">Entrar para Contratar</a>
-                    <a href="{{ route('register') }}" class="btn btn-outline-primary btn-lg">Criar Conta</a>
+                    <a href="{{ route('login') }}" class="btn btn-primary btn-sm">Entrar para Contratar</a>
+                    <a href="{{ route('register') }}" class="btn btn-outline-primary btn-sm">Criar Conta</a>
                 @else
                     @if (auth()->user()->id === $caregiver->user_id)
                         {{-- O próprio Cuidador vendo seu perfil --}}
-                        <a href="{{ route('dashboard.caregiver') }}" class="btn btn-outline-primary btn-lg">
+                        <a href="{{ route('dashboard.caregiver') }}" class="btn btn-outline-primary btn-sm">
                             <i class="fas fa-chart-line"></i> Voltar a Dashboard
                         </a>
-                        <a href="{{ route('caregiver.edit-Profile') }}" class="btn btn-outline-secondary btn-lg">
+                        <a href="{{ route('caregiver.edit-Profile') }}" class="btn btn-outline-secondary btn-sm">
                             <i class="fas fa-edit"></i> Editar
                         </a>
                     @elseif(auth()->user()->role === 'client')
                         {{-- Cliente vendo o perfil --}}
-                        <a href="{{ route('client.hire.form', $caregiver->id) }}" class="btn btn-primary btn-lg">
+                        <a href="{{ route('client.hire.form', $caregiver->id) }}" class="btn btn-primary btn-sm">
                             <i class="fas fa-file-contract"></i> Enviar Proposta
                         </a>
                     @else

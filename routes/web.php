@@ -77,7 +77,8 @@ Route::middleware('auth')->group(function () {
         ->name('edit.profile.avatar');
 
     // CLIENT
-    Route::view('/dashboard-client', 'client.dashboard-client')->name('dashboard.client');
+    Route::get('/dashboard-client', [ClientController::class, 'showDashboard'])
+        ->name('dashboard.client');
 
     Route::get('/dashboard-caregiver', [CaregiverController::class, 'showDashboard'])
         ->name('dashboard.caregiver');

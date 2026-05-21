@@ -166,6 +166,42 @@
                     class="btn btn-outline-primary btn-block mt-md">Ver Perfil</a>
             </div>
 
+            <div class="card proposal-overview-card">
+                <h3>Meus chats ativos</h3>
+                <div class="proposal-list">
+                    @forelse ($proposals as $proposal)
+                        @if ($proposal->status == 'pending' || $proposal->status == 'accepted')
+                            <div class="proposal-item">
+                                <div class="proposal-item-wrap">
+                                    <div class="proposal-avatar">
+                                        @if ($proposal->client->user->foto == null)
+                                            <i class="fa-solid fa-user"></i>
+                                        @else
+                                            <img src="{{ asset('storage/clients/' . $proposal->client->user->foto) }}"
+                                                alt="">
+                                        @endif
+                                    </div>
+                                    <div class="proposal-details">
+                                        <h4> {{ $proposal->client->user->nome }} </h4>
+                                        <p> <span>{{ $proposal->created_at->format('d/m/Y') }}</span> </p>
+                                    </div>
+                                </div>
+                                <div class="proposal-details">
+                                    <div class="request-badge badge-{{ $proposal->status }}">
+                                        {{ ucfirst($proposal->status) }}
+                                    </div>
+                                </div>
+                                {{-- <a href="" class="btn btn-sm btn-outline-primary">Ver Perfil</a> --}}
+                            </div>
+                        @endif
+                    @empty
+                        <p class="text-muted text-center">Nenhum paciente atribuído ainda.</p>
+                    @endforelse
+                </div>
+            </div>
+
+
+
         </div>
 </div>
 </main>

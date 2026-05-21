@@ -443,6 +443,7 @@
 
 .footer-links {
     list-style: none;
+    margin-left: 0;
 }
 
 .footer-links li {

@@ -5,13 +5,76 @@ namespace App\Http\Controllers;
 use App\Models\Caregiver;
 use App\Models\User;
 use App\Models\Specialty;
+use App\Models\Proposal;
+use App\Models\Review;
+
 use Illuminate\Http\Request;
 use App\Helpers\DistanceHelper;
 use App\Helpers\SlugHelper;
+use App\Models\Conversation;
 use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
+    public function showDashboard()
+    {
+        $client = Auth::user()->client;
+
+        $recentProposals = Proposal::with([
+            'caregiver.user',
+            'review'
+        ])
+            ->where('client_id', $client->id)
+            ->whereIn('status', ['pending', 'accepted', 'completed'])
+            ->latest()
+            ->limit(5)
+            ->get();
+
+        $totalRequests = Proposal::where('client_id', $client->id)->count();
+
+        $activeRequests = Proposal::where('client_id', $client->id)
+            ->whereIn('status', ['accepted', 'in_progress'])
+            ->count();
+
+        $completedRequests = Proposal::where('client_id', $client->id)
+            ->where('status', 'completed')
+            ->count();
+
+        $pendingRequests = Proposal::where('client_id', $client->id)
+            ->where('status', 'pending')
+            ->count();
+
+        $totalReviews = Review::where('client_id', $client->id)
+            ->count();
+
+        $averageRating = Review::where('client_id', $client->id)
+            ->avg('rating');
+
+        $pendingReviews = Proposal::with('caregiver.user')
+            ->where('client_id', $client->id)
+            ->where('status', 'completed')
+            ->whereDoesntHave('review')
+            ->latest()
+            ->get();
+
+        $recentChats = Conversation::where('client_user_id', Auth::id())
+            ->orderby('last_message_at', 'desc')
+            ->limit(5)
+            ->get();
+
+        return view('client.dashboard-client', compact(
+            'recentProposals',
+            'totalRequests',
+            'activeRequests',
+            'completedRequests',
+            'pendingRequests',
+            'totalReviews',
+            'averageRating',
+            'pendingReviews',
+            'recentChats',
+        ));
+    }
+
     public function searchCaregiver(Request $request)
     {
         $client = $request->user();

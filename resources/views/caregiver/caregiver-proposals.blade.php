@@ -70,9 +70,6 @@
                                 <span class="request-date-meta text-success">Proposta Aceita em <br>
                                     {{ $proposal->accepted_at }}</span>
                             @endif
-
-                            <a href="" class="btn btn-outline-primary w-100 mt-auto">Ver
-                                Perfil</a>
                         </div>
 
                         <!-- LADO DIREITO: Detalhes da Proposta -->

@@ -6,6 +6,13 @@ use Illuminate\Support\Str;
 
 class StringHelper
 {
+    public static function onlyNumbers($string)
+    {
+        $newString = preg_replace('/\D/', '', $string);
+
+        return $newString;
+    }
+
     public static function removeAccents($string)
     {
         return iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $string);

@@ -1,18 +1,14 @@
-{{-- TITLE --}}
-@section('title', 'Dashboard Cliente')
-{{-- HEADER --}}
+@section('title', 'Painel do Cliente')
 @include('components.header-dashboard')
-<!-- NAVBAR -->
 @include('components.navbar')
 
+
 <div class="dashboard-wrapper">
-    <!-- SIDEBAR -->
-
     <!-- MAIN CONTENT -->
-    <main class="dashboard-content">
-        <div class="container">
 
-            <h1 class="text-center">Bem vindo, <span>{{ Auth::user()->nome }}</span>!</h1>
+    <main class="dashboard-content">
+        <div class="container client-dashboard">
+
             @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -28,141 +24,278 @@
                 </div>
             @endif
 
-            <div class="dashboard-grid">
-                <!-- PERFIL CARD -->
-                <div class="profile-card">
-                    <div class="profile-avatar">
-
+            <!-- HEADER: Perfil, Ações rápidas, Porcentagem de perfil completo -->
+            <div class="client-dashboard-header card">
+                <div class="header-profile-info">
+                    <div class="profile-avatar-lg">
                         @if (Auth::user()->foto == null)
                             <i class="fa-solid fa-user"></i>
                         @else
-                            <img src="{{ asset('storage/clients/' . Auth::user()->foto) }}" alt="">
+                            <img src="{{ asset('storage/clients/' . Auth::user()->foto) }}" alt="Foto de Perfil">
                         @endif
+                    </div>
+                    <div class="profile-text-info">
+                        <h2>Bem-vindo(a), {{ ucwords(Auth::user()->nome) }}!</h2>
+                        <p class="profile-type">{{ Auth::user()->role == 'caregiver' ? 'Cuidador' : 'Cliente' }}</p>
+                    </div>
+                </div>
 
-                        <!-- FORM escondido -->
-                        <form id="avatarForm" action="{{ route('edit.profile.avatar') }}" method="POST"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <input type="file" name="foto" id="avatarInput" hidden>
-                        </form>
+                <div class="header-quick-actions">
+                    <a href="{{ route('dashboard.caregiver-editProfile') }}" class="btn btn-outline-primary btn-sm"><i
+                            class="fas fa-user-edit"></i> Editar Perfil</a>
+                    <a href="{{ route('client.searchCaregiver') }}" class="btn btn-primary btn-sm"><i
+                            class="fas fa-search"></i> Buscar Cuidador</a>
+                    <a href="{{ route('client.hire-history') }}" class="btn btn-secondary btn-sm"><i
+                            class="fas fa-clipboard-list"></i> Minhas Solicitações</a>
+                </div>
+            </div>
 
-                        <!-- BOTÃO lápis -->
-                        <button type="button" class="profile-edit-icon"
-                            onclick="document.getElementById('avatarInput').click()">
-                            <i class="fa-solid fa-pencil"></i>
-                        </button>
+            <div class="profile-completion-card card mb-4" hidden>
+                <h3>Complete seu Perfil para Melhor Experiência</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar"></div> <span class="progress-text">% Completo</span>
+                </div>
+                <p class="text-muted mt-2">Um perfil completo aumenta suas chances de encontrar o cuidador ideal. </p>
+                <a href="{{ route('dashboard.client-editProfile') }}"
+                    class="btn btn-sm btn-outline-primary mt-3">Completar Perfil</a>
+            </div>
+
+            <!-- STATS: Solicitações, Favoritos, Chats, Cuidados -->
+            <div class="stats-grid">
+                <div class="stat-card card">
+                    <i class="fas fa-clipboard-list stat-icon"></i>
+                    <span class="stat-value">{{ $totalRequests ?? 0 }}</span>
+                    <span class="stat-label">Solicitações</span>
+                </div>
+                <div class="stat-card card">
+                    <i class="fas fa-circle-check stat-icon"></i>
+                    <span class="stat-value">{{ $completedRequests ?? 0 }}</span>
+                    <span class="stat-label">Solicitações Completas</span>
+                </div>
+                <div class="stat-card card">
+                    <i class="fas fa-star stat-icon"></i>
+                    <span class="stat-value">{{ $totalReviews ?? 0 }}</span>
+                    <span class="stat-label">Total Avaliações</span>
+                </div>
+                <div class="stat-card card">
+                    <i class="fa-solid fa-ranking-star stat-icon"></i>
+                    <span class="stat-value">{{ number_format($averageRating ?? 0, 1) }}</span>
+                    <span class="stat-label">Avaliação Média</span>
+                </div>
+                {{-- <div class="stat-card card">
+                    <i class="fas fa- stat-icon"></i>
+                    <span class="stat-value">{{ $totalChats ?? 0 }}</span>
+                    <span class="stat-label">Chats</span>
+                </div> --}}
+            </div>
+
+            <div class="dashboard-main-layout">
+                <div class="main-content-grid">
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-history"></i> Solicitações Recentes</h3>
+                        <div class="proposal-list">
+                            @forelse ($recentProposals as $proposal)
+                                <div class="proposal-item">
+                                    <div class="proposal-item-wrap">
+                                        <div class="proposal-avatar">
+                                            @if ($proposal->caregiver->user->foto == null)
+                                                <i class="fa-solid fa-user"></i>
+                                            @else
+                                                <img src="{{ asset('storage/caregivers/' . $proposal->caregiver->user->foto) }}"
+                                                    alt="">
+                                            @endif
+                                        </div>
+                                        <div class="proposal-details">
+                                            <h4> {{ $proposal->caregiver->user->nome }} </h4>
+                                            <p> <span>{{ $proposal->created_at->format('d/m/Y') }}</span> </p>
+                                        </div>
+                                    </div>
+                                    <div class="proposal-details">
+                                        <div class="request-badge badge-{{ $proposal->status }} small">
+                                            @if ($proposal->status == 'completed')
+                                                <i class="fa-solid fa-circle-check"></i>
+                                            @elseif ($proposal->status == 'pending')
+                                                <i class="fa-solid fa-clock"></i>
+                                            @elseif ($proposal->status == 'accepted')
+                                                <i class="fa-solid fa-thumbs-up"></i>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    {{-- <div class="proposal-details">
+                                        <span class="text-muted">
+                                            <i class="fa-solid fa-map-pin"></i>
+                                            {{ $proposal->caregiver->user->address->cidade }},
+                                            {{ $proposal->caregiver->user->address->estado }} |
+                                        </span>
+
+                                        <span class="text-muted">
+                                            <i class="fa-solid fa-star"></i>
+                                            {{ $proposal->caregiver->avgReviews() }}/5
+                                        </span>
+                                    </div> --}}
+
+                                    <div class="proposal-actions">
+                                        <a href="{{ route('caregiver.public-profile', $proposal->caregiver->slug) }}"
+                                            class="btn btn-sm btn-outline-primary">Ver Perfil</a>
+                                    </div>
+                                </div>
+                            @empty
+                                <p class="text-muted text-center">Nenhum paciente atribuído ainda.</p>
+                            @endforelse
+                        </div>
                     </div>
 
-                    <h3>{{ ucwords(Auth::user()->nome) }}</h3>
-
-                    @if (Auth::user()->role == 'caregiver')
-                        <p class="profile-type">Cuidador</p>
-                    @else
-                        <p class="profile-type">Cliente</p>
-                    @endif
-                    {{--
-                    <div class="profile-bio">
-                        <h4>Bio:</h4>
-                        @if (Auth::user()->bio == null)
-                            <p class="text-muted">Nenhuma bio adicionada.</p>
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-envelope"></i> Mensagens Recentes</h3>
+                        @if ($recentChats->isEmpty())
+                            {{-- if is empty pq mongo n conversa direito com o @empty --}}
+                            <p class="text-muted">Nenhuma mensagem recente.</p>
                         @else
-                            {{ Auth::user()->bio }}
+                            @foreach ($recentChats as $chat)
+                                @php
+                                    $caregiver = $chat->other_user;
+                                @endphp
+
+                                <div class="recent-list">
+                                    <div class="conversation-item">
+                                        <div class="conversation-avatar">
+                                            @if ($caregiver->foto)
+                                                <img src="{{ asset('storage/caregivers/' . $caregiver->foto) }}">
+                                            @else
+                                                <i class="fa-solid fa-user"></i>
+                                            @endif
+                                        </div>
+                                        <div class="conversation-info">
+                                            <div class="conversation-top">
+                                                <span class="conversation-name">
+                                                    {{ $caregiver->nome }}</span>
+                                                <span class="conversation-time">
+                                                    {{ $chat->last_message_at->diffForHumans() }}</span>
+                                            </div>
+                                            <div class="conversation-bottom">
+                                                <span class="last-message">{{ $chat->last_message ?? '...' }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                            <a href="{{ route('client.chat') }}" class="btn btn-sm btn-link mt-3">Ver todas as
+                                mensagens</a>
                         @endif
-                    </div> --}}
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title"><i class="fas fa-star"></i> Cuidadores Não Avaliados</h3>
+                        <div class="review-list">
+                            @forelse ($pendingReviews as $review)
+                                <div class="proposal-item">
+                                    <div class="proposal-item-wrap">
+                                        <div class="proposal-avatar">
+                                            @if ($proposal->caregiver->user->foto == null)
+                                                <i class="fa-solid fa-user"></i>
+                                            @else
+                                                <img src="{{ asset('storage/caregivers/' . $proposal->caregiver->user->foto) }}"
+                                                    alt="">
+                                            @endif
+                                        </div>
+                                        <div class="proposal-details">
+                                            <h4> {{ $proposal->caregiver->user->nome }} </h4>
+                                            <p> <span>{{ $proposal->created_at->format('d/m/Y') }}</span> </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="proposal-actions">
+                                        <a href="{{ route('client.hire-history', $proposal->id) }}"
+                                            class="btn btn-sm btn-outline-secondary">
+                                            Avaliar Agora
+                                        </a>
+                                    </div>
+                                </div>
+                            @empty
+                                <p class="text-muted text-center">Tudo em dia por aqui!.</p>
+                            @endforelse
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="card-title"><i class="fa-solid fa-bookmark"></i> Cuidadores Favoritos</h3>
+
+                        <p class="text-danger text-center">Função ainda nao adicionada.</p>
+                    </div>
                 </div>
 
-                <!-- INFORMAÇÕES CARD -->
-                <div class="info-card">
-                    <h3>Informações do Usuário</h3>
-
-                    <div class="info-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
-                            </path>
-                            <polyline points="22 6 12 13 2 6"></polyline>
-                        </svg>
-                        <div>
-                            <label>E-mail</label>
-                            <p>{{ Auth::user()->email }}</p>
-                        </div>
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-bell"></i>Alertas e Notificações</h3>
+                    <div class="alert-list">
+                        @forelse (auth()->user()->unreadNotifications as $notification)
+                            <div class="alert-item">
+                                <i class="fa-solid fa-bell"></i>
+                                <p>{{ $notification->data['message'] }}</p>
+                                <span class="alert-time"></span>
+                            </div>
+                        @empty
+                            
+                            <p class="text-muted text-center">Nenhum alerta ou notificação recente.</p>
+                        @endforelse
                     </div>
-
-                    <div class="info-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path
-                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                            </path>
-                        </svg>
-                        <div>
-                            <label>Telefone</label>
-                            <p>{{ Auth::user()->telefone }}</p>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <circle cx="12" cy="12" r="1"></circle>
-                            <path d="M12 1v6m0 6v6"></path>
-                            <path d="M4.22 4.22l4.24 4.24m2.12 2.12l4.24 4.24"></path>
-                            <path d="M1 12h6m6 0h6"></path>
-                            <path d="M4.22 19.78l4.24-4.24m2.12-2.12l4.24-4.24"></path>
-                            <path d="M12 19v6"></path>
-                            <path d="M19.78 19.78l-4.24-4.24m-2.12-2.12l-4.24-4.24"></path>
-                            <path d="M19 12h6"></path>
-                            <path d="M19.78 4.22l-4.24 4.24m-2.12 2.12l-4.24 4.24"></path>
-                        </svg>
-                        <div>
-                            <label>CPF</label>
-                            <p>{{ Auth::user()->cpf }}</p>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                            <circle cx="12" cy="10" r="3"></circle>
-                        </svg>
-                        <div>
-                            <label>Cidade</label>
-                            <p>{{ Auth::user()->address->cidade }}</p>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                        </svg>
-                        <div>
-                            <label>Bairro</label>
-                            <p>{{ Auth::user()->address->bairro }}</p>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                        </svg>
-                        <div>
-                            <label>Logradouro</label>
-                            <p>{{ Auth::user()->address->logradouro }}</p>
-                        </div>
-                    </div>
-
-                    <a href="{{ route('dashboard.client-editProfile') }}" class="btn btn-primary btn-block">
-                        Atualizar Dados
-                    </a>
                 </div>
+
             </div>
         </div>
     </main>
 </div>
 
 @include('components.footer')
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const profileCard = document.querySelector('.profile-completion-card');
+        const profileCompletionBar = document.querySelector('.progress-bar');
+        const profileCompletionText = document.querySelector('.progress-text');
+
+        let completedFields = 0;
+        const totalFields = 9;
+
+        if ("{{ Auth::user()->nome }}") completedFields++;
+        if ("{{ Auth::user()->cpf }}") completedFields++;
+        if ("{{ Auth::user()->rg }}") completedFields++;
+        if ("{{ Auth::user()->email }}") completedFields++;
+        if ("{{ Auth::user()->telefone }}") completedFields++;
+        if ("{{ Auth::user()->address->cidade ?? '' }}") completedFields++;
+        if ("{{ Auth::user()->address->bairro ?? '' }}") completedFields++;
+        if ("{{ Auth::user()->address->logradouro ?? '' }}") completedFields++;
+        if ("{{ Auth::user()->address->cep ?? '' }}") completedFields++;
+
+        const completionPercentage = Math.round((completedFields / totalFields) * 100);
+
+        profileCompletionBar.style.width = completionPercentage + '%';
+        profileCompletionText.textContent = completionPercentage + '% Completo';
+
+        if (completionPercentage < 100) {
+            profileCard.style.display = 'block';
+        } else {
+            profileCard.style.display = 'none';
+        }
+
+        // Script para toggle de seções (se houver, como em filtros)
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            if (section) {
+                section.classList.toggle('active');
+                const icon = section.previousElementSibling.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                }
+            }
+        }
+
+        // Exemplo de como você pode chamar toggleSection se tiver seções colapsáveis
+        // document.querySelectorAll('.filter-title').forEach(title => {
+        // title.addEventListener('click', () => toggleSection(title.nextElementSibling.id));
+        // });
+    });
+</script>

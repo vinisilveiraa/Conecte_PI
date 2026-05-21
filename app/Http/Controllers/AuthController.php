@@ -22,14 +22,20 @@ class AuthController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+            'rg' => StringHelper::onlyNumbers($request->rg),
+            'telefone' => StringHelper::onlyNumbers($request->telefone),
+            'cpf' => StringHelper::onlyNumbers($request->cpf)
+        ]);
+
         // regras
         $rules = [
             'nome' => 'required|string',
             'cpf' => 'required|min:11',
             'rg' => 'required|min:9',
             'email' => 'required|email',
-            'telefone' => 'required|min:9|max:11',
-            'cep' => 'required',
+            'telefone' => 'required|min:9|max:14',
+            'cep' => 'required|max:9',
             'logradouro' => 'required',
             'numero' => 'required|max:5',
             'bairro' => 'required',
@@ -67,6 +73,7 @@ class AuthController extends Controller
             'telefone.max' => 'O telefone deve ter no maximo :max digitos',
 
             'cep.required' => 'O campo cep é obrigatório',
+            'cep.max' => 'O campo cep pode conter no máximo 9 dígitos',
             'logradouro.required' => 'O campo logradouro é obrigatório',
 
             'numero.required' => 'O campo número é obrigatório',
@@ -76,6 +83,9 @@ class AuthController extends Controller
             'cidade.required' => 'O campo cidade é obrigatório',
             'estado.required' => 'O campo estado é obrigatório',
             'estado.size' => 'O campo estado deve conter exatamente :size caracteres',
+
+            'coren.required_without' => 'O campo coren é obrigatório quando o certificado de cuidador não for preenchido',
+            'certificado_cuidador.required_without' => 'O campo certificado de cuidador é obrigatório quando o coren não for preenchido',
 
             'password.required' => 'O campo senha é obrigatório',
             'password.confirmed' => "A senha e o confirmar senha dever ser exatamente iguais"
@@ -94,6 +104,8 @@ class AuthController extends Controller
         $data['nome'] = $this->cleanInput($data['nome']);
         $data['cpf'] = $this->cleanInput($data['cpf']);
         $data['rg'] = $this->cleanInput($data['rg']);
+
+        dd($data);
 
         DB::beginTransaction();
 

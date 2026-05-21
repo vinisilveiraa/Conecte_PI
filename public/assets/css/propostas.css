@@ -167,6 +167,22 @@
     text-transform: uppercase;
 }
 
+.request-badge.small {
+    padding: 8px;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.request-badge.small i {
+    font-size: var(--font-size-lg);
+    margin: 0;
+    padding: 0;
+}
+
 .badge-pending {
     background: #fff9db;
     color: #f08c00;

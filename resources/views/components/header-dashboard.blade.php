@@ -34,6 +34,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/add-specialty.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/hire-form.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('assets/css/perfil-cliente.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/perfil-cuidador.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/perfil-cuidador-edit.css') }}">
 

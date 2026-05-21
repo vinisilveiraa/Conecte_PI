@@ -51,6 +51,11 @@ class Caregiver extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function avgReviews()
+    {
+        return round($this->reviews()->avg('rating'), 1);
+    }
+
     // faz uma conta do c*ralho pra pega cuidadores por perto usando latitude e longitude
     public static function getNearby($lat, $lng, $radius = null)
     {

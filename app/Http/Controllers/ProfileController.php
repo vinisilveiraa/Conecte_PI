@@ -12,10 +12,12 @@ use App\Helpers\StringHelper;
 
 class ProfileController extends Controller
 {
-    //
-
     public function updateProfile(Request $request)
     {
+        $request->merge([
+            'telefone' => StringHelper::onlyNumbers($request->telefone),
+        ]);
+
         $user = $request->user();
 
         $rules = [

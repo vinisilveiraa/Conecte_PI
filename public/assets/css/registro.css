@@ -86,6 +86,10 @@
     color: var(--color-primary)
 }
 
+.hide-password-wrap input {
+    width: 100%;
+}
+
 .form-section {
     display: flex;
     flex-direction: column;

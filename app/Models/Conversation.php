@@ -4,6 +4,7 @@ namespace App\Models;
 
 use MongoDB\Laravel\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\User;
 
 class Conversation extends Model
 {
@@ -39,5 +40,14 @@ class Conversation extends Model
     public function proposal(): BelongsTo
     {
         return $this->belongsTo(Proposal::class);
+    }
+
+    public function getOtherUserAttribute()
+    {
+        $userId = $this->client_user_id == auth()->id()
+            ? $this->caregiver_user_id
+            : $this->client_user_id;
+
+        return User::find($userId);
     }
 }

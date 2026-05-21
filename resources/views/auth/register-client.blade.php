@@ -58,8 +58,8 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for=" cpf">CPF</label>
-                            <input type="text" id="cpf" name="cpf"
-                                placeholder="CPF"value="{{ old('cpf') }}">
+                            <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00"
+                                value="{{ old('cpf') }}" class="cpf-mask" maxlength="14">
                             {{-- ERRO --}}
                             @error('cpf')
                                 <div style="color:#ff0000;font-weight:bold">
@@ -69,8 +69,8 @@
                         </div>
                         <div class="form-group">
                             <label for="rg">RG</label>
-                            <input type="text" id="rg" name="rg"
-                                placeholder=""value="{{ old('rg') }}">
+                            <input type="text" id="rg" name="rg" placeholder="00.000.000-0"
+                                value="{{ old('rg') }}" class="rg-mask" maxlength="12">
                             {{-- ERRO --}}
                             @error('rg')
                                 <div style="color:#ff0000;font-weight:bold">
@@ -95,8 +95,8 @@
                     </div>
                     <div class="form-group">
                         <label for="telefone">Telefone</label>
-                        <input type="tel" id="telefone" name="telefone"
-                            placeholder="(XX) XXXXX-XXXX"value="{{ old('telefone') }}">
+                        <input type="tel" id="telefone" name="telefone" class="phone-mask"
+                            placeholder="(00) 00000-0000" value="{{ old('telefone') }}" maxlength="15">
                         {{-- ERRO --}}
                         @error('telefone')
                             <div style="color:#ff0000;font-weight:bold">
@@ -114,7 +114,7 @@
                         <div class="form-group">
                             <label for="cep">CEP</label>
                             <input type="text" id="cep" name="cep"
-                                placeholder=""value="{{ old('cep') }}">
+                                placeholder="00000-000" value="{{ old('cep') }}" maxlength="9" class="cep-mask">
                             {{-- erro --}}
                             @error('cep')
                                 <div style="color:#ff0000;font-weight:bold">
@@ -128,7 +128,7 @@
                         <div class="form-group">
                             <label for="logradouro">Logradouro</label>
                             <input type="text" id="logradouro" name="logradouro"
-                                placeholder=""value="{{ old('logradouro') }}">
+                                placeholder="" value="{{ old('logradouro') }}">
                             {{-- erro --}}
                             @error('logradouro')
                                 <div style="color:#ff0000;font-weight:bold">
@@ -141,7 +141,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="numero">Número</label>
-                            <input type="text" id="numero" name="numero"
+                            <input type="text" id="numero" name="numero" maxlength="4"
                                 placeholder=""value="{{ old('numero') }}">
                             {{-- erro --}}
                             @error('numero')
@@ -252,6 +252,4 @@
 <!-- FOOTER -->
 @include('components.footer')
 
-<script>
-
-</script>
+<script></script>

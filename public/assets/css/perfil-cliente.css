@@ -1,0 +1,394 @@
+/* ============================================
+   CSS Específico para a Página Inicial do Cliente Centralizada (client-dashboard-centralized.blade.php)
+   ============================================ */
+
+
+.client-dashboard .card h3.card-title {
+    font-size: var(--font-size-lg);
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary-dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.client-dashboard .card h3.card-title i {
+    color: var(--color-primary);
+}
+
+.client-dashboard-header {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+    align-items: center;
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+    padding: var(--spacing-xl);
+}
+
+@media (min-width: 992px) {
+    .client-dashboard-header {
+        grid-template-columns: auto 1fr auto;
+        /* Perfil | Progresso | Ações */
+        text-align: left;
+    }
+}
+
+.header-profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+    .header-profile-info {
+        flex-direction: row;
+    }
+}
+
+.profile-avatar-lg {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--border-radius-full);
+    overflow: hidden;
+    background-color: var(--color-light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: var(--color-dark-gray);
+    flex-shrink: 0;
+    border: 3px solid var(--color-primary);
+}
+
+.profile-avatar-lg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-text-info h2 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    color: var(--color-text);
+}
+
+.profile-text-info .profile-type {
+    font-size: var(--font-size-base);
+    color: var(--color-dark-gray);
+    margin-bottom: var(--spacing-xs);
+}
+
+.progress-bar-container {
+    width: 100%;
+    background-color: var(--color-light-gray);
+    border-radius: var(--border-radius-full);
+    height: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--color-primary);
+    border-radius: var(--border-radius-full);
+    text-align: center;
+    color: var(--color-white);
+    line-height: 15px;
+    font-size: var(--font-size-sm);
+    transition: width 0.5s ease-in-out;
+}
+
+.progress-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    line-height: 15px;
+    color: var(--color-white);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.completion-hint {
+    font-size: var(--font-size-sm);
+    line-height: 1.4;
+}
+
+.completion-hint a {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.header-quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+
+@media (min-width: 992px) {
+    .header-quick-actions {
+        justify-content: flex-end;
+    }
+}
+
+/* STATS: Solicitações, Favoritos, Chats, Cuidados */
+.client-dashboard .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.client-dashboard .stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+    text-align: center;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+}
+
+.client-dashboard .stat-icon {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.client-dashboard .stat-value {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+}
+
+.client-dashboard .stat-label {
+    font-size: var(--font-size-base);
+    color: var(--color-dark-gray);
+}
+
+/* MAIN LAYOUT: Main Grid e Sidebar */
+.dashboard-main-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+}
+
+@media (min-width: 992px) {
+    .dashboard-main-layout {
+        grid-template-columns: 2fr 1fr;
+        /* Main Grid | Sidebar */
+    }
+}
+
+/* MAIN GRID: Solicitações recentes, Mensagens recentes, Próximo cuidado */
+.main-content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+}
+
+@media (min-width: 768px) {
+    .main-content-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    }
+}
+
+.recent-list {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: 0;
+    margin: 0;
+}
+
+.recent-list .conversation-item {
+    flex: 1;
+    margin-bottom: var(--spacing-sm);
+    padding: var(--spacing-xs);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+}
+
+.recent-list .conversation-item:hover {
+    background-color: var(--color-light-gray);
+}
+
+.recent-list .conversation-avatar {
+    position: relative;
+    width: 45px;
+    height: 45px;
+    flex-shrink: 0;
+}
+
+.recent-list .conversation-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.recent-list .conversation-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.recent-list .conversation-name {
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-md);
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recent-list .conversation-time {
+    font-size: var(--font-size-xs);
+    color: var(--color-dark-gray);
+}
+
+.recent-list .conversation-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: var(--font-size-sm);
+}
+
+.recent-list .last-message {
+    font-size: var(--font-sizexs);
+    color: var(--color-text-light);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 180px;
+}
+
+
+.recent-list .notification-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--color-light-gray);
+}
+
+.notification-list li:last-child {
+    border-bottom: none;
+}
+
+.notification-list li p {
+    margin: 0;
+    flex-grow: 1;
+    color: var(--color-text);
+}
+
+.notification-list li .notification-time {
+    flex-shrink: 0;
+    font-size: var(--font-size-sm);
+}
+
+.notification-list li .notification-type {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+    /* Alinha com o texto */
+}
+
+.notification-list li .notification-type.info {
+    background-color: var(--color-info);
+}
+
+.notification-list li .notification-type.warning {
+    background-color: var(--color-warning);
+}
+
+.notification-list li .notification-type.danger {
+    background-color: var(--color-danger);
+}
+
+.checklist-items {
+    list-style: none;
+    padding: 0;
+    margin: var(--spacing-md) 0;
+}
+
+.checklist-items li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.checklist-items li input[type="checkbox"] {
+    accent-color: var(--color-primary);
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.checklist-items li label {
+    color: var(--color-text);
+    font-size: var(--font-size-base);
+    cursor: pointer;
+}
+
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    text-decoration: underline;
+    padding: 0;
+}
+
+.btn-link:hover {
+    color: var(--color-primary-dark);
+}
+
+/* Responsividade */
+@media (max-width: 576px) {
+    .client-dashboard-header {
+        padding: var(--spacing-lg);
+    }
+
+    .header-quick-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .profile-avatar-lg {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+
+    .profile-text-info h2 {
+        font-size: var(--font-size-lg);
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-main-layout {
+        grid-template-columns: 1fr;
+    }
+}

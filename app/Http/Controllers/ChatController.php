@@ -62,17 +62,15 @@ class ChatController extends Controller
 
         $proposal = Proposal::findOrFail($request->proposal_id);
 
-        $conversation = Conversation::firstOrCreate(
-            [
-                'proposal_id' => $proposal->id
-            ],
-            [
-                'caregiver_user_id' => $proposal->caregiver->user->id,
-                'client_user_id' => $proposal->client->user->id,
-                'last_message' => '',
-                'last_message_at' => now()
-            ]
-        );
+        // cria so se nao tiver conversa com esses usuarios
+        $conversation = Conversation::firstOrCreate([
+            'client_user_id' => $proposal->client->user->id,
+            'caregiver_user_id' => $proposal->caregiver->user->id,
+        ], [
+            'proposal_id' => $proposal->id,
+            'last_message' => '',
+            'last_message_at' => now()
+        ]);
 
         return redirect()->route('client.chat');
     }
