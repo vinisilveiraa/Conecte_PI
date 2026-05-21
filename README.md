@@ -2,7 +2,7 @@
     
 # DOCUMENTO DA APLICAÇÃO WEB 
 
-## ![Logo LightMode](App/public/assets/imgs/logos/logoescura.svg#gh-light-mode-only)![Logo DarkMode](App/public/assets/imgs/logos/logobranca.svg#gh-dark-mode-only)
+## ![Logo LightMode](public/assets/imgs/conecte_logo.svg#gh-light-mode-only)![Logo DarkMode](public/assets/imgs/conecte_logo.svg#gh-dark-mode-only)
 
 Plataforma digital que conecta cuidadores de saúde a pacientes que necessitam de acompanhamento e cuidados médicos.
 
@@ -16,8 +16,7 @@ Plataforma digital que conecta cuidadores de saúde a pacientes que necessitam d
 </div>
 
 **Autores:**  
-- [Vinicius Leonardo Silveira](https://github.com/vinisilveiraa);
-- [William Matias de Oliveira](https://github.com/WilliamMatiasDeOliveira)
+- [Vinicius Leonardo Silveira](https://github.com/vinisilveiraa)
 
 ---
 
