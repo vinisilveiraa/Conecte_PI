@@ -7,6 +7,7 @@ use App\Models\Specialty;
 use App\Models\Proposal;
 use App\Models\Client;
 use App\Models\Review;
+use App\Models\Conversation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -114,12 +115,18 @@ class CaregiverController extends Controller
         $averageRating = Review::where('caregiver_id', $caregiverId)
             ->avg('rating');
 
+        $recentChats = Conversation::where('caregiver_user_id', Auth::id())
+            ->orderby('last_message_at', 'desc')
+            ->limit(5)
+            ->get();
+
         return view('caregiver.dashboard-caregiver', compact(
             'proposals',
             'reviews',
             'totalProposals',
             'totalReviews',
-            'averageRating'
+            'averageRating',
+            'recentChats'
         ));
     }
 

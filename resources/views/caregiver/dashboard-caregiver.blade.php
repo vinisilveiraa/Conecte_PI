@@ -52,8 +52,14 @@
                                         </div>
                                     </div>
                                     <div class="proposal-details">
-                                        <div class="request-badge badge-{{ $proposal->status }}">
-                                            {{ ucfirst($proposal->status) }}
+                                        <div class="request-badge badge-{{ $proposal->status }} small">
+                                            @if ($proposal->status == 'completed')
+                                                <i class="fa-solid fa-circle-check"></i>
+                                            @elseif ($proposal->status == 'pending')
+                                                <i class="fa-solid fa-clock"></i>
+                                            @elseif ($proposal->status == 'accepted')
+                                                <i class="fa-solid fa-thumbs-up"></i>
+                                            @endif
                                         </div>
                                     </div>
                                     {{-- <a href="" class="btn btn-sm btn-outline-primary">Ver Perfil</a> --}}
@@ -168,43 +174,42 @@
 
             <div class="card proposal-overview-card">
                 <h3>Meus chats ativos</h3>
-                <div class="proposal-list">
-                    @forelse ($proposals as $proposal)
-                        @if ($proposal->status == 'pending' || $proposal->status == 'accepted')
-                            <div class="proposal-item">
-                                <div class="proposal-item-wrap">
-                                    <div class="proposal-avatar">
-                                        @if ($proposal->client->user->foto == null)
-                                            <i class="fa-solid fa-user"></i>
-                                        @else
-                                            <img src="{{ asset('storage/clients/' . $proposal->client->user->foto) }}"
-                                                alt="">
-                                        @endif
+                @if ($recentChats->isEmpty())
+                    {{-- if is empty pq mongo n conversa direito com o @empty --}}
+                    <p class="text-muted">Nenhuma mensagem recente.</p>
+                @else
+                    @foreach ($recentChats as $chat)
+                        @php
+                            $client = $chat->other_user;
+                        @endphp
+
+                        <div class="recent-list">
+                            <div class="conversation-item">
+                                <div class="conversation-avatar">
+                                    @if ($client->foto)
+                                        <img src="{{ asset('storage/clients/' . $client->foto) }}">
+                                    @else
+                                        <i class="fa-solid fa-user"></i>
+                                    @endif
+                                </div>
+                                <div class="conversation-info">
+                                    <div class="conversation-top">
+                                        <span class="conversation-name">
+                                            {{ $client->nome }}</span>
+                                        <span class="conversation-time">
+                                            {{ $chat->last_message_at->diffForHumans() }}</span>
                                     </div>
-                                    <div class="proposal-details">
-                                        <h4> {{ $proposal->client->user->nome }} </h4>
-                                        <p> <span>{{ $proposal->created_at->format('d/m/Y') }}</span> </p>
+                                    <div class="conversation-bottom">
+                                        <span class="last-message">{{ $chat->last_message ?? '...' }}</span>
                                     </div>
                                 </div>
-                                <div class="proposal-details">
-                                    <div class="request-badge badge-{{ $proposal->status }}">
-                                        {{ ucfirst($proposal->status) }}
-                                    </div>
-                                </div>
-                                {{-- <a href="" class="btn btn-sm btn-outline-primary">Ver Perfil</a> --}}
                             </div>
-                        @endif
-                    @empty
-                        <p class="text-muted text-center">Nenhum paciente atribuído ainda.</p>
-                    @endforelse
-                </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
-
-
-
         </div>
-</div>
-</main>
+    </main>
 </div>
 
 
