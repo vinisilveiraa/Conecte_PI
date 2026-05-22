@@ -38,7 +38,7 @@ class StringHelper
         return $texto;
     }
 
-    public function formatTelefone($telefone)
+    public static function formatTelefone($telefone)
     {
         $telefone = preg_replace('/\D/', '', $telefone);
 
@@ -53,7 +53,7 @@ class StringHelper
         return $telefone;
     }
 
-    public function formatCpf($cpf)
+    public static function formatCpf($cpf)
     {
         $cpf = preg_replace('/\D/', '', $cpf);
 

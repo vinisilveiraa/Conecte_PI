@@ -24,7 +24,7 @@ class ProfileController extends Controller
             'nome' => 'nullable|string|max:255',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'email' => 'nullable|email|unique:users,email,' . Auth::id(),
-            'telefone' => 'nullable|string|max:11',
+            'telefone' => 'nullable|string|min:9|max:11',
             'cep' => 'nullable|string|max:10',
             'logradouro' => 'nullable|string|max:255',
             'numero' => 'nullable|max:5',
@@ -49,6 +49,7 @@ class ProfileController extends Controller
 
             'telefone.string' => 'O telefone deve conter apenas números',
             'telefone.max' => 'O telefone deve ter no máximo :max caracteres',
+            'telefone.min' => 'O telefone deve ter no mínimo :min caracteres',
 
             'cep.string' => 'O CEP deve conter apenas números',
             'cep.max' => 'O CEP deve ter no máximo :max caracteres',

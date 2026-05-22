@@ -55,8 +55,8 @@
                 <div class="progress-bar-container">
                     <div class="progress-bar"></div> <span class="progress-text">% Completo</span>
                 </div>
-                <p class="text-muted mt-2">Um perfil completo aumenta suas chances de encontrar o cuidador ideal. </p>
-                <a href="{{ route('dashboard.client-editProfile') }}"
+                <p class="text-muted mt-2">Um perfil completo aumenta suas chances de se destacar. </p>
+                <a href="{{ route('dashboard.caregiver-editProfile') }}"
                     class="btn btn-sm btn-outline-primary mt-3">Completar Perfil</a>
             </div>
 
@@ -143,8 +143,11 @@
                             @empty
                                 <p class="text-muted text-center">Nenhum paciente atribuído ainda.</p>
                             @endforelse
-                            <a href="{{ route('client.hire-history') }}" class="btn btn-sm btn-link mt-3">Ver todas as
-                                propostas</a>
+                            <div class="card-footer">
+                                <a href="{{ route('client.hire-history') }}" class="btn btn-sm btn-link mt-3">Ver todas
+                                    as
+                                    propostas</a>
+                            </div>
                         </div>
                     </div>
 
@@ -182,8 +185,10 @@
                                     </div>
                                 </div>
                             @endforeach
-                            <a href="{{ route('client.chat') }}" class="btn btn-sm btn-link mt-3">Ver todas as
-                                mensagens</a>
+                            <div class="card-footer">
+                                <a href="{{ route('client.chat') }}" class="btn btn-sm btn-link">Ver todas as
+                                    mensagens</a>
+                            </div>
                         @endif
                     </div>
 
@@ -277,23 +282,23 @@
         profileCompletionText.textContent = completionPercentage + '% Completo';
 
         if (completionPercentage < 100) {
-            profileCard.style.display = 'block';
+            profileCard.removeAttribute('hidden');
         } else {
-            profileCard.style.display = 'none';
+            profileCard.setAttribute('hidden', '');
         }
 
-        // Script para toggle de seções (se houver, como em filtros)
-        function toggleSection(id) {
-            const section = document.getElementById(id);
-            if (section) {
-                section.classList.toggle('active');
-                const icon = section.previousElementSibling.querySelector('i');
-                if (icon) {
-                    icon.classList.toggle('fa-chevron-down');
-                    icon.classList.toggle('fa-chevron-up');
-                }
-            }
-        }
+        // // Script para toggle de seções (se houver, como em filtros)
+        // function toggleSection(id) {
+        //     const section = document.getElementById(id);
+        //     if (section) {
+        //         section.classList.toggle('active');
+        //         const icon = section.previousElementSibling.querySelector('i');
+        //         if (icon) {
+        //             icon.classList.toggle('fa-chevron-down');
+        //             icon.classList.toggle('fa-chevron-up');
+        //         }
+        //     }
+        // }
 
         // Exemplo de como você pode chamar toggleSection se tiver seções colapsáveis
         // document.querySelectorAll('.filter-title').forEach(title => {

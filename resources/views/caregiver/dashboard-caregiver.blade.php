@@ -30,6 +30,16 @@
                 </div>
             @endif
 
+            <div class="profile-completion-card card mb-4" hidden>
+                <h3>Complete seu Perfil para Melhor Experiência</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar"></div> <span class="progress-text">% Completo</span>
+                </div>
+                <p class="text-muted mt-2">Um perfil completo aumenta suas chances de encontrar o cuidador ideal. </p>
+                <a href="{{ route('dashboard.client-editProfile') }}"
+                    class="btn btn-sm btn-outline-primary mt-3">Completar Perfil</a>
+            </div>
+
             <div class="dashboard-cuidador">
                 <div class="card proposal-overview-card">
                     <h3>Minhas Propostas Ativas</h3>
@@ -212,5 +222,42 @@
     </main>
 </div>
 
-
 @include('components.footer')
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const profileCard = document.querySelector('.profile-completion-card');
+        const profileCompletionBar = document.querySelector('.progress-bar');
+        const profileCompletionText = document.querySelector('.progress-text');
+
+        let completedFields = 0;
+        const totalFields = 9;
+
+        if ("{{ Auth::user()->nome }}") completedFields++;
+        if ("{{ Auth::user()->cpf }}") completedFields++;
+        if ("{{ Auth::user()->rg }}") completedFields++;
+        if ("{{ Auth::user()->email }}") completedFields++;
+        if ("{{ Auth::user()->telefone }}") completedFields++;
+        if ("{{ Auth::user()->address->cidade ?? '' }}") completedFields++;
+        if ("{{ Auth::user()->address->bairro ?? '' }}") completedFields++;
+        if ("{{ Auth::user()->address->logradouro ?? '' }}") completedFields++;
+        if ("{{ Auth::user()->address->cep ?? '' }}") completedFields++;
+
+        const completionPercentage = Math.round((completedFields / totalFields) * 100);
+
+        profileCompletionBar.style.width = completionPercentage + '%';
+        profileCompletionText.textContent = completionPercentage + '% Completo';
+
+        if (completionPercentage < 100) {
+            profileCard.removeAttribute('hidden');
+        } else {
+            profileCard.setAttribute('hidden', '');
+        }
+
+        // Exemplo de como você pode chamar toggleSection se tiver seções colapsáveis
+        // document.querySelectorAll('.filter-title').forEach(title => {
+        // title.addEventListener('click', () => toggleSection(title.nextElementSibling.id));
+        // });
+    });
+</script>

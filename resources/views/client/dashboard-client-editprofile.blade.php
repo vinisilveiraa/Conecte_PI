@@ -78,13 +78,14 @@
                                 <div class="form-group col-6">
                                     <label>WhatsApp / Telefone</label>
                                     <input type="text" name="telefone"
-                                        value="{{ (new \App\Helpers\StringHelper)->formatTelefone(Auth::user()->telefone) }}"
-                                        class=" phone-mask form-control phone-mask" maxlength="15">
+                                        value="{{ \App\Helpers\StringHelper::formatTelefone(Auth::user()->telefone) }}"
+                                        class="phone-mask form-control" maxlength="15">
                                 </div>
 
                                 <div class="form-group col-6">
                                     <label>CPF (Protegido)</label>
-                                    <input type="text" value="{{ (new \App\Helpers\StringHelper)->formatCpf(Auth::user()->cpf) }}"
+                                    <input type="text"
+                                        value="{{ \App\Helpers\StringHelper::formatCpf(Auth::user()->cpf) }}"
                                         class="form-control" disabled>
                                 </div>
                             </div>
