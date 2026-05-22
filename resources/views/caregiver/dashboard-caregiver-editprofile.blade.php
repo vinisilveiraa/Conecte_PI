@@ -76,12 +76,16 @@
                             <div class="form-row mt-sm">
                                 <div class="form-group col-6">
                                     <label>WhatsApp / Telefone</label>
-                                    <input type="text" name="telefone" value="{{ Auth::user()->telefone }}"
-                                        class="form-control phone-mask" maxlength="15">
+                                    <input type="text" name="telefone"
+                                        value="{{ new \App\Helpers\StringHelper()->formatTelefone(Auth::user()->telefone) }}"
+                                        class=" phone-mask form-control phone-mask" maxlength="15">
                                 </div>
+
                                 <div class="form-group col-6">
                                     <label>CPF (Protegido)</label>
-                                    <input type="text" value="{{ Auth::user()->cpf }}" class="form-control" disabled>
+                                    <input type="text"
+                                        value="{{ new \App\Helpers\StringHelper()->formatCpf(Auth::user()->cpf) }}"
+                                        class="form-control" disabled>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +98,8 @@
                                 <div class="form-group col-4">
                                     <label>CEP</label>
                                     <input type="text" name="cep" id="cep"
-                                        value="{{ Auth::user()->address->cep }}" class="form-control cep-mask" maxlength="9">
+                                        value="{{ Auth::user()->address->cep }}" class="form-control cep-mask"
+                                        maxlength="9">
                                 </div>
                                 <div class="form-group col-8">
                                     <label>Logradouro</label>

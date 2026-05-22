@@ -143,6 +143,8 @@
                             @empty
                                 <p class="text-muted text-center">Nenhum paciente atribuído ainda.</p>
                             @endforelse
+                            <a href="{{ route('client.hire-history') }}" class="btn btn-sm btn-link mt-3">Ver todas as
+                                propostas</a>
                         </div>
                     </div>
 
@@ -235,7 +237,7 @@
                                 <span class="alert-time"></span>
                             </div>
                         @empty
-                            
+
                             <p class="text-muted text-center">Nenhum alerta ou notificação recente.</p>
                         @endforelse
                     </div>

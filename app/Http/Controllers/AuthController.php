@@ -105,8 +105,6 @@ class AuthController extends Controller
         $data['cpf'] = $this->cleanInput($data['cpf']);
         $data['rg'] = $this->cleanInput($data['rg']);
 
-        dd($data);
-
         DB::beginTransaction();
 
         try {

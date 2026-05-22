@@ -14,7 +14,7 @@
             <div class="profile-main-info-wrap">
                 <div class="profile-main-info">
                     <div class="profile-avatar-large">
-                        <img src="{{ asset('storage/caregivers/' . $caregiver->user->foto) ?: asset('assets/imgs/default-avatar.svg') }}"
+                        <img src="{{ $caregiver->user->foto ? asset('storage/caregivers/' . $caregiver->user->foto) : asset('assets/imgs/default-avatar.svg') }}"
                             alt="Foto de {{ $caregiver->user->nome }}">
                     </div>
                     <div class="profile-details">

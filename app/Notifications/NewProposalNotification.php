@@ -28,7 +28,8 @@ class NewProposalNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database', 'mail']; // salva no banco + envia email
+        // return ['database', 'mail']; // salva no banco + envia email
+        return ['database']; // salva no banco + envia email
     }
 
     /**
