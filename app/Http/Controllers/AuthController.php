@@ -115,7 +115,7 @@ class AuthController extends Controller
                 $logradouro = StringHelper::removeAccents($data['logradouro']);
                 $estado = $data['estado'];
 
-                // Construa o endereço de forma mais robusta
+                // var passado pra api
                 $fullAddress = "{$logradouro}, {$cidade}, {$estado}, Brasil";
 
                 $response = Http::withHeaders([
@@ -197,7 +197,7 @@ class AuthController extends Controller
         }
 
 
-        // ENVIO DE E-MAIL
+        // ENVIO DE E-MAIL - desativado pra n incomodar
         // $link = route('login.link', $user->id);
 
         // Mail::to($user->email)->send(
@@ -221,6 +221,7 @@ class AuthController extends Controller
         return redirect()->route('login')->with('error', 'E-mail ou senha incorretos!');
     }
 
+    // ta usando esse metodo em uma rota
     public function getCoordinates(Request $request)
     {
         $endereco = $request->endereco;

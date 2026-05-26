@@ -170,7 +170,6 @@ class ProposalController extends Controller
             // 'status' => pending,
         ]);
 
-
         $caregiver->user->notify(
             new NewProposalNotification($proposal)
         );
