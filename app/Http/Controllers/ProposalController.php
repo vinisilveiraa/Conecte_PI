@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Caregiver;
-use App\Models\User;
 use App\Models\Proposal;
-use App\Models\Specialty;
-use App\Models\Review;
 use App\Notifications\NewProposalNotification;
 use App\Notifications\NewStatusNotification;
 use Illuminate\Http\Request;
@@ -55,7 +52,7 @@ class ProposalController extends Controller
     private function autoUpdateProposals()
     {
         Proposal::where('status', 'accepted')
-            ->where('data_fim', '<=', now())
+            ->whereDate('data_fim', '<', today())
             ->whereNull('completed_at')
             ->update([
                 'status' => 'completed',
@@ -63,7 +60,7 @@ class ProposalController extends Controller
             ]);
 
         Proposal::where('status', 'pending')
-            ->where('data_inicio', '<=', now())
+            ->whereDate('data_inicio', '<', today())
             ->whereNull('expired_at')
             ->update([
                 'status' => 'expired',
@@ -125,6 +122,10 @@ class ProposalController extends Controller
         $user = $request->user();
         $caregiver = Caregiver::with('user')->findOrFail($request->caregiver_id);
 
+        if ($user->id === $caregiver->user_id) {
+            return back()->with('error', 'Você não pode contratar a si mesmo.');
+        }
+
         $rules = [
             'caregiver_id' => 'required|exists:caregivers,id',
             'data_inicio' => 'required|date|after_or_equal:today',
@@ -155,6 +156,15 @@ class ProposalController extends Controller
 
         $validated = $request->validate($rules, $messages);
 
+        $exists = Proposal::where('client_id', $user->client->id)
+            ->where('caregiver_id', $validated['caregiver_id'])
+            ->whereIn('status', ['pending', 'accepted'])
+            ->exists();
+
+        if ($exists) {
+            return back()->with('error', 'Você já possui uma solicitação ativa para este cuidador.');
+        }
+
         $proposal = Proposal::create([
             'valor_servico' => $validated['valor_servico'],
             'data_inicio' => $validated['data_inicio'],
@@ -182,9 +192,10 @@ class ProposalController extends Controller
     public function setProposalStatus($id, $status)
     {
         $proposal = Proposal::findOrFail($id);
-        $statusses = ['pending', 'accepted', 'rejected', 'cancelled', 'completed', 'expired'];
+        $statuses = ['pending', 'accepted', 'rejected', 'cancelled', 'completed', 'expired'];
+        $user = Auth::user();
 
-        if (!in_array($status, $statusses)) {
+        if (!in_array($status, $statuses)) {
             return back()->with('error', 'Status inválido');
         }
 
@@ -192,18 +203,46 @@ class ProposalController extends Controller
         switch ($status) {
             case 'accepted':
             case 'rejected':
+
+                if (!$user->caregiver) {
+                    abort(403);
+                }
                 // apenas o cuidador pode aceitar ou recusar
-                if ($proposal->caregiver_id !== Auth::user()->caregiver->id) {
+                if ($proposal->caregiver_id !== $user->caregiver->id) {
                     return back()->with('error', 'Ação não autorizada');
                 }
                 break;
 
             case 'cancelled':
+
+                if (!$user->client) {
+                    abort(403);
+                }
+
                 // apenas o cliente pode cancelar
-                if ($proposal->client_id !== Auth::user()->client->id) {
+                if ($proposal->client_id !== $user->client->id) {
                     return back()->with('error', 'Ação não autorizada');
                 }
                 break;
+        }
+
+        // propostas finalizadas nao podem mais ser alteradas
+        if (!in_array($proposal->status, ['pending', 'accepted'])) {
+            return back()->with(
+                'error',
+                'Esta proposta não pode mais ser alterada.'
+            );
+        }
+
+        // aceitar/rejeitar só funciona se estiver pending
+        if (
+            in_array($status, ['accepted', 'rejected']) &&
+            $proposal->status !== 'pending'
+        ) {
+            return back()->with(
+                'error',
+                'Esta proposta não pode mais ser alterada.'
+            );
         }
 
         // atualizar status
@@ -213,17 +252,13 @@ class ProposalController extends Controller
             $proposal->accepted_at = now();
         }
 
-        if ($status === 'completed') {
-            $proposal->completed_at = now();
-        }
-
         if ($status === 'cancelled') {
             $proposal->cancelled_at = now();
         }
 
         $proposal->save();
 
-        if ($status === 'accepted' || $status === 'rejected') {
+        if (in_array($status, ['accepted', 'rejected'])) {
             $proposal->client->user->notify(
                 new NewStatusNotification($proposal)
             );

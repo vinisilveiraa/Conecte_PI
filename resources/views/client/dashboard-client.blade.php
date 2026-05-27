@@ -185,11 +185,11 @@
                                     </div>
                                 </div>
                             @endforeach
-                            <div class="card-footer">
-                                <a href="{{ route('client.chat') }}" class="btn btn-sm btn-link">Ver todas as
-                                    mensagens</a>
-                            </div>
                         @endif
+                        <div class="card-footer">
+                            <a href="{{ route('client.chat') }}" class="btn btn-sm btn-link">Ver todas as
+                                mensagens</a>
+                        </div>
                     </div>
 
                     <div class="card">

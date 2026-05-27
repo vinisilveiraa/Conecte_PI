@@ -17,8 +17,19 @@
                 </nav>
                 <h1>Solicitar <span>Contratação</span></h1>
                 <p class="text-muted">Preencha os detalhes do serviço para enviar a proposta ao cuidador.</p>
-
             </div>
+
+            @error('error')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+            @if (session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
 
             <div class="hire-grid">
                 <!-- COLUNA ESQUERDA: Resumo do Cuidador -->
@@ -183,7 +194,10 @@
                                 <label class="form-label">Endereço do Serviço</label>
                                 <input type="text" name="endereco_servico" class="form-control"
                                     placeholder="Rua, número, bairro e cidade"
-                                    value="{{ old('endereco_servico', Auth::user()->address->logradouro . ', ' . Auth::user()->address->bairro) }}"
+                                    value="{{ old(
+                                        'endereco_servico',
+                                        Auth::user()->address->logradouro . ', ' . Auth::user()->address->numero . ', ' . Auth::user()->address->bairro,
+                                    ) }}"
                                     required>
                                 @error('endereco_servico')
                                     <div class=" alert-danger">

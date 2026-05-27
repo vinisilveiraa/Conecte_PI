@@ -36,8 +36,10 @@
                     <div class="progress-bar"></div> <span class="progress-text">% Completo</span>
                 </div>
                 <p class="text-muted mt-2">Um perfil completo aumenta suas chances de encontrar o cuidador ideal. </p>
-                <a href="{{ route('dashboard.client-editProfile') }}"
-                    class="btn btn-sm btn-outline-primary mt-3">Completar Perfil</a>
+                <a href="{{ route('dashboard.caregiver-editProfile') }}" class="btn btn-sm btn-outline-primary mt-3">Perfil
+                    de Usuário</a>
+                <a href="{{ route('caregiver.edit-Profile') }}" class="btn btn-sm btn-outline-primary mt-3">Perfil
+                    Profissional</a>
             </div>
 
             <div class="dashboard-cuidador">
@@ -232,32 +234,138 @@
         const profileCompletionText = document.querySelector('.progress-text');
 
         let completedFields = 0;
-        const totalFields = 9;
 
-        if ("{{ Auth::user()->nome }}") completedFields++;
-        if ("{{ Auth::user()->cpf }}") completedFields++;
-        if ("{{ Auth::user()->rg }}") completedFields++;
-        if ("{{ Auth::user()->email }}") completedFields++;
-        if ("{{ Auth::user()->telefone }}") completedFields++;
-        if ("{{ Auth::user()->address->cidade ?? '' }}") completedFields++;
-        if ("{{ Auth::user()->address->bairro ?? '' }}") completedFields++;
-        if ("{{ Auth::user()->address->logradouro ?? '' }}") completedFields++;
-        if ("{{ Auth::user()->address->cep ?? '' }}") completedFields++;
+        // =========================
+        // DADOS DO USUÁRIO
+        // =========================
+        const fields = [{
+                value: "{{ Auth::user()->nome ?? '' }}",
+                weight: 8
+            },
+            {
+                value: "{{ Auth::user()->cpf ?? '' }}",
+                weight: 6
+            },
+            {
+                value: "{{ Auth::user()->rg ?? '' }}",
+                weight: 4
+            },
+            {
+                value: "{{ Auth::user()->email ?? '' }}",
+                weight: 8
+            },
+            {
+                value: "{{ Auth::user()->telefone ?? '' }}",
+                weight: 8
+            },
 
-        const completionPercentage = Math.round((completedFields / totalFields) * 100);
+            // ENDEREÇO
+            {
+                value: "{{ Auth::user()->address->cidade ?? '' }}",
+                weight: 5
+            },
+            {
+                value: "{{ Auth::user()->address->bairro ?? '' }}",
+                weight: 4
+            },
+            {
+                value: "{{ Auth::user()->address->logradouro ?? '' }}",
+                weight: 4
+            },
+            {
+                value: "{{ Auth::user()->address->cep ?? '' }}",
+                weight: 4
+            },
 
+            // DADOS DO CUIDADOR
+            {
+                value: "{{ Auth::user()->caregiver->headline ?? '' }}",
+                weight: 10
+            },
+            {
+                value: "{{ Auth::user()->caregiver->bio ?? '' }}",
+                weight: 15
+            },
+            {
+                value: "{{ Auth::user()->caregiver->experience_years ?? '' }}",
+                weight: 8
+            },
+            {
+                value: "{{ Auth::user()->caregiver->hour_price ?? '' }}",
+                weight: 8
+            },
+
+            // DOCUMENTOS
+            {
+                value: "{{ Auth::user()->caregiver->coren ?? '' }}",
+                weight: 5
+            },
+            {
+                value: "{{ Auth::user()->caregiver->certificado_cuidador ?? '' }}",
+                weight: 10
+            },
+
+            // DISPONIBILIDADE
+            {
+                value: "{{ Auth::user()->caregiver->available_morning ?? 0 }}" == 1 ||
+                    "{{ Auth::user()->caregiver->available_afternoon ?? 0 }}" == 1 ||
+                    "{{ Auth::user()->caregiver->available_night ?? 0 }}" == 1 ||
+                    "{{ Auth::user()->caregiver->available_weekends ?? 0 }}" == 1,
+                weight: 8
+            },
+
+            // ESPECIALIDADES
+            {
+                value: {{ Auth::user()->caregiver?->specialties?->count() ?? 0 }} > 0,
+                weight: 15
+            }
+        ];
+
+        const totalWeight = fields.reduce((sum, field) => sum + field.weight, 0);
+
+        fields.forEach(field => {
+
+            const hasValue =
+                field.value !== null &&
+                field.value !== undefined &&
+                field.value !== '' &&
+                field.value !== false;
+
+            if (hasValue) {
+                completedFields += field.weight;
+            }
+        });
+
+        const completionPercentage = Math.round(
+            (completedFields / totalWeight) * 100
+        );
+
+        // atualiza barra
         profileCompletionBar.style.width = completionPercentage + '%';
-        profileCompletionText.textContent = completionPercentage + '% Completo';
+        profileCompletionText.textContent =
+            completionPercentage + '% Completo';
 
+        // muda cor conforme progresso
+        profileCompletionBar.classList.remove(
+            'bg-danger',
+            'bg-warning',
+            'bg-success'
+        );
+
+        if (completionPercentage < 40) {
+            profileCompletionBar.classList.add('bg-danger');
+        } else if (completionPercentage < 80) {
+            profileCompletionBar.classList.add('bg-warning');
+        } else {
+            profileCompletionBar.classList.add('bg-success');
+        }
+
+        // exibe/esconde card
         if (completionPercentage < 100) {
             profileCard.removeAttribute('hidden');
         } else {
             profileCard.setAttribute('hidden', '');
         }
 
-        // Exemplo de como você pode chamar toggleSection se tiver seções colapsáveis
-        // document.querySelectorAll('.filter-title').forEach(title => {
-        // title.addEventListener('click', () => toggleSection(title.nextElementSibling.id));
-        // });
     });
 </script>

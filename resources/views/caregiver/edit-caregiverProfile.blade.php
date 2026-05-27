@@ -232,6 +232,7 @@
             }
         });
 
+        const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
         const certificadoInput = document.getElementById('certificado_cuidador');
         const certificadoPreview = document.querySelector('.certificado-preview');
         const fileDummy = document.querySelector('.file-dummy');
@@ -240,9 +241,21 @@
             certificadoInput.addEventListener('change', function(event) {
                 const file = event.target.files[0];
                 if (file) {
+                    if (file.size > MAX_FILE_SIZE) {
+                        certificadoPreview.innerHTML =
+                            '<p class="text-danger">Arquivo muito grande. Limite de 2MB.</p>';
+                        fileDummy.querySelector('p').textContent =
+                            'Arraste e solte seu certificado aqui ou clique para fazer upload';
+                        fileDummy.querySelector('small').textContent = '(PDF ou Imagem)';
+                        certificadoInput.value = '';
+                        return;
+                    }
+
                     const reader = new FileReader();
                     reader.onload = function(e) {
-                        certificadoPreview.innerHTML = ''; // Limpa o preview existente
+                        certificadoPreview.innerHTML = ''; // limpa o preview existente
+
+
                         if (file.type === 'application/pdf') {
                             const iframe = document.createElement('iframe');
                             iframe.src = e.target.result;
