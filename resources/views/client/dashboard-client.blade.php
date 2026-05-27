@@ -55,7 +55,7 @@
                 <div class="progress-bar-container">
                     <div class="progress-bar"></div> <span class="progress-text">% Completo</span>
                 </div>
-                <p class="text-muted mt-2">Um perfil completo aumenta suas chances de se destacar. </p>
+                <p class="text-muted mt-2">Um perfil completo aumenta suas chances de encontrar o cuidador ideal. </p>
                 <a href="{{ route('dashboard.caregiver-editProfile') }}"
                     class="btn btn-sm btn-outline-primary mt-3">Completar Perfil</a>
             </div>
@@ -168,7 +168,7 @@
                                             @if ($caregiver->foto)
                                                 <img src="{{ asset('storage/caregivers/' . $caregiver->foto) }}">
                                             @else
-                                                <i class="fa-solid fa-user"></i>
+                                                <img src="{{ asset('assets/imgs/default-avatar.svg') }}">
                                             @endif
                                         </div>
                                         <div class="conversation-info">

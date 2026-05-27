@@ -35,8 +35,9 @@
                 <div class="progress-bar-container">
                     <div class="progress-bar"></div> <span class="progress-text">% Completo</span>
                 </div>
-                <p class="text-muted mt-2">Um perfil completo aumenta suas chances de encontrar o cuidador ideal. </p>
-                <a href="{{ route('dashboard.caregiver-editProfile') }}" class="btn btn-sm btn-outline-primary mt-3">Perfil
+                <p class="text-muted mt-2">Um perfil completo aumenta suas chances de se destacar. </p>
+                <a href="{{ route('dashboard.caregiver-editProfile') }}"
+                    class="btn btn-sm btn-outline-primary mt-3">Perfil
                     de Usuário</a>
                 <a href="{{ route('caregiver.edit-Profile') }}" class="btn btn-sm btn-outline-primary mt-3">Perfil
                     Profissional</a>
@@ -201,7 +202,7 @@
                                     @if ($client->foto)
                                         <img src="{{ asset('storage/clients/' . $client->foto) }}">
                                     @else
-                                        <i class="fa-solid fa-user"></i>
+                                        <img src="{{ asset('assets/imgs/default-avatar.svg') }}">
                                     @endif
                                 </div>
                                 <div class="conversation-info">
