@@ -118,11 +118,18 @@
                     <div class="certificates-list">
                         @if (isset($caregiver->certificado_cuidador) && $caregiver->certificado_cuidador)
                             <div class="certificate-item">
-                                @if (pathinfo($caregiver->certificado_cuidador, PATHINFO_EXTENSION) == 'pdf')
+                                @php
+                                    $extension = strtolower(
+                                        pathinfo($caregiver->certificado_cuidador, PATHINFO_EXTENSION),
+                                    );
+                                @endphp
+                                @if ($extension === 'pdf')
                                     <iframe src="{{ route('caregiver.certificate', $caregiver->id) }}" width="100%"
-                                        height="400px"></iframe>
+                                        height="150px">
+                                    </iframe>
                                 @else
-                                    <img src="{{ route('caregiver.certificate', $caregiver->id) }}" alt="Certificado">
+                                    <img src="{{ route('caregiver.certificate', $caregiver->id) }}" alt="Certificado"
+                                        class="img-fluid">
                                 @endif
                             </div>
                         @else

@@ -25,13 +25,20 @@
                     <div class="profile-upload-card card mb-4">
                         <h3 class="mb-0">Certificado de Cuidador</h3>
                         <p class="text-muted ">(Opcional caso envie COREN)</p>
+                        @php
+                            $extension = strtolower(pathinfo($caregiver->certificado_cuidador, PATHINFO_EXTENSION));
+                        @endphp
+
                         <div class="certificado-preview mb-3">
-                            @if (isset($caregiver->certificado_cuidador) && $caregiver->certificado_cuidador)
-                                @if (pathinfo($caregiver->certificado_cuidador, PATHINFO_EXTENSION) == 'pdf')
+                            @if (!empty($caregiver->certificado_cuidador))
+
+                                @if ($extension === 'pdf')
                                     <iframe src="{{ route('caregiver.certificate', $caregiver->id) }}" width="100%"
-                                        height="150px"></iframe>
+                                        height="150px">
+                                    </iframe>
                                 @else
-                                    <img src="{{ route('caregiver.certificate', $caregiver->id) }}" alt="Certificado">
+                                    <img src="{{ route('caregiver.certificate', $caregiver->id) }}" alt="Certificado"
+                                        class="img-fluid">
                                 @endif
                             @else
                                 <p class="text-muted">Nenhum certificado enviado.</p>
@@ -67,7 +74,7 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <div class="slug-text">
-                                        <label for="slug" class="form-label">Nome de úsuario</label>
+                                        <label for="slug" class="form-label">Nome de usuário</label>
                                         <span class="text-danger" id="slug-feedback"></span>
                                     </div>
 

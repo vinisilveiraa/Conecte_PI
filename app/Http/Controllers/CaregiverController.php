@@ -41,7 +41,9 @@ class CaregiverController extends Controller
             abort(404);
         }
 
-        return response()->file($path);
+        return response()->file($path, [
+            'Content-Type' => mime_content_type($path)
+        ]);
     }
 
     public function addSpecialty($id)

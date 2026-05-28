@@ -211,15 +211,20 @@
 
     </div>
 `;
+                // adiciona pro fim
                 conversationsList.insertAdjacentHTML('beforeend', html);
             });
 
+
+            // pega as conversas
             const items = document.querySelectorAll('.conversation-item');
 
             items.forEach(item => {
 
                 item.addEventListener('click', function() {
 
+                    // pra cada item
+                    // troca a parte do emptychat
                     document.getElementById('emptyChatState')
                         .style.display = 'none';
 
@@ -227,17 +232,16 @@
                         .style.display = 'flex';
 
                     const conversationId = this.dataset.conversationId;
-
                     const userName = this.dataset.userName;
-
                     const userAvatar = this.dataset.userAvatar;
 
                     document.getElementById('chatUserName').innerText = userName;
-
                     document.getElementById('chatUserAvatar').src = userAvatar;
 
+                    // tira active de quaisquer item ativo
                     items.forEach(i => i.classList.remove('active'));
 
+                    // adiciona ao atual
                     this.classList.add('active');
 
                     currentConversationId = conversationId;
